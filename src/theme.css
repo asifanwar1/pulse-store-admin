@@ -88,13 +88,7 @@ body {
     --color-app-gray: #f8f8fb;
 
     /* Analytic card palette */
-    --color-analytic-card-soft-green: #f1faef;
     --color-app-green: #698a63;
-    --color-analytic-card-periwinkle: #edf0f8;
-    --color-analytic-card-navy: #223977;
-    --color-analytic-card-linen: #f8f3ed;
-    --color-analytic-card-khaki-brown: #927e64;
-    --color-analytic-card-cultured: #f2f2f2;
     --color-medium-gray: #7c7c7c;
     --color-charcoal: #3b4152;
     --color-card-header-title: #1a1f2c;
@@ -195,13 +189,6 @@ body {
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --animate-bounce: bounce 1s infinite;
 
-    /* CustomSelect colors */
-    --color-custom-select-border: #dbdbdb;
-    --color-custom-select-bg: #ffffff;
-    --color-custom-select-selected-bg: #000000;
-    --color-custom-select-selected-text: #ffffff;
-    --color-custom-select-hover-bg: #7f7f7f;
-    --color-custom-select-hover-text: #ffffff;
 
     /* Table colors */
     --color-table-header: #eaecec80;
@@ -213,25 +200,7 @@ body {
     --color-link-active: #7c808c;
     --color-link-inactive: #9da5b4;
 
-    /* Product Color Palette (from Figma) */
-    --color-teal: #166f7f;
-    --color-brown: #935421;
-    --color-yellow: #f6c82d;
-    --color-gray: #c4c9cf;
-    --color-maroon: #8d1a1f;
-    --color-orange: #ca5b32;
-    --color-navy-blue: #005491;
-    --color-olive-green: #638100;
-    --color-golden: #d9ae00;
-    --color-sky-blue: #73daff;
-    --color-silver: #dadada;
-    /* Product Stain Palette (from Figma) */
-    --color-beige: #f5e8d7;
-    --color-oak: #e2c290;
-    --color-cherry: #d2691e;
-    --color-maple: #ffe5b4;
-    --color-pine: #e3dac9;
-    --color-birch: #f6e3b4;
+   
 }
 
 /* ----------------------------------------------------
