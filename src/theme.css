@@ -1,0 +1,231 @@
+/* ----------------------------------------------------
+   🌐 Tailwind core + animation plugin
+---------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Onest:wght@100..900&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css"; /* remove if not using */
+
+body {
+    overflow: hidden;
+}
+
+*::-webkit-scrollbar {
+    width: 3px !important;
+    height: 3px !important;              
+  }
+  
+*::-webkit-scrollbar-track {
+    background: transparent !important;        
+  }
+  
+*::-webkit-scrollbar-thumb {
+    background-color: #9DA5B4 !important;   
+    border-radius: 20px !important;       
+    border: 3px solid #9DA5B4 !important;
+    transition: background 0.5s ease-in-out !important;
+  }
+
+/* ----------------------------------------------------
+   🔑 Keyframes (must be top‑level, never inside a selector)
+---------------------------------------------------- */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes ping {
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: none;
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+/* ----------------------------------------------------
+   🌙 Dark‑mode variant (Tailwind v4 syntax)
+---------------------------------------------------- */
+@custom-variant dark (&:is(.dark *));
+
+/* ----------------------------------------------------
+   👥 Group utilities are built-in to Tailwind v4
+---------------------------------------------------- */
+
+/* ----------------------------------------------------
+   🎨 Theme variables – Tailwind v4-compatible
+   These map directly to utility classes like `bg-xxx`, `shadow-xxx`, etc.
+---------------------------------------------------- */
+@theme {
+    /* Fonts */
+    --font-archivo: "Archivo", sans-serif;
+    --font-onest: "Onest", sans-serif;
+
+    /* App-wide colors */
+    --color-app-background: #f8f9fa;
+    --color-app-primary: #1a1f2c;
+    --color-app-secondary: #515665;
+    --color-app-branding: #252c3f;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-muted: #9da5b4;
+    --color-muted-secondary: #636875;
+    --color-cool-gray: #92969f;
+    --color-app-gray: #f8f8fb;
+
+    /* Analytic card palette */
+    --color-analytic-card-soft-green: #f1faef;
+    --color-app-green: #698a63;
+    --color-analytic-card-periwinkle: #edf0f8;
+    --color-analytic-card-navy: #223977;
+    --color-analytic-card-linen: #f8f3ed;
+    --color-analytic-card-khaki-brown: #927e64;
+    --color-analytic-card-cultured: #f2f2f2;
+    --color-medium-gray: #7c7c7c;
+    --color-charcoal: #3b4152;
+    --color-card-header-title: #1a1f2c;
+
+    /* Preset card palette */
+    --color-preset-card-border: #d3d5d9;
+    --color-custom-text-blue: #006bff;
+    --color-light-cultured: #f3f3f3;
+
+    /* Shadows */
+    --shadow-custom: 0 10px 35px 0 rgba(0, 0, 0, 0.1);
+
+    /* Font sizes & line heights */
+    --text-xss: 0.65rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-custom: 1.75rem;
+    --text-xs--line-height: calc(1 / 0.75); /* 1rem */
+    --text-sm--line-height: calc(1.25 / 0.875); /* ≈1.43rem */
+
+    /* Font weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-custom: 250;
+
+    /* Tracking & leading */
+    --tracking-widest: 0.1em;
+    --leading-tight: 1.25;
+    --leading-loose: 2;
+
+    /* Border radius */
+    --radius-xs: 0.125rem;
+
+    /* Inset & drop shadows */
+    --inset-shadow-2xs: inset 0 1px rgb(0 0 0 / 0.05);
+    --drop-shadow-xs: 0 1px 1px rgb(0 0 0 / 0.05);
+
+    /* Blur & perspective */
+    --blur-xs: 4px;
+    --perspective-dramatic: 100px;
+
+    /* Animation helpers */
+    --animate-spin: spin 1s linear infinite;
+    --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-bounce: bounce 1s infinite;
+
+    /* CustomSelect colors */
+    --color-custom-select-border: #dbdbdb;
+    --color-custom-select-bg: #ffffff;
+    --color-custom-select-selected-bg: #000000;
+    --color-custom-select-selected-text: #ffffff;
+    --color-custom-select-hover-bg: #7f7f7f;
+    --color-custom-select-hover-text: #ffffff;
+
+    /* Group utilities - removed as they are built-in to Tailwind v4 */
+
+    /* Shadows */
+    --shadow-custom: 0 10px 35px 0 rgba(0, 0, 0, 0.1);
+
+    /* Font sizes & line heights */
+    --text-13: 0.813rem;
+    --text-15: 0.9375rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-custom: 1.75rem;
+    --text-xs--line-height: calc(1 / 0.75); /* 1rem */
+    --text-sm--line-height: calc(1.25 / 0.875); /* ≈1.43rem */
+
+    /* Font weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-custom: 250;
+
+    /* Tracking & leading */
+    --tracking-widest: 0.1em;
+    --leading-tight: 1.25;
+    --leading-loose: 2;
+
+    /* Border radius */
+    --radius-xs: 0.125rem;
+
+    /* Inset & drop shadows */
+    --inset-shadow-2xs: inset 0 1px rgb(0 0 0 / 0.05);
+    --drop-shadow-xs: 0 1px 1px rgb(0 0 0 / 0.05);
+
+    /* Blur & perspective */
+    --blur-xs: 4px;
+    --perspective-dramatic: 100px;
+
+    /* Animation helpers */
+    --animate-spin: spin 1s linear infinite;
+    --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-bounce: bounce 1s infinite;
+
+ 
+
+
+    /* Product Color Palette (from Figma) */
+    --color-teal: #166f7f;
+    --color-brown: #935421;
+    --color-yellow: #f6c82d;
+    --color-gray: #c4c9cf;
+    --color-maroon: #8d1a1f;
+    --color-orange: #ca5b32;
+    --color-navy-blue: #005491;
+    --color-olive-green: #638100;
+    --color-golden: #d9ae00;
+    --color-sky-blue: #73daff;
+    --color-silver: #dadada;
+  
+}
+
+/* ----------------------------------------------------
+   🌙 Dark‑mode overrides (NOT used to generate utilities)
+---------------------------------------------------- */
+@layer base {
+    * {
+        font-family: var(--font-archivo);
+    }
+
+    .dark {
+        --color-app-background: #1a1f2c;
+        --color-app-primary: #f4f4f5;
+        --color-app-secondary: #a1a1aa;
+    }
+}
+
+
