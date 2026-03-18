@@ -1,4 +1,4 @@
-import { useStore } from "@/store";
+import { useStore } from "@/store/store";
 import axiosInstance from "./axiosInstance";
 import { networkRequestErrorHandler } from "@/lib/errorHandlerUtils";
 
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
         }
         networkRequestErrorHandler(error);
         return Promise.reject(error);
-    }
+    },
 );
 
 export default axiosInstance;
