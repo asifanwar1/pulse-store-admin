@@ -1,0 +1,40 @@
+import type { AddressModel } from "./address.model";
+import type { BaseModel } from "./base.model";
+import type { UserType } from "@/constants/User";
+import type { UserGenderType } from "@/constants/UserGender";
+import type { UserStatusType } from "@/constants/UserStatus";
+import type { MediaModel } from "./media.model";
+
+export type UserModel = BaseModel & {
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    fullName?: string;
+    phone?: string;
+    type?: UserType;
+    status?: UserStatusType;
+    gender?: UserGenderType;
+    profilePictureId?: number;
+    isOnline?: boolean;
+    lastSeenAt?: string;
+    settings?: UserSettingsModel;
+    profilePicture?: MediaModel;
+    locationId?: number;
+    adminDetails?: AdminDetailsModel;
+    location?: AddressModel;
+    userInfo?: UserInfoModel;
+};
+
+type AdminDetailsModel = {
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    revenueShare?: number;
+};
+type UserInfoModel = AdminDetailsModel & {
+    userId?: number;
+};
+
+type UserSettingsModel = {
+    notificationsEnabled?: boolean;
+};

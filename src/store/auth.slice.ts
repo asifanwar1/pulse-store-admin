@@ -1,7 +1,7 @@
 import type { StateCreator } from "zustand";
 import { USER_TYPE, type UserType } from "@/constants/user-type.constants";
 import { sliceResetFns } from "./store";
-import type { UserModel } from "../api/models";
+import type { UserModel } from "@/api/models/user.model";
 
 export interface AuthStateType {
     userType: UserType;
