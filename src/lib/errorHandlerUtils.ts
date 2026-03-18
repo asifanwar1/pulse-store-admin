@@ -1,6 +1,6 @@
 import { showToast } from "./toast";
-import { HTTP_STATUS } from "@/constants";
-import { APP_ROUTES } from "@/routes";
+import { HTTP_STATUS } from "@/constants/api";
+import { APP_ROUTES } from "@/routes/appRoutes";
 import { store } from "@/store";
 import {
     GENERIC_ERROR_MESSAGE,
