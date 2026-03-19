@@ -1,12 +1,12 @@
 import { showToast } from "./toast";
-import { HTTP_STATUS } from "@/constants/api";
+import { HTTP_STATUS } from "@/constants/api.constants";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { store } from "@/store";
 import {
     GENERIC_ERROR_MESSAGE,
     NETWORK_ERROR_MESSAGE,
     UNAUTHORIZED_ERROR_MESSAGE,
-} from "@/constants/ValidationMessages";
+} from "@/constants/Validation-messages.constants";
 
 const networkRequestErrorHandler = (
     error: unknown,

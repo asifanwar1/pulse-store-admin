@@ -1,4 +1,4 @@
-import type { SortOrder } from "@/constants/sort-order";
+import type { SortOrder } from "@/constants/sort-order.constants";
 
 export interface BaseModel {
     id: number;

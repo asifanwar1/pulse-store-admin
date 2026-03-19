@@ -1,4 +1,4 @@
-import { injectBaseConstantMethods } from "./BaseConstant";
+import { injectBaseConstantMethods } from "./base.constants";
 
 export const UserStatus = {
     ACTIVE: "ACTIVE",
