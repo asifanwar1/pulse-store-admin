@@ -1,8 +1,7 @@
 import type { AddressModel } from "./address.model";
 import type { BaseModel } from "./base.model";
-import type { UserType } from "@/constants/User";
-import type { UserGenderType } from "@/constants/UserGender";
-import type { UserStatusType } from "@/constants/UserStatus";
+import type { UserType } from "@/constants/user-type.constants";
+import type { UserStatusType } from "@/constants/user-status.constants";
 import type { MediaModel } from "./media.model";
 
 export type UserModel = BaseModel & {
@@ -13,7 +12,6 @@ export type UserModel = BaseModel & {
     phone?: string;
     type?: UserType;
     status?: UserStatusType;
-    gender?: UserGenderType;
     profilePictureId?: number;
     isOnline?: boolean;
     lastSeenAt?: string;
