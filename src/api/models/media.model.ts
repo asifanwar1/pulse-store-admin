@@ -1,4 +1,8 @@
-import { MediaAccess, MediaStatus, MediaTypes } from "@/constants/MediaConstants";
+import {
+    MediaAccess,
+    MediaStatus,
+    MediaTypes,
+} from "@/constants/media.constants";
 import { type BaseModel } from "./base.model";
 
 export type MediaModel = BaseModel & {
