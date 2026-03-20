@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import { useStore } from "@/store";
-import { APP_ROUTES } from "@/routes";
+import { APP_ROUTES } from "@/routes/appRoutes";
 import Loading from "@/components/ui/Loading";
 
 const AuthLayout: React.FC = () => {
