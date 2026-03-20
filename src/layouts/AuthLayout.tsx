@@ -1,0 +1,29 @@
+import React, { Suspense, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import { useStore } from "@/store";
+import { APP_ROUTES } from "@/routes";
+import Loading from "@/components/ui/Loading";
+
+const AuthLayout: React.FC = () => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate(APP_ROUTES.DASHBOARD);
+        }
+    }, [isAuthenticated, navigate]);
+
+    if (isAuthenticated) {
+        return null;
+    }
+
+    return (
+        <Suspense fallback={<Loading />}>
+            <Outlet />
+        </Suspense>
+    );
+};
+
+export default AuthLayout;
