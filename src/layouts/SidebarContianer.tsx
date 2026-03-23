@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
-import type { APP_ROUTES } from "@/routes";
+import type { APP_ROUTES } from "@/routes/appRoutes";
 
-import { Image } from "@/components/ui/Image";
+import { Image } from "@/components/custom/Image";
 import logoutIcon from "@/assets/icons/logout-icon.svg";
 import sidebarHeaderImage from "@/assets/images/dcd-logo-white.png";
 import mobileSidebarHeaderImage from "@/assets/images/dcd-circle-logo.png";
