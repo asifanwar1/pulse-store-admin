@@ -15,7 +15,6 @@ import { defaultRouteNames } from "@/constants/PageTitles";
 
 import chevronDownIcon from "@/assets/icons/chevron-down-icon.svg";
 import { useStore } from "@/store";
-import { UserRoleType, type UserType } from "@/constants/User";
 
 interface ITopbarProps {
     user: {
@@ -72,9 +71,7 @@ const Topbar: React.FC<ITopbarProps> = ({
                                     {userData?.fullName}
                                 </span>
                                 <span className="text-xs text-[#9DA5B4]">
-                                    {UserRoleType.getDisplayTextKey(
-                                        userData?.type as UserType,
-                                    )}
+                                    "ADMIN"
                                 </span>
                             </div>
                             <img
