@@ -1,0 +1,11 @@
+@reference "@/theme.css";
+
+@layer components {
+  .tooltip-content {
+    @apply bg-white text-black text-xs font-medium rounded px-3 py-2 leading-[15px] z-50 w-fit;
+  }
+
+  /* .tooltip-arrow {
+        @apply bg-[#ad728b] fill-[#ad728b] size-2.5 rotate-45 rounded-[2px] z-50;
+      } */
+}

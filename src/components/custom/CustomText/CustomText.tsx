@@ -1,6 +1,6 @@
 import { safeStringConversion, truncateString } from "@/utils/stringUtils";
 import { CustomTooltip } from "../CustomTooltip";
-import type { ICustomTextProps } from "./CustomText.types";
+import type { ICustomTextProps } from "./types";
 
 export const CustomText = ({
     text = "",
