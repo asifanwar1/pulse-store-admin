@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { type IButtonProps } from "./types";
-import { buttonVariants } from "./CustomButton.Constant";
+import { buttonVariants } from "./CustomButton.Constants";
 
 const CustomButton = React.forwardRef<HTMLButtonElement, IButtonProps>(
     (

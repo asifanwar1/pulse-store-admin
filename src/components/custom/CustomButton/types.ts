@@ -1,7 +1,7 @@
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import type { buttonVariants } from "./CustomButton.Constant";
+import type { buttonVariants } from "./CustomButton.Constants";
 
 export interface ICustomButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     asChild?: boolean;
