@@ -19,12 +19,12 @@ import profilePlaceholderImage from "@/assets/images/profile-gray-image.png";
 import logoutIcon from "@/assets/icons/logout-black-icon.svg";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import NotificationDropdown from "@/components/shared/NotificationDropDown";
+import NotificationDropdown from "@/components/custom/NotificationDropDown";
 import {
     useLogout,
     useGetMe,
 } from "@/pages/Authentication/Authentication.Container";
-import { useGetNotificationsUnreadCount } from "@/components/shared/NotificationDropDown/NotificationContainer";
+import { useGetNotificationsUnreadCount } from "@/components/custom/";
 
 const MainLayoutWrapper: React.FC = () => {
     const { state, isMobile } = useSidebar();
