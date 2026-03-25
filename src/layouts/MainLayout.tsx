@@ -2,22 +2,22 @@ import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { useStore } from "@/store";
-import { APP_ROUTES } from "@/routes";
+import { APP_ROUTES } from "@/routes/appRoutes";
 
 import { cn } from "@/lib/utils";
 
 import Topbar from "./Topbar";
-import SidebarContainer from "./SidebarContainer";
+import SidebarContainer from "./SidebarContianer";
 
-import ConfirmationModal from "@/components/shared/Modals/ConfirmationModal";
-import { Image } from "@/components/ui/Image";
-import Loading from "@/components/ui/Loading";
+import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
+import { Image } from "@/components/custom/Image";
+import Loading from "@/components/custom/Loading";
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
 
 import commentIcon from "@/assets/icons/comment-icon.svg";
 import profilePlaceholderImage from "@/assets/images/profile-gray-image.png";
 import logoutIcon from "@/assets/icons/logout-black-icon.svg";
-import { CustomButton } from "@/components/shared/CustomButton";
+import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/shared/NotificationDropDown";
 import {
