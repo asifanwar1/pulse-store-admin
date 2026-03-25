@@ -24,7 +24,7 @@ import {
     useLogout,
     useGetMe,
 } from "@/pages/Authentication/Authentication.Container";
-import { useGetNotificationsUnreadCount } from "@/components/custom/";
+import { useGetNotificationsUnreadCount } from "@/components/custom/NotificationDropDown/NotificationContainer";
 
 const MainLayoutWrapper: React.FC = () => {
     const { state, isMobile } = useSidebar();
@@ -101,7 +101,7 @@ const MainLayoutWrapper: React.FC = () => {
                             src={commentIcon}
                             alt="Comments"
                             className="h-6 w-6"
-                            onClick={() => navigate(APP_ROUTES.CUSTOMER_CHATS)}
+                            onClick={() => navigate(APP_ROUTES.CHATS)}
                         />
                     </CustomButton>
                     <NotificationDropdown />
