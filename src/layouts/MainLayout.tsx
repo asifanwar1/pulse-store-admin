@@ -20,10 +20,7 @@ import logoutIcon from "@/assets/icons/logout-black-icon.svg";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/custom/NotificationDropDown";
-import {
-    useLogout,
-    useGetMe,
-} from "@/pages/Authentication/Authentication.Container";
+import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
 import { useGetNotificationsUnreadCount } from "@/components/custom/NotificationDropDown/NotificationContainer";
 
 const MainLayoutWrapper: React.FC = () => {
