@@ -1,5 +1,5 @@
 import { APP_ROUTES } from "@/routes/appRoutes";
-import { defaultRouteNames } from "@/constants/PageTitles";
+import { defaultRouteNames } from "@/constants/page-title.constants";
 
 export interface BreadcrumbItem {
     label: string;
