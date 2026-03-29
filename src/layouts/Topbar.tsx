@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { CustomButton } from "@/components/shared/CustomButton";
+import { CustomButton } from "@/components/custom/CustomButton";
 import {
     DropdownMenu,
     DropdownMenuContent,
