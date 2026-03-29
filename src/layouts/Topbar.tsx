@@ -11,7 +11,7 @@ import {
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { getRouteDisplayName } from "@/utils/breadcrumbUtils";
-import { defaultRouteNames } from "@/constants/PageTitles";
+import { defaultRouteNames } from "@/constants/page-title.constants";
 
 import chevronDownIcon from "@/assets/icons/chevron-down-icon.svg";
 import { useStore } from "@/store";
