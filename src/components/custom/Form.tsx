@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormItem, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/Custom/";
+import { Input } from "@/components/custom/Input";
 import { cn } from "@/lib/utils";
 
 // Stricter version that prevents repeated TLDs like .com.com
