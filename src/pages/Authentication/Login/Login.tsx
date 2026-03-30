@@ -1,6 +1,6 @@
-import FormBuilder from "@/components/shared/FormBuilder/FormBuilder";
-import { Button } from "@/components/ui/button";
-import { APP_ROUTES } from "@/routes";
+import { FormBuilder } from "@/components/custom/Form";
+import Button from "@/components/custom/CustomButton/CustomButton";
+import { APP_ROUTES } from "@/routes/appRoutes";
 import { Link } from "react-router-dom";
 import logo from "@/assets/images/dcd-logo.png";
 
@@ -37,7 +37,7 @@ const Login = () => {
                             Forgot password?
                         </Link>
                     </div>
-                    <Button type="submit" block isLoading={isPending}>
+                    <Button type="submit" isLoading={isPending}>
                         LOGIN
                     </Button>
                 </FormBuilder>
@@ -47,4 +47,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
 import { useLogin } from "../Authentication.Container";
 import type { ILoginFormValues } from "@/pages/Authentication/types";
-import { APP_ROUTES } from "@/routes";
-import type { FormBuilderRef } from "@/components/shared/FormBuilder/FormBuilder";
+import { APP_ROUTES } from "@/routes/appRoutes";
+import type { FormBuilderRef } from "@/components/custom/Form";
 import { showToast } from "@/lib/toast";
 
 export function useLoginContainer() {
@@ -21,7 +21,7 @@ export function useLoginContainer() {
         if (token) {
             setAuth({
                 isAuthenticated: true,
-                token
+                token,
             });
             showToast.success("Login successful");
             navigate(APP_ROUTES.DASHBOARD);
@@ -31,6 +31,6 @@ export function useLoginContainer() {
     return {
         formRef,
         onSubmit,
-        isPending
+        isPending,
     };
 }
