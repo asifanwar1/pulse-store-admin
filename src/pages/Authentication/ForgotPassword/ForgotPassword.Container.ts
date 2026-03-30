@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { useForgetPassword } from "../Authentication.Container";
 import type { IForgotPasswordFormValues } from "../types";
-import type { FormBuilderRef } from "@/components/shared/FormBuilder/FormBuilder";
+import type { FormBuilderRef } from "@/components/custom/Form";
 import { useRef } from "react";
 
 export function useForgotPasswordContainer() {
