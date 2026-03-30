@@ -1,7 +1,7 @@
 import logo from "@/assets/images/dcd-logo.png";
 
 import { Button } from "@/components/ui/button";
-import OTPInputField from "@/components/shared/OTPInputField/OTPInputField";
+import OTPInputField from "@/components/custom/OTPInputField/OTPInputField";
 import { useVerificationCodeContainer } from "./VerificationCode.Container";
 import AuthWrapper from "../components/AuthWrapper";
 import AuthHeader from "../components/AuthHeader";
@@ -16,7 +16,7 @@ const VerificationCode = () => {
         handleSubmit,
         handleResend,
         isSubmitDisabled,
-        OTP_LENGTH
+        OTP_LENGTH,
     } = useVerificationCodeContainer();
 
     return (
@@ -62,7 +62,9 @@ const VerificationCode = () => {
                     ) : (
                         <p className="text-app-secondary text-[16px] mt-4">
                             Resend Code in{" "}
-                            <span>({timer < 10 ? `00:0${timer}` : `00:${timer}`})</span>
+                            <span>
+                                ({timer < 10 ? `00:0${timer}` : `00:${timer}`})
+                            </span>
                         </p>
                     )}
                 </div>

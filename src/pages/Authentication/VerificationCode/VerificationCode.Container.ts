@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { useForgetPasswordVerification } from "../Authentication.Container";
-import { APP_ROUTES } from "../../../routes";
+import { APP_ROUTES } from "@/routes/appRoutes";
 
 import { ResendCode } from "../../../api";
 import type { TResendCodeResponse } from "../../../api/services/auth/auth.response.types";
@@ -38,7 +38,10 @@ export function useVerificationCodeContainer() {
             const interval = setInterval(() => {
                 setTimer((prev) => {
                     const newTimer = prev - 1;
-                    sessionStorage.setItem("verificationTimer", newTimer.toString());
+                    sessionStorage.setItem(
+                        "verificationTimer",
+                        newTimer.toString(),
+                    );
 
                     if (newTimer === 0) {
                         setCanResend(true);
@@ -62,7 +65,7 @@ export function useVerificationCodeContainer() {
         }
         const payload: TForgetPasswordVerificationBody = {
             code: otp,
-            token: token
+            token: token,
         };
         const result = (await verify(payload)) as { data?: { token?: string } };
         const newToken = result?.data?.token;
@@ -82,9 +85,9 @@ export function useVerificationCodeContainer() {
             navigate(newUrl, {
                 state: {
                     email,
-                    type
+                    type,
                 },
-                replace: true
+                replace: true,
             });
         }
         setCanResend(false);
@@ -104,6 +107,6 @@ export function useVerificationCodeContainer() {
         handleSubmit,
         handleResend,
         isSubmitDisabled,
-        OTP_LENGTH
+        OTP_LENGTH,
     };
 }
