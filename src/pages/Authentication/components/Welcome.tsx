@@ -5,23 +5,22 @@ const WelcomeSection = ({
         <>
             Welcome to
             <br />
-            <span className="font-bold">Dadcrafted Decor</span>
+            <span className="font-bold">Pulse Store</span>
         </>
     ),
     subtitle = (
         <>
-            Made With <span className="font-bold">Heart &amp; Hand</span>
+            Manage. Sell. <span className="font-bold">Grow.</span>
         </>
     ),
     backgroundImage,
     personImage,
-    className
+    className,
 }: IWelcomeSectionProps) => {
     return (
         <div
             className={`relative w-full h-screen flex items-center justify-center bg-auth-primary lg:max-w-[574px] xl:max-w-[726px] mr-5 ${className}`}
         >
-            {/* Background image */}
             <img
                 src={backgroundImage}
                 alt="Background"
@@ -29,10 +28,8 @@ const WelcomeSection = ({
                 draggable={false}
             />
 
-            {/* Overlay for gradient/darkening */}
             <div className="h-[95%] mt-5 absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 rounded-none lg:rounded-[20px]" />
 
-            {/* Content */}
             <div className="absolute top-0 left-0 w-full z-20 flex flex-col items-center pt-16 px-4 text-center">
                 <h2 className="text-white text-xl sm:text-2xl lg:text-[32px] font-normal leading-tight mb-2">
                     {title}
@@ -42,7 +39,6 @@ const WelcomeSection = ({
                 </p>
             </div>
 
-            {/* Foreground person image */}
             <img
                 src={personImage}
                 alt="Person"
@@ -50,7 +46,7 @@ const WelcomeSection = ({
                     -translate-x-6 sm:-translate-x-10 lg:-translate-x-16"
                 draggable={false}
                 style={{
-                    objectFit: "contain"
+                    objectFit: "contain",
                 }}
             />
         </div>

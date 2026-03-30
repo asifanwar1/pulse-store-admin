@@ -2,11 +2,13 @@ import type { IAuthHeaderProps } from "../types";
 
 const AuthHeader = ({
     title = "Welcome",
-    subtitle = "DAD Crafted Decor.",
-    logo
+    subtitle = "Pulse Store.",
+    logo,
 }: IAuthHeaderProps) => (
     <div className="w-full flex flex-col items-center pt-8 pb-2">
-        {logo && <img src={logo} alt="Dadcrafted Decor" className="h-16 mb-6 mr-auto" />}
+        {logo && (
+            <img src={logo} alt="Pulse Store" className="h-16 mb-6 mr-auto" />
+        )}
         <div className="w-full max-w-md">
             <div className="mb-6">
                 <h1
