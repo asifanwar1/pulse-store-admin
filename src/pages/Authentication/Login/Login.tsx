@@ -2,7 +2,7 @@ import { FormBuilder } from "@/components/custom/Form";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { Link } from "react-router-dom";
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 
 import { useLoginContainer } from "./Login.Container";
 import AuthWrapper from "../components/AuthWrapper";

@@ -10,13 +10,10 @@ import Topbar from "./Topbar";
 import SidebarContainer from "./SidebarContianer";
 
 import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
-import { Image } from "@/components/custom/Image";
 import Loading from "@/components/custom/Loading";
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
 
-import commentIcon from "@/assets/icons/comment-icon.svg";
-import profilePlaceholderImage from "@/assets/images/profile-gray-image.png";
-import logoutIcon from "@/assets/icons/logout-black-icon.svg";
+import { MessageSquareText, LogOut } from "lucide-react";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/custom/NotificationDropDown";
@@ -62,9 +59,7 @@ const MainLayoutWrapper: React.FC = () => {
                 <SidebarContainer onLogoutClick={onLogoutClick} />
                 <Topbar
                     user={{
-                        image:
-                            userData?.profilePicture?.path ||
-                            profilePlaceholderImage,
+                        image: userData?.profilePicture?.path || "",
                     }}
                     profileMenuItems={
                         <>
@@ -93,13 +88,9 @@ const MainLayoutWrapper: React.FC = () => {
                         variant="ghost"
                         type="button"
                         className="relative flex items-center cursor-pointer w-14 h-14 bg-muted/12 rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-muted/30"
+                        onClick={() => navigate(APP_ROUTES.CHATS)}
                     >
-                        <img
-                            src={commentIcon}
-                            alt="Comments"
-                            className="h-6 w-6"
-                            onClick={() => navigate(APP_ROUTES.CHATS)}
-                        />
+                        <MessageSquareText size={18} />
                     </CustomButton>
                     <NotificationDropdown />
                 </Topbar>
@@ -122,7 +113,7 @@ const MainLayoutWrapper: React.FC = () => {
                 {showLogout && (
                     <ConfirmationModal
                         open={showLogout}
-                        icon={<Image src={logoutIcon} alt="Logout" />}
+                        icon={<LogOut size={18} />}
                         title="Logout"
                         description="Are you sure you want to logout?"
                         confirmText="Logout"

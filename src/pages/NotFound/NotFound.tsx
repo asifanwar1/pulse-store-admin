@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CustomButton } from "@/components/custom/CustomButton";
 
 import { APP_ROUTES } from "@/routes/appRoutes";
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 import Image from "@/components/custom/Image";
 
 const NotFound: React.FC = () => {
@@ -13,7 +13,7 @@ const NotFound: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 px-4 relative overflow-hidden">
             <Image
                 src={logo}
-                alt="DCD Logo"
+                alt="Pulse Store Logo"
                 className="absolute top-5 left-5 w-45 h-20"
             />
 

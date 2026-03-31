@@ -1,4 +1,4 @@
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 
 import { Button } from "@/components/ui/button";
 import OTPInputField from "@/components/custom/OTPInputField/OTPInputField";

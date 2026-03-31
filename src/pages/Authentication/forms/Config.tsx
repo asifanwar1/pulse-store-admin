@@ -1,5 +1,4 @@
-import mailIcon from "@/assets/icons/mail-icon.svg";
-import keyIcon from "@/assets/icons/key-icon.svg";
+import { Mail, Lock } from "lucide-react";
 import type { FieldType } from "@/components/custom/Form";
 import type {
     IForgotPasswordFormValues,
@@ -13,14 +12,14 @@ export const LOGIN_FORM_CONFIG: FieldType<ILoginFormValues>[] = [
         label: "Email",
         type: "text",
         placeholder: "Enter email address",
-        icon: <img src={mailIcon} alt="mail" />,
+        icon: <Mail size={18} />,
     },
     {
         name: "password",
         label: "Password",
         type: "password",
         placeholder: "Enter password",
-        icon: <img src={keyIcon} alt="key" />,
+        icon: <Lock size={18} />,
     },
 ];
 
@@ -31,7 +30,7 @@ export const FORGOT_PASSWORD_FORM_CONFIG: FieldType<IForgotPasswordFormValues>[]
             label: "Email",
             type: "text",
             placeholder: "Enter email address",
-            icon: <img src={mailIcon} alt="mail" />,
+            icon: <Mail size={18} />,
         },
     ];
 
@@ -42,14 +41,14 @@ export const RESET_PASSWORD_FORM_CONFIG: FieldType<IResetPasswordFormValues>[] =
             label: "Password",
             type: "password",
             placeholder: "Enter password",
-            icon: <img src={keyIcon} alt="key" />,
+            icon: <Lock size={18} />,
         },
         {
             name: "confirmPassword",
             label: "Confirm Password",
             type: "password",
             placeholder: "Enter confirm password",
-            icon: <img src={keyIcon} alt="key" />,
+            icon: <Lock size={18} />,
         },
     ];
 

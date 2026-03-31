@@ -1,13 +1,16 @@
-import FormBuilder from "@/components/shared/FormBuilder/FormBuilder";
-import { Button } from "@/components/ui/button";
-import { APP_ROUTES } from "@/routes";
+import { FormBuilder } from "@/components/custom/Form";
+import Button from "@/components/custom/CustomButton/CustomButton";
+import { APP_ROUTES } from "@/routes/appRoutes";
 import { Link } from "react-router-dom";
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 
 import { useForgotPasswordContainer } from "./ForgotPassword.Container";
 import AuthWrapper from "../components/AuthWrapper";
 import AuthHeader from "../components/AuthHeader";
-import { FORGOT_PASSWORD_FORM_CONFIG, FORGOT_PASSWORD_FORM_INITIAL_VALUES } from "../forms/Config";
+import {
+    FORGOT_PASSWORD_FORM_CONFIG,
+    FORGOT_PASSWORD_FORM_INITIAL_VALUES,
+} from "../forms/Config";
 import { FORGOT_PASSWORD_FORM_SCHEMA } from "../forms/validationSchemas";
 
 const ForgotPassword = () => {
@@ -30,7 +33,7 @@ const ForgotPassword = () => {
                         onSubmit={onSubmit}
                         className="space-y-5"
                     >
-                        <Button type="submit" block isLoading={isPending}>
+                        <Button type="submit" isLoading={isPending}>
                             Send OTP
                         </Button>
                     </FormBuilder>
@@ -38,7 +41,10 @@ const ForgotPassword = () => {
                 <div className="">
                     <p className="text-app-secondary text-[16px] mt-4">
                         Back to{" "}
-                        <Link to={APP_ROUTES.LOGIN} className="text-app-secondary hover:underline">
+                        <Link
+                            to={APP_ROUTES.LOGIN}
+                            className="text-app-secondary hover:underline"
+                        >
                             Login
                         </Link>
                     </p>
