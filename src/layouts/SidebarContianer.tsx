@@ -18,7 +18,6 @@ import { LogOut } from "lucide-react";
 import sidebarHeaderImage from "@/assets/images/pulse-store-black.png";
 import mobileSidebarHeaderImage from "@/assets/images/pulse-store-black.png";
 import { menuItems, type SidebarContainerType } from "./menu.config";
-import "./style.css";
 
 type SidebarContainerProps = {
     onLogoutClick?: () => void;
