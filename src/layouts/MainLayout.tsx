@@ -17,8 +17,7 @@ import { MessageSquareText, LogOut } from "lucide-react";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/custom/NotificationDropDown";
-import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
-import { useGetNotificationsUnreadCount } from "@/components/custom/NotificationDropDown/NotificationContainer";
+// import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
 
 const MainLayoutWrapper: React.FC = () => {
     const { state, isMobile } = useSidebar();
@@ -26,22 +25,21 @@ const MainLayoutWrapper: React.FC = () => {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
-    const { mutateAsync: logout } = useLogout();
+    // const { mutateAsync: logout } = useLogout();
     const clearAuth = useStore((state) => state.clearAuth);
     const userData = useStore((state) => state.user);
-    useGetNotificationsUnreadCount();
-    useGetMe();
+    // useGetMe();
     const handleLogout = useCallback(async (): Promise<void> => {
         setIsLoggingOut(true);
         try {
-            await logout();
+            // await logout();
             clearAuth();
             navigate(APP_ROUTES.LOGIN, { replace: true });
         } finally {
             setIsLoggingOut(false);
             setShowLogout(false);
         }
-    }, [logout, clearAuth, navigate]);
+    }, [clearAuth, navigate]);
     const onLogoutClick = () => setShowLogout((prev) => !prev);
 
     useEffect(() => {
