@@ -1,11 +1,11 @@
-import { CustomModal } from "@/components/shared/CustomModal";
-import { CustomButton } from "@/components/shared/CustomButton";
+import { CustomModal } from "@/components/custom/CustomModal";
+import { CustomButton } from "@/components/custom/CustomButton";
 
 const WarningModal = ({
     isOpen,
     onClose,
     onConfirm,
-    isLoading = false
+    isLoading = false,
 }: {
     isOpen: boolean;
     onClose: () => void;
@@ -25,10 +25,12 @@ const WarningModal = ({
         >
             <div className="flex flex-col items-center gap-4 mt-5">
                 <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-gray-900">Delete Uploaded Files?</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                        Delete Uploaded Files?
+                    </h3>
                     <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
-                        If unchecked, the previously uploaded files for this option will be deleted.
-                        This action cannot be undone.
+                        If unchecked, the previously uploaded files for this
+                        option will be deleted. This action cannot be undone.
                     </p>
                 </div>
                 <div className="flex flex-wrap items-center justify-center gap-3 w-full ">

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { APP_ROUTES } from "@/routes/appRoutes";
-import leftArrowIcon from "@/assets/icons/arrow-left-icon.svg";
+import { ArrowLeft } from "lucide-react";
 
 type TDataNotFoundProps = {
     title?: string;
@@ -21,14 +21,18 @@ const DataNotFound = ({
     className = "",
     backLink = APP_ROUTES.DASHBOARD,
     backLinkText = "Back to home",
-    showBackLink = true
+    showBackLink = true,
 }: TDataNotFoundProps) => {
     const navigate = useNavigate();
     return (
-        <div className={`flex flex-col items-center justify-center m-auto ${className}`}>
+        <div
+            className={`flex flex-col items-center justify-center m-auto ${className}`}
+        >
             <div className="text-center max-w-md mx-auto p-6">
                 {icon && <div className="mb-4 flex justify-center">{icon}</div>}
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                    {title}
+                </h2>
                 <p className="text-gray-600 text-sm">{description}</p>
             </div>
             {showBackLink && (
@@ -36,7 +40,7 @@ const DataNotFound = ({
                     onClick={() => navigate(backLink)}
                     className="inline-flex items-center gap-2 mt-4 text-app-primary hover:underline cursor-pointer"
                 >
-                    <img src={leftArrowIcon} alt="back" />
+                    <ArrowLeft size={16} />
                     {backLinkText}
                 </button>
             )}

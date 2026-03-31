@@ -6,11 +6,10 @@ import {
     DialogHeader,
     DialogTitle,
     DialogDescription,
-    DialogFooter
+    DialogFooter,
 } from "@/components/ui/dialog";
-import { CustomButton } from "@/components/shared/CustomButton";
-import checkIcon from "@/assets/icons/check-icon.svg";
-import { Image } from "@/components/ui/Image";
+import { CustomButton } from "@/components/custom/CustomButton";
+import { Check } from "lucide-react";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { useNavigate } from "react-router-dom";
 
@@ -31,17 +30,17 @@ export type TSuccessModalProps = {
 
 const SuccessModal: React.FC<TSuccessModalProps> = ({
     open,
-    icon = <Image src={checkIcon} alt="Success" />,
+    icon = <Check size={32} className="text-green-500" />,
     title = "",
     entityName = "Color",
     description = " has been saved successfully",
     addNewText = "Add New",
     goBackText = "Back to Listing",
-    backRoute = APP_ROUTES.PRODUCT_MANAGEMENT_APPEARANCE_COLORS,
+    backRoute = APP_ROUTES.DASHBOARD,
     onAddNew = () => {},
     onClose = () => {},
     isLoading = false,
-    hideCloseButton = false
+    hideCloseButton = false,
 }) => {
     const navigate = useNavigate();
     const handleNavigateBack = () => {

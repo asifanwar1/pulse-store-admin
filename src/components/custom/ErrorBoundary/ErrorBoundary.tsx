@@ -15,7 +15,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import NotFound from "@/pages/NotFound/NotFound";
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 import Image from "@/components/custom/Image";
 import type { IErrorBoundaryProps } from "./ErrorBoundary.types";
 

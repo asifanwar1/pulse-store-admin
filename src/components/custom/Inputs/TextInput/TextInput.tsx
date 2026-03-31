@@ -6,8 +6,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import type { TextInputProps } from "./types";
 
-import eyeIcon from "@/assets/icons/password-eye-icon.svg";
-import eyeOffIcon from "@/assets/icons/eye-off-icon.svg";
+import { Eye, EyeOff } from "lucide-react";
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     (
@@ -29,7 +28,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             type = "text",
             ...rest
         },
-        ref
+        ref,
     ) => {
         const [showPassword, setShowPassword] = useState(false);
         const isPasswordType = type === "password";
@@ -55,7 +54,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             "focus:outline-none focus-visible:ring-0",
             "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
             rightElement ? "pr-10" : "",
-            className
+            className,
         );
 
         return (
@@ -63,7 +62,10 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 {label && (
                     <Label
                         htmlFor={name}
-                        className={cn("text-base text-app-primary mb-1.5  font-normal", labelClass)}
+                        className={cn(
+                            "text-base text-app-primary mb-1.5  font-normal",
+                            labelClass,
+                        )}
                     >
                         {label}
                     </Label>
@@ -73,7 +75,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                         <span
                             className={cn(
                                 "absolute inset-y-0 left-3 flex items-center text-gray-400",
-                                iconClass
+                                iconClass,
                             )}
                         >
                             {icon}
@@ -95,27 +97,34 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                             onClick={handlePasswordToggle}
                             className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                         >
-                            <img
+                            {/* <img
                                 src={showPassword ? eyeIcon : eyeOffIcon}
                                 alt={showPassword ? "Hide password" : "Show password"}
                                 className="w-5 h-5"
-                            />
+                            /> */}
+                            {showPassword ? (
+                                <Eye size={20} />
+                            ) : (
+                                <EyeOff size={20} />
+                            )}
                         </div>
                     ) : rightElement ? (
                         <span
                             className={cn(
                                 "absolute inset-y-[0.7px] right-[0.5px] px-3 flex items-center text-muted-foreground pointer-events-none  rounded-r-md",
-                                rightElementClass
+                                rightElementClass,
                             )}
                         >
                             {rightElement}
                         </span>
                     ) : null}
                 </div>
-                {error && <span className="text-red-500 text-xs ">{error}</span>}
+                {error && (
+                    <span className="text-red-500 text-xs ">{error}</span>
+                )}
             </div>
         );
-    }
+    },
 );
 
 TextInput.displayName = "TextInput";

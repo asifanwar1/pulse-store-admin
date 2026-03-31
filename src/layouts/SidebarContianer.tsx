@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
 import type { APP_ROUTES } from "@/routes/appRoutes";
 
 import { Image } from "@/components/custom/Image";
-import logoutIcon from "@/assets/icons/logout-icon.svg";
-import sidebarHeaderImage from "@/assets/images/dcd-logo-white.png";
-import mobileSidebarHeaderImage from "@/assets/images/dcd-circle-logo.png";
+import { LogOut } from "lucide-react";
+import sidebarHeaderImage from "@/assets/images/pulse-store-black.png";
+import mobileSidebarHeaderImage from "@/assets/images/pulse-store-black.png";
 import { menuItems, type SidebarContainerType } from "./menu.config";
 import "./style.css";
 
@@ -112,10 +112,9 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                 className="flex ml-5 group-data-[collapsible=icon]:ml-4 mb-2 items-center h-10 text-white text-sm gap-4 w-59 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3 cursor-pointer "
                 onClick={onLogoutClick}
             >
-                <Image
-                    src={logoutIcon}
-                    alt="Logout"
-                    className="size-4 group-data-[collapsible=icon]:mx-auto h-6 w-6"
+                <LogOut
+                    size={18}
+                    className="group-data-[collapsible=icon]:mx-auto"
                 />
                 <span className="group-data-[collapsible=icon]:hidden">
                     Logout

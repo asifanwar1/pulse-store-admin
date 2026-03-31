@@ -1,8 +1,8 @@
 import React from "react";
 
-import { CustomModal } from "@/components/shared/CustomModal";
-import { CustomButton } from "@/components/shared/CustomButton";
-import trashIcon from "@/assets/icons/bin-icon.svg";
+import { CustomModal } from "@/components/custom/CustomModal";
+import { CustomButton } from "@/components/custom/CustomButton";
+import { Trash } from "lucide-react";
 
 interface IDeleteConfirmationModalProps {
     isOpen: boolean;
@@ -29,7 +29,7 @@ const DeleteConfirmationModal: React.FC<IDeleteConfirmationModalProps> = ({
     isLoading = false,
     confirmButtonText = "Delete",
     cancelButtonText = "Cancel",
-    size = "sm"
+    size = "sm",
 }) => {
     const defaultMessage = itemName
         ? `Are you sure you want to delete "${itemName}"?`
@@ -77,11 +77,13 @@ const DeleteConfirmationModal: React.FC<IDeleteConfirmationModalProps> = ({
         >
             <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center">
-                    <img src={trashIcon} alt="trash" className="w-15 h-15 text-red-600" />
+                    <Trash size={32} className="text-[#B00020]" />
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{displayTitle}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                        {displayTitle}
+                    </h3>
                     <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
                         {displayMessage}
                     </p>

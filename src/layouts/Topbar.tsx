@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 import { getRouteDisplayName } from "@/utils/breadcrumbUtils";
 import { defaultRouteNames } from "@/constants/page-title.constants";
 
-import chevronDownIcon from "@/assets/icons/chevron-down-icon.svg";
 import { useStore } from "@/store";
+import { ChevronDown } from "lucide-react";
 
 interface ITopbarProps {
     user: {
@@ -74,11 +74,7 @@ const Topbar: React.FC<ITopbarProps> = ({
                                     "ADMIN"
                                 </span>
                             </div>
-                            <img
-                                src={chevronDownIcon}
-                                alt="Chevron Down"
-                                className="w-3 h-3 -ml-1.5"
-                            />
+                            <ChevronDown size={16} className="ml-1" />
                         </CustomButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

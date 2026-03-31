@@ -6,9 +6,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogDescription,
-    DialogFooter
+    DialogFooter,
 } from "@/components/ui/dialog";
-import { CustomButton } from "@/components/shared/CustomButton";
+import CustomButton from "@/components/custom/CustomButton/CustomButton";
 
 export interface IConfirmationModalProps {
     open: boolean;
@@ -31,7 +31,7 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
     cancelText = "Cancel",
     onSuccess,
     onClose,
-    isLoading = false
+    isLoading = false,
 }) => {
     return (
         <Dialog open={open}>
