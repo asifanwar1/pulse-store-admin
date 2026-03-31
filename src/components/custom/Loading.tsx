@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "./Image";
 
-import logo from "@/assets/images/dcd-logo.png";
+import logo from "@/assets/images/pulse-store-black.png";
 
 const Loading: React.FC = () => (
     <div className="flex h-screen w-full items-center justify-center bg-background">
