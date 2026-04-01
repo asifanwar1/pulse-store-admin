@@ -10,7 +10,7 @@ const AuthWrapper = ({ children }: IAuthWrapperProps) => {
                 <div className="flex-1 flex items-center justify-center">
                     <div className="w-full max-w-md">{children}</div>
                 </div>
-                <footer className="text-app-secondary text-[14px] py-1 text-left pl-4">
+                <footer className="text-pulse-green text-[14px] py-1 text-center">
                     © {currentYear} Pulse Store. All rights reserved
                 </footer>
             </div>

@@ -15,7 +15,7 @@ const Login = () => {
 
     return (
         <AuthWrapper>
-            <div className="flex flex-col w-full justify-between px-4 border border-pulse-cream-dark rounded-lg shadow-sm">
+            <div className="flex flex-col w-full justify-between px-5 py-5 ">
                 <AuthHeader
                     logo={logo}
                     title="Hey there, Welcome Back"
@@ -29,17 +29,17 @@ const Login = () => {
                     onSubmit={onSubmit}
                     className="space-y-5"
                 >
-                    <div className="flex justify-end">
+                    <div className="flex flex-col justify-end gap-5">
                         <Link
                             to={APP_ROUTES.FORGOT_PASSWORD}
                             className="text-app-green text-15 text-right cursor-pointer font-medium"
                         >
                             Forgot password?
                         </Link>
+                        <Button type="submit" isLoading={isPending}>
+                            SignIn
+                        </Button>
                     </div>
-                    <Button type="submit" isLoading={isPending}>
-                        SignIn
-                    </Button>
                 </FormBuilder>
             </div>
         </AuthWrapper>
