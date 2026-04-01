@@ -31,16 +31,16 @@ const ProductMatrixScroll = ({ icons }: ProductMatrixScrollProps) => {
                     className="flex flex-col items-center gap-2 px-8 py-5 rounded-3xl"
                     style={{
                         background:
-                            "radial-gradient(ellipse at center, rgba(15,22,36,0.88) 60%, transparent 100%)",
+                            "radial-gradient(ellipse at center, rgba(249,245,239,0.92) 55%, transparent 100%)",
                     }}
                 >
                     <span
-                        className="text-white font-bold tracking-widest text-3xl leading-none"
-                        style={{ fontFamily: "var(--font-archivo)" }}
+                        className="font-bold tracking-widest text-3xl leading-none"
+                        style={{ fontFamily: "var(--font-archivo)", color: "#2A5C42" }}
                     >
                         Pulse Store
                     </span>
-                    <span className="text-white/40 text-xs tracking-[0.2em] uppercase">
+                    <span className="text-xs tracking-[0.2em] uppercase" style={{ color: "#1C2B22", opacity: 0.5 }}>
                         Admin Panel
                     </span>
                 </div>
@@ -70,13 +70,14 @@ const ProductMatrixScroll = ({ icons }: ProductMatrixScrollProps) => {
                                 {doubled.map((item, i) => (
                                     <div
                                         key={`${item.id}-${i}`}
-                                        className="flex flex-col items-center justify-center rounded-2xl bg-white/8 border border-white/12 aspect-square p-2 shrink-0"
+                                        className="flex flex-col items-center justify-center rounded-2xl aspect-square p-2 shrink-0"
+                                        style={{ background: "rgba(28,43,34,0.06)", border: "1px solid rgba(28,43,34,0.1)" }}
                                     >
                                         <div className="flex items-center justify-center flex-1">
                                             {item.icon}
                                         </div>
                                         {item.label && (
-                                            <span className="text-white/45 text-[9px] mt-1 text-center w-full truncate leading-none">
+                                            <span className="text-[9px] mt-1 text-center w-full truncate leading-none" style={{ color: "#1C2B22", opacity: 0.5 }}>
                                                 {item.label}
                                             </span>
                                         )}

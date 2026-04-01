@@ -68,21 +68,21 @@ export interface ProductIconConfig {
 }
 
 const COLORS = [
-    "#60a5fa", // blue-400
-    "#34d399", // emerald-400
-    "#f472b6", // pink-400
-    "#fb923c", // orange-400
-    "#818cf8", // indigo-400
-    "#2dd4bf", // teal-400
-    "#facc15", // yellow-400
-    "#fb7185", // rose-400
-    "#4ade80", // green-400
-    "#e879f9", // fuchsia-400
-    "#38bdf8", // sky-400
-    "#a3e635", // lime-400
-    "#f97316", // orange-500
-    "#c084fc", // purple-400
-    "#22d3ee", // cyan-400
+    "#2563eb", // blue-600
+    "#059669", // emerald-600
+    "#db2777", // pink-600
+    "#ea580c", // orange-600
+    "#4f46e5", // indigo-600
+    "#0d9488", // teal-600
+    "#ca8a04", // yellow-600
+    "#e11d48", // rose-600
+    "#16a34a", // green-600
+    "#a21caf", // fuchsia-600
+    "#0284c7", // sky-600
+    "#65a30d", // lime-600
+    "#c2410c", // orange-700
+    "#9333ea", // purple-600
+    "#0891b2", // cyan-600
 ];
 
 const c = (idx: number) => COLORS[idx % COLORS.length];
