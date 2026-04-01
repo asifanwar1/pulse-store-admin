@@ -5,8 +5,8 @@ import { productIcons } from "./productIcons.config";
 const AuthWrapper = ({ children }: IAuthWrapperProps) => {
     const currentYear = new Date().getFullYear();
     return (
-        <div className="flex h-screen bg-white">
-            <div className="flex-1 flex flex-col justify-between px-4 py-8 bg-white overflow-y-auto">
+        <div className="flex h-screen bg-pulse-cream">
+            <div className="flex-1 flex flex-col justify-between px-4 py-8 bg-pulse-cream overflow-y-auto">
                 <div className="flex-1 flex items-center justify-center">
                     <div className="w-full max-w-md">{children}</div>
                 </div>

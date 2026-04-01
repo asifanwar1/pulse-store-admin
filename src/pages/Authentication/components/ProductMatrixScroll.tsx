@@ -25,7 +25,6 @@ const ProductMatrixScroll = ({ icons }: ProductMatrixScrollProps) => {
                     "linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
             }}
         >
-            {/* Brand name overlay */}
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none">
                 <div
                     className="flex flex-col items-center gap-2 px-8 py-5 rounded-3xl"
@@ -36,11 +35,20 @@ const ProductMatrixScroll = ({ icons }: ProductMatrixScrollProps) => {
                 >
                     <span
                         className="font-bold tracking-widest text-3xl leading-none"
-                        style={{ fontFamily: "var(--font-archivo)", color: "#2A5C42" }}
+                        style={{
+                            fontFamily: "var(--font-archivo)",
+                            color: "var(--color-pulse-green)",
+                        }}
                     >
                         Pulse Store
                     </span>
-                    <span className="text-xs tracking-[0.2em] uppercase" style={{ color: "#1C2B22", opacity: 0.5 }}>
+                    <span
+                        className="text-xs tracking-[0.2em] uppercase"
+                        style={{
+                            color: "var(--color-pulse-green-dark)",
+                            opacity: 0.5,
+                        }}
+                    >
                         Admin Panel
                     </span>
                 </div>
@@ -71,13 +79,22 @@ const ProductMatrixScroll = ({ icons }: ProductMatrixScrollProps) => {
                                     <div
                                         key={`${item.id}-${i}`}
                                         className="flex flex-col items-center justify-center rounded-2xl aspect-square p-2 shrink-0"
-                                        style={{ background: "rgba(28,43,34,0.06)", border: "1px solid rgba(28,43,34,0.1)" }}
+                                        style={{
+                                            background: "rgba(28,43,34,0.06)",
+                                            border: "1px solid rgba(28,43,34,0.1)",
+                                        }}
                                     >
                                         <div className="flex items-center justify-center flex-1">
                                             {item.icon}
                                         </div>
                                         {item.label && (
-                                            <span className="text-[9px] mt-1 text-center w-full truncate leading-none" style={{ color: "#1C2B22", opacity: 0.5 }}>
+                                            <span
+                                                className="text-[9px] mt-1 text-center w-full truncate leading-none"
+                                                style={{
+                                                    color: "#1C2B22",
+                                                    opacity: 0.5,
+                                                }}
+                                            >
                                                 {item.label}
                                             </span>
                                         )}
