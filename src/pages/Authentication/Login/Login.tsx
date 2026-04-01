@@ -15,7 +15,7 @@ const Login = () => {
 
     return (
         <AuthWrapper>
-            <div className="flex flex-col w-full justify-between bg-white px-4">
+            <div className="flex flex-col w-full justify-between px-4">
                 <AuthHeader
                     logo={logo}
                     title="Hey there, Welcome Back"

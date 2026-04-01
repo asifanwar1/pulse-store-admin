@@ -14,7 +14,13 @@ const AuthWrapper = ({ children }: IAuthWrapperProps) => {
                     © {currentYear} Pulse Store. All rights reserved
                 </footer>
             </div>
-            <div className="hidden lg:flex lg:w-1/2 items-center justify-center overflow-hidden" style={{ background: "linear-gradient(150deg, #F9F5EF, #EDE4D5)" }}>
+            <div
+                className="hidden lg:flex lg:w-1/2 items-center justify-center overflow-hidden"
+                style={{
+                    background:
+                        "linear-gradient(150deg, var(--color-pulse-cream), var(--color-pulse-cream-dark))",
+                }}
+            >
                 <ProductMatrixScroll icons={productIcons} />
             </div>
         </div>

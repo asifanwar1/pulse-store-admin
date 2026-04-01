@@ -85,6 +85,10 @@ body {
     --font-archivo: "Archivo", sans-serif;
     --font-onest: "Onest", sans-serif;
 
+    /* pulse store colors */
+    --color-pulse-cream: #F9F5EF;
+    --color-pulse-cream-dark: #EDE4D5;
+
     /* App-wide colors */
     --color-auth-primary: #0f1624;
     --color-app-background: #f8f9fa;
