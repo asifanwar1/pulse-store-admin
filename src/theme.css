@@ -58,6 +58,14 @@ body {
         animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
     }
 }
+@keyframes matrixScrollUp {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
+@keyframes matrixScrollDown {
+    0%   { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+}
 
 /* ----------------------------------------------------
    🌙 Dark‑mode variant (Tailwind v4 syntax)
@@ -78,6 +86,7 @@ body {
     --font-onest: "Onest", sans-serif;
 
     /* App-wide colors */
+    --color-auth-primary: #0f1624;
     --color-app-background: #f8f9fa;
     --color-app-primary: #1a1f2c;
     --color-app-secondary: #515665;
