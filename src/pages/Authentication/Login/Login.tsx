@@ -2,7 +2,7 @@ import { FormBuilder } from "@/components/custom/Form";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { Link } from "react-router-dom";
-import logo from "@/assets/images/pulse-store-black.png";
+import logo from "@/assets/images/pulse-store-green.png";
 
 import { useLoginContainer } from "./Login.Container";
 import AuthWrapper from "../components/AuthWrapper";
@@ -15,7 +15,7 @@ const Login = () => {
 
     return (
         <AuthWrapper>
-            <div className="flex flex-col w-full justify-between px-4">
+            <div className="flex flex-col w-full justify-between px-4 border border-pulse-cream-dark rounded-lg shadow-sm">
                 <AuthHeader
                     logo={logo}
                     title="Hey there, Welcome Back"
@@ -38,7 +38,7 @@ const Login = () => {
                         </Link>
                     </div>
                     <Button type="submit" isLoading={isPending}>
-                        LOGIN
+                        SignIn
                     </Button>
                 </FormBuilder>
             </div>

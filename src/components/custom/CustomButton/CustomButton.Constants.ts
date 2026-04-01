@@ -6,7 +6,7 @@ export const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    "rounded-md mt-10 font-semibold text-[15px] tracking-[0.15em] uppercase bg-gradient-to-r from-[#7C818A] to-[#232837] text-white shadow-none border-0 hover:scale-105 transition-all duration-300",
+                    "rounded-sm font-semibold text-[15px] tracking-[0.15em] bg-pulse-green text-pulse-cream shadow-none border-0 hover:scale-105 transition-all duration-300",
                 destructive:
                     "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
                 outline:
@@ -21,7 +21,7 @@ export const buttonVariants = cva(
                     "flex items-center gap-4 cursor-pointer bg-transparent border-none p-0 hover:bg-[#e9eaec] hover: rounded-full focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
             },
             size: {
-                default: "h-12 px-4 py-2 has-[>svg]:px-3",
+                default: "h-[36px] p-3 has-[>svg]:px-3",
                 sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
                 lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
                 icon: "size-9",
