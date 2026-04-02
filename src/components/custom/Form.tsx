@@ -186,7 +186,7 @@ export const FormBuilder = forwardRef(function FormBuilder<
                                                             e,
                                                         );
                                                     }}
-                                                    className={`shadow border-[#e2e8f0] !h-[36px] focus-within:!border-[#2563EB] focus-within:!ring-[0.8px] ${field.inputClass} ${field.disabled ? "cursor-not-allowed !bg-[#f8fafc] !text-black" : ""}`}
+                                                    className={`shadow border-[#e2e8f0] !h-[36px] focus-within:!border-[#2A5C42] focus-within:!ring-[0.8px] ${field.inputClass} ${field.disabled ? "cursor-not-allowed !bg-[#f8fafc] !text-black" : ""}`}
                                                 />
                                             )}
                                         </FormControl>

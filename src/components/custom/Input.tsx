@@ -91,7 +91,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         }}
                         className={cn(
                             "!bg-white",
-                            "text-sm shadow-none border-[#e2e8f0] rounded-[6px] !font-normal transition-all placeholder:text-[#64748B] text-text my-2.5",
+                            "text-sm shadow-none border-[#e2e8f0] rounded-[6px] !font-normal transition-all placeholder:text-pulse-green/60 my-2.5",
                             icon && "pr-12",
                             error && "border-red-500",
                             type === "password" && "pr-8",
