@@ -10,6 +10,7 @@ export const LOGIN_FORM_CONFIG: FieldType<ILoginFormValues>[] = [
     {
         name: "email",
         label: "Email",
+        required: true,
         type: "text",
         placeholder: "Enter email address",
         icon: <Mail size={18} />,
@@ -17,6 +18,7 @@ export const LOGIN_FORM_CONFIG: FieldType<ILoginFormValues>[] = [
     {
         name: "password",
         label: "Password",
+        required: true,
         type: "password",
         placeholder: "Enter password",
         icon: <Lock size={18} />,
@@ -28,6 +30,7 @@ export const FORGOT_PASSWORD_FORM_CONFIG: FieldType<IForgotPasswordFormValues>[]
         {
             name: "email",
             label: "Email",
+            required: true,
             type: "text",
             placeholder: "Enter email address",
             icon: <Mail size={18} />,

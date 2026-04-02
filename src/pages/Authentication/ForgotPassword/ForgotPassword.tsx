@@ -2,7 +2,7 @@ import { FormBuilder } from "@/components/custom/Form";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { Link } from "react-router-dom";
-import logo from "@/assets/images/pulse-store-black.png";
+import logo from "@/assets/images/pulse-store-green.png";
 
 import { useForgotPasswordContainer } from "./ForgotPassword.Container";
 import AuthWrapper from "../components/AuthWrapper";
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     return (
         <AuthWrapper>
-            <div className="flex flex-col w-full items-center justify-between bg-white px-4">
+            <div className="flex flex-col w-full items-center justify-between px-4">
                 <div className="w-full max-w-md">
                     <AuthHeader
                         logo={logo}
@@ -33,17 +33,19 @@ const ForgotPassword = () => {
                         onSubmit={onSubmit}
                         className="space-y-5"
                     >
-                        <Button type="submit" isLoading={isPending}>
-                            Send OTP
-                        </Button>
+                        <div className="flex flex-col mt-4">
+                            <Button type="submit" isLoading={isPending}>
+                                Send OTP
+                            </Button>
+                        </div>
                     </FormBuilder>
                 </div>
                 <div className="">
-                    <p className="text-app-secondary text-[16px] mt-4">
+                    <p className="text-pulse-green text-[16px] mt-4">
                         Back to{" "}
                         <Link
                             to={APP_ROUTES.LOGIN}
-                            className="text-app-secondary hover:underline"
+                            className="text-pulse-green hover:underline"
                         >
                             Login
                         </Link>

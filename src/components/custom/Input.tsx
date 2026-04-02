@@ -48,7 +48,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                                 ? { fontWeight: labelWeight }
                                 : undefined
                         }
-                        className={`mb-0 text-sm font-500 text-text ${labelClass}`}
+                        className={`mb-0 text-sm font-500 text-pulse-green ${labelClass}`}
                     >
                         {label}{" "}
                         {required && <span className="text-red-500">*</span>}

@@ -32,7 +32,7 @@ const Login = () => {
                     <div className="flex flex-col justify-end gap-5">
                         <Link
                             to={APP_ROUTES.FORGOT_PASSWORD}
-                            className="text-app-green text-15 text-right cursor-pointer font-medium"
+                            className="text-pulse-green text-15 text-right cursor-pointer font-medium hover:underline"
                         >
                             Forgot password?
                         </Link>

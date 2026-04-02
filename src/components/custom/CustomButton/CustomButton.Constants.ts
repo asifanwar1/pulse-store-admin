@@ -6,7 +6,7 @@ export const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    "rounded-sm font-semibold text-[15px] tracking-[0.15em] bg-pulse-green text-pulse-cream shadow-sm border-0 hover:scale-105 transition-all duration-300",
+                    "rounded-sm font-normal text-[15px] tracking-[0.15em] bg-pulse-green text-pulse-cream shadow-sm border-0 hover:scale-105 transition-all duration-300",
                 destructive:
                     "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
                 outline:
