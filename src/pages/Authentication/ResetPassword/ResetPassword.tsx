@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 import Button from "@/components/custom/CustomButton/CustomButton";
-import { cn } from "@/lib/utils";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { useResetPasswordContainer } from "./ResetPassword.Container";
 import AuthWrapper from "../components/AuthWrapper";
@@ -19,7 +18,7 @@ const ResetPassword = () => {
 
     return (
         <AuthWrapper>
-            <div className="flex flex-col w-full items-center justify-between bg-white px-4">
+            <div className="flex flex-col w-full items-center justify-between px-4">
                 <div className="w-full max-w-md">
                     <AuthHeader
                         logo={undefined}
@@ -34,24 +33,19 @@ const ResetPassword = () => {
                         onSubmit={onSubmit}
                         className="space-y-5"
                     >
-                        <Button
-                            type="submit"
-                            isLoading={isPending}
-                            className={cn(
-                                "w-full h-12 rounded-md mt-10 font-semibold text-[15px] tracking-[0.15em] uppercase",
-                                "bg-gradient-to-r from-[#7C818A] to-[#232837] text-white shadow-none border-0",
-                            )}
-                        >
-                            CHANGE PASSWORD
-                        </Button>
+                        <div className="flex flex-col mt-4">
+                            <Button type="submit" isLoading={isPending}>
+                                Change Password
+                            </Button>
+                        </div>
                     </FormBuilder>
                 </div>
                 <div>
-                    <p className="text-app-secondary text-[16px] mt-4">
+                    <p className="text-pulse-green text-[16px] mt-4">
                         Back to{" "}
                         <Link
                             to={APP_ROUTES.LOGIN}
-                            className="text-app-secondary hover:underline"
+                            className="text-pulse-green hover:underline"
                         >
                             Login
                         </Link>

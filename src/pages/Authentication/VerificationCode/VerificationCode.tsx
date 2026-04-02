@@ -1,6 +1,6 @@
-import logo from "@/assets/images/pulse-store-black.png";
+import logo from "@/assets/images/pulse-store-green.png";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/custom/CustomButton/CustomButton";
 import OTPInputField from "@/components/custom/OTPInputField/OTPInputField";
 import { useVerificationCodeContainer } from "./VerificationCode.Container";
 import AuthWrapper from "../components/AuthWrapper";
@@ -12,11 +12,11 @@ const VerificationCode = () => {
         timer,
         canResend,
         isLoading,
+        isSubmitDisabled,
+        OTP_LENGTH,
         handleOtpChange,
         handleSubmit,
         handleResend,
-        isSubmitDisabled,
-        OTP_LENGTH,
     } = useVerificationCodeContainer();
 
     return (
@@ -44,7 +44,7 @@ const VerificationCode = () => {
                             disabled={isSubmitDisabled}
                             className="w-full"
                         >
-                            {isLoading ? "VERIFYING..." : "SUBMIT"}
+                            {isLoading ? "Verifying..." : "Submit"}
                         </Button>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ const VerificationCode = () => {
                             type="button"
                             onClick={handleResend}
                             disabled={isLoading}
-                            className="text-app-secondary hover:underline text-[16px] mt-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="text-pulse-green hover:underline text-[16px] mt-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Resend Code
                         </button>
