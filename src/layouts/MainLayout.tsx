@@ -21,7 +21,7 @@ import NotificationDropdown from "@/components/custom/NotificationDropDown";
 
 const MainLayoutWrapper: React.FC = () => {
     const { state, isMobile } = useSidebar();
-    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    // const isAuthenticated = useStore((state) => state.isAuthenticated);
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
