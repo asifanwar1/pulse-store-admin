@@ -38,8 +38,6 @@ export const routes: RouteObject[] = [
             },
             { path: APP_ROUTES.DASHBOARD, element: <Dashboard /> },
 
-            // { path: APP_ROUTES.CUSTOMER_MANAGEMENT_DETAILS, element: <CustomerDetail /> },
-
             // {
             //     path: APP_ROUTES.ACCOUNT,
             //     element: <Setting />,
