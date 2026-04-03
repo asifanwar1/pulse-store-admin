@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { useStore } from "@/store";
