@@ -11,7 +11,7 @@ export type SidebarContainerType = {
 export const menuItems: Array<SidebarContainerType> = [
     {
         label: "Dashboard",
-        inactiveIcon: <LayoutDashboard className />,
+        inactiveIcon: <LayoutDashboard />,
         activeIcon: <LayoutDashboard />,
         path: [APP_ROUTES.ROOT, APP_ROUTES.DASHBOARD],
     },
