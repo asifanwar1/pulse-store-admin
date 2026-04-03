@@ -42,15 +42,15 @@ const MainLayoutWrapper: React.FC = () => {
     }, [clearAuth, navigate]);
     const onLogoutClick = () => setShowLogout((prev) => !prev);
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate(APP_ROUTES.LOGIN);
-        }
-    }, [isAuthenticated, navigate]);
+    // useEffect(() => {
+    //     if (!isAuthenticated) {
+    //         navigate(APP_ROUTES.LOGIN);
+    //     }
+    // }, [isAuthenticated, navigate]);
 
-    if (!isAuthenticated) {
-        return null;
-    }
+    // if (!isAuthenticated) {
+    //     return null;
+    // }
     return (
         <>
             <div className="relative flex h-screen w-full overflow-hidden overflow-x-hidden">
