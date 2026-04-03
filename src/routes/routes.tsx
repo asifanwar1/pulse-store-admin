@@ -70,7 +70,7 @@ export const routes: RouteObject[] = [
         element: <AuthLayout />,
         errorElement: <ErrorBoundary />,
         children: [
-            { path: APP_ROUTES.LOGIN, element: <Login /> }, // /login
+            { path: APP_ROUTES.LOGIN, element: <Login /> },
             { path: APP_ROUTES.FORGOT_PASSWORD, element: <ForgotPassword /> },
             {
                 path: APP_ROUTES.OTP_VERIFICATION,
