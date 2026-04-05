@@ -30,6 +30,6 @@ export const menuItems: Array<SidebarContainerType> = [
         label: "Product Management",
         inactiveIcon: Store,
         activeIcon: Store,
-        path: [APP_ROUTES.DASHBOARD],
+        path: [APP_ROUTES.],
     },
 ];

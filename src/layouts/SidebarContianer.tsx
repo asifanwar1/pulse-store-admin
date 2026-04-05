@@ -89,7 +89,7 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                                     >
                                         {isActive ? (
                                             <item.activeIcon
-                                                size={18}
+                                                size={20}
                                                 className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
                                             />
                                         ) : (
