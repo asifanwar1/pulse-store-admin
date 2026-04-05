@@ -23,4 +23,7 @@ export enum APP_ROUTES {
 
     CUSTOMER_MANAGEMENT = "/customers",
     CUSTOMER_MANAGEMENT_DETAILS = "/customers/:id",
+
+    PRODUCTS = "/products",
+    PRODUCTS_DETAILS = "/products/:id",
 }
