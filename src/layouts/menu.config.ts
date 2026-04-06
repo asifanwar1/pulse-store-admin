@@ -3,6 +3,8 @@ import {
     LayoutDashboardIcon,
     Store,
     User,
+    Van,
+    Container
     type LucideIcon,
 } from "lucide-react";
 
@@ -32,9 +34,15 @@ export const menuItems: Array<SidebarContainerType> = [
         path: [APP_ROUTES.PRODUCTS],
     },
     {
-        label: "Product Management",
-        inactiveIcon: Store,
-        activeIcon: Store,
-        path: [APP_ROUTES.PRODUCTS],
+        label: "Order Management",
+        inactiveIcon: Container,
+        activeIcon: Container,
+        path: [APP_ROUTES.ORDERS],
+    },
+    {
+        label: "Shipment Management",
+        inactiveIcon: Van,
+        activeIcon: Van,
+        path: [APP_ROUTES.SHIPMENTS],
     },
 ];
