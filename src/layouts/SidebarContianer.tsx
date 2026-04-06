@@ -87,15 +87,18 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                                         to={item.path[FIRST_ROUTE_INDEX]}
                                         className="d-flex items-center gap-4 py-6"
                                     >
-                                        <Image
-                                            src={
-                                                isActive
-                                                    ? item.activeIcon
-                                                    : item.inactiveIcon
-                                            }
-                                            alt={item.label}
-                                            className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
-                                        />
+                                        {isActive ? (
+                                            <item.activeIcon
+                                                size={18}
+                                                className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
+                                            />
+                                        ) : (
+                                            <item.inactiveIcon
+                                                size={18}
+                                                className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
+                                            />
+                                        )}
+
                                         <span className="group-data-[collapsible=icon]:hidden">
                                             {item.label}
                                         </span>
