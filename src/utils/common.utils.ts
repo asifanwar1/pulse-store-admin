@@ -1,3 +1,4 @@
+import type { dashboardStatsData } from "@/mock/dashboard.mock";
 import type { NavigateFunction } from "react-router-dom";
 
 export const objectContainsKey = (
@@ -73,4 +74,17 @@ export const navigateBack = (
         .find((r) => r && r !== current);
     if (last) navigate(last, { replace: true });
     else navigate(-1);
+};
+
+export const formatStatValue = (
+    stat: (typeof dashboardStatsData)["totalRevenue"],
+) => {
+    const { value, prefix = "", suffix = "" } = stat;
+    const display =
+        value >= 1_000_000
+            ? `${(value / 1_000_000).toFixed(2)}M`
+            : value >= 1_000
+              ? `${(value / 1_000).toFixed(value >= 10_000 ? 0 : 1)}k`
+              : value.toString();
+    return `${prefix}${display}${suffix}`;
 };

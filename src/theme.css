@@ -216,6 +216,45 @@ body {
     --color-link-active: #7c808c;
     --color-link-inactive: #9da5b4;
 
+    /* Pulse Dashboard chart & accent colors */
+    --color-dash-blue: #3B82F6;
+    --color-dash-blue-light: #EFF6FF;
+    --color-dash-purple: #8B5CF6;
+    --color-dash-purple-light: #F5F3FF;
+    --color-dash-amber: #F59E0B;
+    --color-dash-amber-light: #FFFBEB;
+    --color-dash-red: #EF4444;
+    --color-dash-red-light: #FEF2F2;
+    --color-dash-teal: #14B8A6;
+    --color-dash-teal-light: #F0FDFA;
+    --color-dash-indigo: #6366F1;
+    --color-dash-indigo-light: #EEF2FF;
+    --color-dash-pink: #EC4899;
+    --color-dash-pink-light: #FDF2F8;
+    --color-dash-orange: #F97316;
+    --color-dash-orange-light: #FFF7ED;
+    --color-dash-cyan: #06B6D4;
+    --color-dash-cyan-light: #ECFEFF;
+    --color-pulse-green-light: #EAF2ED;
+
+    /* Pulse Order status colors */
+    --color-status-delivered: #10B981;
+    --color-status-delivered-bg: #ECFDF5;
+    --color-status-pending: #F59E0B;
+    --color-status-pending-bg: #FFFBEB;
+    --color-status-processing: #3B82F6;
+    --color-status-processing-bg: #EFF6FF;
+    --color-status-cancelled: #EF4444;
+    --color-status-cancelled-bg: #FEF2F2;
+    --color-status-shipped: #8B5CF6;
+    --color-status-shipped-bg: #F5F3FF;
+
+    /* Pulse Dashboard card & surface */
+    --color-dash-card-border: #E8EAF0;
+    --color-dash-surface: #FAFBFC;
+    --shadow-dash-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+    --shadow-dash-card-hover: 0 4px 12px 0 rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+
 }
 
 /* ----------------------------------------------------
