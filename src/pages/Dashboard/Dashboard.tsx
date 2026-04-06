@@ -42,10 +42,8 @@ export default function Dashboard() {
                 )}
             </div>
 
-            {/* ── Revenue Area Chart (full width) ── */}
             <RevenueAreaChart />
 
-            {/* ── Middle row: Orders by Category + Sales Distribution ── */}
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-3">
                     <OrdersByCategoryChart />
@@ -55,7 +53,6 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            {/* ── Customer Growth + Weekly Sales ── */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <CustomerGrowthChart />
                 <WeeklySalesChart />

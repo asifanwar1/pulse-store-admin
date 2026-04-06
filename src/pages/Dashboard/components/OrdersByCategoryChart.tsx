@@ -58,7 +58,7 @@ export default function OrdersByCategoryChart() {
                 >
                     <CartesianGrid
                         strokeDasharray="3 3"
-                        stroke="#E8EAF0"
+                        stroke="#789b89"
                         vertical={false}
                     />
                     <XAxis
@@ -78,7 +78,7 @@ export default function OrdersByCategoryChart() {
                     />
                     <Tooltip
                         content={<CustomTooltip />}
-                        cursor={{ fill: "#F3F4F6", radius: 6 }}
+                        cursor={{ fill: "#d1ddd6", radius: 6 }}
                     />
                     <Bar dataKey="orders" radius={[6, 6, 0, 0]}>
                         {ordersByCategoryData.map((entry, index) => (

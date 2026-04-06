@@ -63,6 +63,7 @@ export default function SalesDistributionChart() {
         <ChartCard
             title="Sales Distribution"
             subtitle="Revenue share by category"
+            className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
         >
             <ResponsiveContainer width="100%" height={280}>
                 <PieChart>

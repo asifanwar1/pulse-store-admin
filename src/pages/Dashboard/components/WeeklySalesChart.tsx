@@ -5,6 +5,7 @@ import {
     YAxis,
     Tooltip,
     ResponsiveContainer,
+    CartesianGrid,
 } from "recharts";
 import { weeklySalesData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
@@ -35,6 +36,7 @@ export default function WeeklySalesChart() {
         <ChartCard
             title="Weekly Sales"
             subtitle="Sales volume for the current week"
+            className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
         >
             <ResponsiveContainer width="100%" height={200}>
                 <BarChart
@@ -42,21 +44,26 @@ export default function WeeklySalesChart() {
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                     barSize={32}
                 >
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="#789b89"
+                        vertical={false}
+                    />
                     <XAxis
                         dataKey="day"
-                        tick={{ fontSize: 11, fill: "#9DA5B4" }}
+                        tick={{ fontSize: 11, fill: "#2A5C42" }}
                         axisLine={false}
                         tickLine={false}
                     />
                     <YAxis
-                        tick={{ fontSize: 11, fill: "#9DA5B4" }}
+                        tick={{ fontSize: 11, fill: "#2A5C42" }}
                         axisLine={false}
                         tickLine={false}
                         tickFormatter={(v) => `$${v / 1000}k`}
                     />
                     <Tooltip
                         content={<CustomTooltip />}
-                        cursor={{ fill: "#F3F4F6", radius: 6 }}
+                        cursor={{ fill: "#d1ddd6", radius: 6 }}
                     />
                     <Bar
                         dataKey="sales"

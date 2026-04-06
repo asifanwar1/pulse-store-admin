@@ -48,6 +48,7 @@ export default function CustomerGrowthChart() {
         <ChartCard
             title="Customer Growth"
             subtitle="New vs returning customers month over month"
+            className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
         >
             <ResponsiveContainer width="100%" height={240}>
                 <LineChart
@@ -56,17 +57,17 @@ export default function CustomerGrowthChart() {
                 >
                     <CartesianGrid
                         strokeDasharray="3 3"
-                        stroke="#E8EAF0"
+                        stroke="#789b89"
                         vertical={false}
                     />
                     <XAxis
                         dataKey="month"
-                        tick={{ fontSize: 11, fill: "#9DA5B4" }}
+                        tick={{ fontSize: 11, fill: "#2A5C42" }}
                         axisLine={false}
                         tickLine={false}
                     />
                     <YAxis
-                        tick={{ fontSize: 11, fill: "#9DA5B4" }}
+                        tick={{ fontSize: 11, fill: "#2A5C42" }}
                         axisLine={false}
                         tickLine={false}
                     />
@@ -78,7 +79,7 @@ export default function CustomerGrowthChart() {
                         formatter={(value) =>
                             value === "newCustomers"
                                 ? "New Customers"
-                                : "Returning"
+                                : "Returning Customers"
                         }
                     />
                     <Line
