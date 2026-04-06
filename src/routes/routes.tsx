@@ -26,6 +26,10 @@ import NotFound from "@/pages/NotFound/NotFound";
 // } from "@/pages/PublicPages";
 
 import { APP_ROUTES } from "./appRoutes";
+import ShipmentManagement from "@/pages/ShipmentManagement/ShipmentManagement";
+import OrderManagement from "@/pages/OrderManagement/OrderManagement";
+import CustomerManagement from "@/pages/CustomerManagement/CustomerManagement";
+import ProductManagement from "@/pages/ProductManagement/ProductManagement";
 
 export const routes: RouteObject[] = [
     {
@@ -37,16 +41,11 @@ export const routes: RouteObject[] = [
                 element: <Navigate to={APP_ROUTES.DASHBOARD} replace />,
             },
             { path: APP_ROUTES.DASHBOARD, element: <Dashboard /> },
+            { path: APP_ROUTES.CUSTOMERS, element: <CustomerManagement /> },
+            { path: APP_ROUTES.ORDERS, element: <OrderManagement /> },
+            { path: APP_ROUTES.SHIPMENTS, element: <ShipmentManagement /> },
+            { path: APP_ROUTES.PRODUCTS, element: <ProductManagement /> },
 
-            // {
-            //     path: APP_ROUTES.ACCOUNT,
-            //     element: <Setting />,
-            //     index: false,
-            //     children: [
-            //         { path: APP_ROUTES.ACCOUNT_PROFILE, element: <Profile /> },
-            //         { path: APP_ROUTES.ACCOUNT_CHANGE_PASSWORD, element: <ChangePassword /> }
-            //     ]
-            // },
             // {
             //     path: APP_ROUTES.CHATS,
             //     element: <Chats />,

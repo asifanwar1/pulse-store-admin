@@ -21,8 +21,8 @@ export enum APP_ROUTES {
     //Chat Management
     CHATS = "/chats",
 
-    CUSTOMER_MANAGEMENT = "/customers",
-    CUSTOMER_MANAGEMENT_DETAILS = "/customers/:id",
+    CUSTOMERS = "/customers",
+    CUSTOMERS_DETAILS = "/customers/:id",
 
     PRODUCTS = "/products",
     PRODUCTS_DETAILS = "/products/:id",

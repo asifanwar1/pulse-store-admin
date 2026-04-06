@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { CustomButton } from "@/components/custom/CustomButton";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,6 +14,7 @@ import { defaultRouteNames } from "@/constants/page-title.constants";
 
 import { useStore } from "@/store";
 import { ChevronDown } from "lucide-react";
+import { Avatar } from "@/components/custom/Avatar";
 
 interface ITopbarProps {
     user: {
@@ -38,7 +38,7 @@ const Topbar: React.FC<ITopbarProps> = ({
     return (
         <div
             className={cn(
-                "bg-white shadow-md p-4 flex justify-between items-center fixed top-0 z-30 transition-all duration-300",
+                "bg-pulse-cream shadow-sm p-4 flex justify-between items-center fixed top-0 z-30 transition-all duration-300",
                 isMobile
                     ? "w-full left-0"
                     : state === "expanded"
@@ -47,8 +47,8 @@ const Topbar: React.FC<ITopbarProps> = ({
             )}
         >
             <div className="flex items-center">
-                <SidebarTrigger className="mr-4" />
-                <span className="text-lg font-semibold">
+                <SidebarTrigger className="mr-4 text-pulse-green" />
+                <span className="text-lg font-semibold text-pulse-green">
                     {currentRouteName}
                 </span>
             </div>
@@ -56,26 +56,18 @@ const Topbar: React.FC<ITopbarProps> = ({
                 {children}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <CustomButton
-                            type="button"
-                            variant="profile"
-                            aria-label="Open profile menu"
-                        >
-                            <img
+                        <div className="flex items-center justify-center gap-4 cursor-pointer">
+                            <Avatar
                                 src={user.image}
-                                alt="Profile"
-                                className="w-8 h-8 rounded-full object-cover"
+                                alt={userData?.fullName || "Admin"}
+                                className="w-14 h-14 "
+                                fallBackClassName="bg-pulse-cream-dark text-pulse-green hover:bg-pulse-green/10 z-10"
                             />
-                            <div className="flex flex-col items-start">
-                                <span className="text-[15px] font-medium text-[#5B6B57]">
-                                    {userData?.fullName}
-                                </span>
-                                <span className="text-xs text-[#9DA5B4]">
-                                    "ADMIN"
-                                </span>
-                            </div>
-                            <ChevronDown size={16} className="ml-1" />
-                        </CustomButton>
+                            <ChevronDown
+                                size={16}
+                                className="ml-1 text-pulse-green"
+                            />
+                        </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         align="end"

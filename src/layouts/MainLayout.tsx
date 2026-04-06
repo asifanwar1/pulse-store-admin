@@ -85,16 +85,16 @@ const MainLayoutWrapper: React.FC = () => {
                     <CustomButton
                         variant="ghost"
                         type="button"
-                        className="relative flex items-center cursor-pointer w-14 h-14 bg-muted/12 rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-muted/30"
+                        className="relative flex items-center cursor-pointer w-14 h-14 bg-pulse-cream-dark rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-pulse-green/10"
                         onClick={() => navigate(APP_ROUTES.CHATS)}
                     >
-                        <MessageSquareText size={18} />
+                        <MessageSquareText className="text-pulse-green " />
                     </CustomButton>
                     <NotificationDropdown />
                 </Topbar>
                 <main
                     className={cn(
-                        "relative transition-all duration-300 overflow-y-auto box-border overflow-x-hidden mt-[88px] min-h-[calc(100vh-88px)] bg-app-gray",
+                        "relative transition-all duration-300 overflow-y-auto box-border overflow-x-hidden mt-[88px] min-h-[calc(100vh-88px)] bg-pulse-cream/50",
                         isMobile
                             ? "ml-0 w-full"
                             : state === "expanded"

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 // import { handleScroll } from "@/utils/handleScroll";
 // import NotificationSkeleton from "./NotificationSkeleton";
 import NotificationCard from "./NotificationSkeleton";
-import { BellDot } from "lucide-react";
+import { Bell } from "lucide-react";
 
 // const NO_NOTIFICATION_COUNT: number = 0;
 const MAX_UNREAD_COUNT: number = 99;
@@ -39,9 +39,9 @@ export const NotificationDropdown: React.FC = () => {
                 <DropdownMenuTrigger asChild>
                     <Button
                         variant="ghost"
-                        className="relative flex items-center cursor-pointer w-14 h-14 bg-muted/12 rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-muted/30"
+                        className="relative flex items-center cursor-pointer w-14 h-14 bg-pulse-cream-dark rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-pulse-green/10"
                     >
-                        <BellDot className="h-6 w-6" />
+                        <Bell className="h-6 w-6 text-pulse-green" />
                         {Boolean(unreadCount > 0) && (
                             <span className=" absolute top-2 right-3 inline-flex items-center justify-center text-white bg-[#B00020] font-semibold rounded-full min-w-[1.8em] min-h-[1.8em] text-[10px] p-[1px]">
                                 {unreadCount > MAX_UNREAD_COUNT

@@ -46,7 +46,7 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
             collapsible="icon"
         >
             <SidebarHeader>
-                <div className="p-2 flex justify-center items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mb-2 group-data-[collapsible=icon]:mt-2 group-data-[collapsible=icon]:p-0 mb-4">
+                <div className="p-2 flex flex-col justify-center items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mb-2 group-data-[collapsible=icon]:mt-2 group-data-[collapsible=icon]:p-0 mb-4">
                     <Image
                         src={sidebarHeaderImage}
                         alt="Logo"
@@ -57,6 +57,9 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                         alt="Logo"
                         className="hidden group-data-[collapsible=icon]:block h-8 w-8"
                     />
+                    <h5 className="text-pulse-green font-semibold group-data-[collapsible=icon]:hidden">
+                        Pulse Store
+                    </h5>
                 </div>
             </SidebarHeader>
             <SidebarContent className="flex-1 overflow-y-auto min-h-0">
@@ -77,9 +80,9 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                                     tooltip={item.label}
                                     isActive={isActive}
                                     className={cn(
-                                        "flex items-center text-pulse-green text-sm gap-4 w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3",
+                                        "flex items-center text-pulse-green text-sm gap-4 w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3 hover:bg-pulse-green/10 hover:text-pulse-green hover:rounded-r-none hover:rounded-l-md",
                                         isActive &&
-                                            "bg-link-active/40 rounded-l-md rounded-r-none",
+                                            "!bg-pulse-green/10 rounded-l-md rounded-r-none !text-pulse-green !font-semibold",
                                     )}
                                 >
                                     <Link
@@ -88,14 +91,11 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                                     >
                                         {isActive ? (
                                             <item.activeIcon
-                                                size={20}
-                                                className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
+                                                className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 font-semibold"
+                                                strokeWidth={2.5}
                                             />
                                         ) : (
-                                            <item.inactiveIcon
-                                                size={18}
-                                                className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5 h-6 w-6"
-                                            />
+                                            <item.inactiveIcon className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5" />
                                         )}
 
                                         <span className="group-data-[collapsible=icon]:hidden">
@@ -110,7 +110,7 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
             </SidebarContent>
             <SidebarFooter className="mt-auto h-5 relative group-data-[collapsible=icon]:hidden" />
             <SidebarMenuButton
-                className="flex ml-5 group-data-[collapsible=icon]:ml-4 mb-2 items-center h-10 text-white text-sm gap-4 w-59 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3 cursor-pointer "
+                className="flex ml-5 group-data-[collapsible=icon]:ml-4 mb-2 items-center h-10 text-pulse-green text-sm gap-4 w-59 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3 cursor-pointer hover:bg-pulse-green/10 hover:text-pulse-green hover:rounded-r-none hover:rounded-l-md"
                 onClick={onLogoutClick}
             >
                 <LogOut

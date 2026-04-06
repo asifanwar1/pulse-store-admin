@@ -25,7 +25,7 @@ export const menuItems: Array<SidebarContainerType> = [
         label: "Customer Management",
         inactiveIcon: User,
         activeIcon: User,
-        path: [APP_ROUTES.CUSTOMER_MANAGEMENT],
+        path: [APP_ROUTES.CUSTOMERS],
     },
     {
         label: "Product Management",
