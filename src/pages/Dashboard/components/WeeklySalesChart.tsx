@@ -7,7 +7,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { weeklySalesData } from "@/mock/dashboard.mock";
-import ChartCard from "./ChartCard";
+import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -21,7 +21,10 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
         <div className="bg-white border border-dash-card-border rounded-xl shadow-dash-card-hover px-3.5 py-2.5 text-xs">
             <p className="font-semibold text-app-primary mb-1">{label}</p>
             <span className="text-app-secondary">
-                Sales: <span className="font-semibold text-app-primary">${payload[0].value.toLocaleString()}</span>
+                Sales:{" "}
+                <span className="font-semibold text-app-primary">
+                    ${payload[0].value.toLocaleString()}
+                </span>
             </span>
         </div>
     );
@@ -51,7 +54,10 @@ export default function WeeklySalesChart() {
                         tickLine={false}
                         tickFormatter={(v) => `$${v / 1000}k`}
                     />
-                    <Tooltip content={<CustomTooltip />} cursor={{ fill: "#F3F4F6", radius: 6 }} />
+                    <Tooltip
+                        content={<CustomTooltip />}
+                        cursor={{ fill: "#F3F4F6", radius: 6 }}
+                    />
                     <Bar
                         dataKey="sales"
                         radius={[6, 6, 0, 0]}

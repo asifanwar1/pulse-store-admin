@@ -1,6 +1,6 @@
 import { Clock } from "lucide-react";
 import { recentOrdersData, type OrderStatus } from "@/mock/dashboard.mock";
-import ChartCard from "./ChartCard";
+import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
 
 const STATUS_CONFIG: Record<
@@ -83,7 +83,8 @@ export default function RecentOrders() {
                     <tbody className="divide-y divide-dash-card-border">
                         {recentOrdersData.map((order, idx) => {
                             const status = STATUS_CONFIG[order.status];
-                            const avatarColor = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+                            const avatarColor =
+                                AVATAR_COLORS[idx % AVATAR_COLORS.length];
                             return (
                                 <tr
                                     key={order.id}

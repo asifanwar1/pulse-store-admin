@@ -1,6 +1,6 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { topProductsData } from "@/mock/dashboard.mock";
-import ChartCard from "./ChartCard";
+import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
 
 const MAX_REVENUE = Math.max(...topProductsData.map((p) => p.revenue));
@@ -14,9 +14,14 @@ export default function TopProducts() {
             <ul className="flex flex-col gap-3">
                 {topProductsData.map((product, index) => {
                     const isUp = product.trend >= 0;
-                    const barPct = Math.round((product.revenue / MAX_REVENUE) * 100);
+                    const barPct = Math.round(
+                        (product.revenue / MAX_REVENUE) * 100,
+                    );
                     return (
-                        <li key={product.id} className="flex items-center gap-3">
+                        <li
+                            key={product.id}
+                            className="flex items-center gap-3"
+                        >
                             <span className="text-xs font-bold text-muted w-4 shrink-0 text-right">
                                 {index + 1}
                             </span>
@@ -42,7 +47,9 @@ export default function TopProducts() {
                                     <span
                                         className={cn(
                                             "flex items-center gap-0.5 text-xss font-semibold shrink-0",
-                                            isUp ? "text-status-delivered" : "text-status-cancelled",
+                                            isUp
+                                                ? "text-status-delivered"
+                                                : "text-status-cancelled",
                                         )}
                                     >
                                         {isUp ? (
@@ -54,7 +61,8 @@ export default function TopProducts() {
                                     </span>
                                 </div>
                                 <p className="text-xss text-muted mt-0.5">
-                                    {product.sales.toLocaleString()} sales · {product.stock} in stock
+                                    {product.sales.toLocaleString()} sales ·{" "}
+                                    {product.stock} in stock
                                 </p>
                             </div>
                         </li>

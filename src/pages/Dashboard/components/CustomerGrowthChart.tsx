@@ -9,7 +9,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { customerGrowthData } from "@/mock/dashboard.mock";
-import ChartCard from "./ChartCard";
+import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -23,7 +23,10 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
         <div className="bg-white border border-dash-card-border rounded-xl shadow-dash-card-hover px-3.5 py-2.5 text-xs">
             <p className="font-semibold text-app-primary mb-1.5">{label}</p>
             {payload.map((entry) => (
-                <div key={entry.name} className="flex items-center gap-2 py-0.5">
+                <div
+                    key={entry.name}
+                    className="flex items-center gap-2 py-0.5"
+                >
                     <span
                         className="w-2 h-2 rounded-full shrink-0"
                         style={{ backgroundColor: entry.color }}
@@ -31,7 +34,9 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
                     <span className="text-app-secondary">
                         {entry.name === "newCustomers" ? "New" : "Returning"}:
                     </span>
-                    <span className="font-semibold text-app-primary">{entry.value.toLocaleString()}</span>
+                    <span className="font-semibold text-app-primary">
+                        {entry.value.toLocaleString()}
+                    </span>
                 </div>
             ))}
         </div>
@@ -49,7 +54,11 @@ export default function CustomerGrowthChart() {
                     data={customerGrowthData}
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E8EAF0" vertical={false} />
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="#E8EAF0"
+                        vertical={false}
+                    />
                     <XAxis
                         dataKey="month"
                         tick={{ fontSize: 11, fill: "#9DA5B4" }}
@@ -67,7 +76,9 @@ export default function CustomerGrowthChart() {
                         iconSize={8}
                         wrapperStyle={{ fontSize: "12px", paddingTop: "12px" }}
                         formatter={(value) =>
-                            value === "newCustomers" ? "New Customers" : "Returning"
+                            value === "newCustomers"
+                                ? "New Customers"
+                                : "Returning"
                         }
                     />
                     <Line

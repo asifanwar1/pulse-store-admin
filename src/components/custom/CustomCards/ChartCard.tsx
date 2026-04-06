@@ -20,15 +20,19 @@ export default function ChartCard({
     return (
         <div
             className={cn(
-                "bg-white rounded-2xl border border-dash-card-border shadow-dash-card flex flex-col",
+                "rounded-2xl border border-dash-card-border shadow-dash-card flex flex-col",
                 className,
             )}
         >
-            <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-dash-card-border">
+            <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-pulse-cream-dark">
                 <div>
-                    <h3 className="text-sm font-semibold text-app-primary">{title}</h3>
+                    <h3 className="text-sm font-semibold text-pulse-green-dark">
+                        {title}
+                    </h3>
                     {subtitle && (
-                        <p className="text-xs text-muted mt-0.5">{subtitle}</p>
+                        <p className="text-xs text-pulse-green mt-0.5">
+                            {subtitle}
+                        </p>
                     )}
                 </div>
                 {action && <div>{action}</div>}

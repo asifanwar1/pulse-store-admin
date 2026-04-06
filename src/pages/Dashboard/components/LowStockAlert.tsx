@@ -1,13 +1,30 @@
 import { Package, AlertTriangle } from "lucide-react";
 import { lowStockData } from "@/mock/dashboard.mock";
-import ChartCard from "./ChartCard";
+import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
 
 function getStockLevel(stock: number, threshold: number) {
     const ratio = stock / threshold;
-    if (ratio <= 0.3) return { label: "Critical", barColor: "bg-dash-red", textColor: "text-dash-red", bgColor: "bg-dash-red-light" };
-    if (ratio <= 0.6) return { label: "Low", barColor: "bg-dash-amber", textColor: "text-dash-amber", bgColor: "bg-dash-amber-light" };
-    return { label: "Fair", barColor: "bg-dash-blue", textColor: "text-dash-blue", bgColor: "bg-dash-blue-light" };
+    if (ratio <= 0.3)
+        return {
+            label: "Critical",
+            barColor: "bg-dash-red",
+            textColor: "text-dash-red",
+            bgColor: "bg-dash-red-light",
+        };
+    if (ratio <= 0.6)
+        return {
+            label: "Low",
+            barColor: "bg-dash-amber",
+            textColor: "text-dash-amber",
+            bgColor: "bg-dash-amber-light",
+        };
+    return {
+        label: "Fair",
+        barColor: "bg-dash-blue",
+        textColor: "text-dash-blue",
+        bgColor: "bg-dash-blue-light",
+    };
 }
 
 export default function LowStockAlert() {
@@ -24,8 +41,14 @@ export default function LowStockAlert() {
         >
             <ul className="flex flex-col gap-3">
                 {lowStockData.map((product) => {
-                    const level = getStockLevel(product.stock, product.threshold);
-                    const pct = Math.min(100, Math.round((product.stock / product.threshold) * 100));
+                    const level = getStockLevel(
+                        product.stock,
+                        product.threshold,
+                    );
+                    const pct = Math.min(
+                        100,
+                        Math.round((product.stock / product.threshold) * 100),
+                    );
                     return (
                         <li key={product.id} className="flex flex-col gap-1.5">
                             <div className="flex items-center gap-2">
@@ -47,16 +70,23 @@ export default function LowStockAlert() {
                                             {level.label}
                                         </span>
                                     </div>
-                                    <p className="text-xss text-muted">{product.category}</p>
+                                    <p className="text-xss text-muted">
+                                        {product.category}
+                                    </p>
                                 </div>
                                 <span className="text-xs font-bold text-app-primary shrink-0">
                                     {product.stock}
-                                    <span className="font-normal text-muted">/{product.threshold}</span>
+                                    <span className="font-normal text-muted">
+                                        /{product.threshold}
+                                    </span>
                                 </span>
                             </div>
                             <div className="h-1.5 bg-app-gray rounded-full overflow-hidden ml-10">
                                 <div
-                                    className={cn("h-full rounded-full transition-all", level.barColor)}
+                                    className={cn(
+                                        "h-full rounded-full transition-all",
+                                        level.barColor,
+                                    )}
                                     style={{ width: `${pct}%` }}
                                 />
                             </div>
