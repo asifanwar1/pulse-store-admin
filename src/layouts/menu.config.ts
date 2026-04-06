@@ -4,7 +4,7 @@ import {
     Store,
     User,
     Van,
-    Container
+    Container,
     type LucideIcon,
 } from "lucide-react";
 

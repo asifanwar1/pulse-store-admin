@@ -15,8 +15,7 @@ import type { APP_ROUTES } from "@/routes/appRoutes";
 
 import { Image } from "@/components/custom/Image";
 import { LogOut } from "lucide-react";
-import sidebarHeaderImage from "@/assets/images/pulse-store-black.png";
-import mobileSidebarHeaderImage from "@/assets/images/pulse-store-black.png";
+import sidebarHeaderImage from "@/assets/images/pulse-store-green.png";
 import { menuItems, type SidebarContainerType } from "./menu.config";
 
 type SidebarContainerProps = {
@@ -43,7 +42,7 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
 
     return (
         <Sidebar
-            className="bg-app-branding h-screen fixed top-0 left-0 w-64 z-40 group-data-[collapsible=icon]:w-16 md:block"
+            className="bg-pulse-cream h-screen fixed top-0 left-0 w-64 z-40 group-data-[collapsible=icon]:w-16 md:block"
             collapsible="icon"
         >
             <SidebarHeader>
@@ -51,10 +50,10 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                     <Image
                         src={sidebarHeaderImage}
                         alt="Logo"
-                        className="h-14 w-auto group-data-[collapsible=icon]:hidden"
+                        className="h-10 w-auto group-data-[collapsible=icon]:hidden"
                     />
                     <Image
-                        src={mobileSidebarHeaderImage}
+                        src={sidebarHeaderImage}
                         alt="Logo"
                         className="hidden group-data-[collapsible=icon]:block h-8 w-8"
                     />
@@ -78,7 +77,7 @@ const SidebarContainer: React.FC<SidebarContainerProps> = (props) => {
                                     tooltip={item.label}
                                     isActive={isActive}
                                     className={cn(
-                                        "flex items-center text-white text-sm gap-4 w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3",
+                                        "flex items-center text-pulse-green text-sm gap-4 w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded group-data-[collapsible=icon]:p-3",
                                         isActive &&
                                             "bg-link-active/40 rounded-l-md rounded-r-none",
                                     )}
