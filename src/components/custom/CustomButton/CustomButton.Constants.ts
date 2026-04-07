@@ -13,7 +13,7 @@ export const buttonVariants = cva(
                     "bg-white border border-[#C1C7D0] text-[#7C808C] shadow-none hover:bg-[#F5F6F8] hover:border-[#9DA5B4] focus:ring-0 focus:outline-none",
                 secondary:
                     "bg-[#232B3A] text-white shadow-none border-0 hover:bg-[#1A2232] focus:ring-0 focus:outline-none",
-                ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+                ghost: "hover:bg-pulse-green/10 text-pulse-green-dark hover:text-accent-foreground dark:hover:bg-accent/50",
                 link: "text-primary underline-offset-4 hover:underline",
                 iconCircle:
                     "rounded-full bg-[#F5F6F8] flex items-center justify-center hover:bg-[#e9eaec] transition shadow-none border-0 p-0",

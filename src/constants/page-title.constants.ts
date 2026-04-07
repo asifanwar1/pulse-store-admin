@@ -6,8 +6,8 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.DASHBOARD]: "Dashboard",
 
     // Customer Management
-    [APP_ROUTES.CUSTOMER_MANAGEMENT]: "Customer Management",
-    [APP_ROUTES.CUSTOMER_MANAGEMENT_DETAILS]: "Customer Management",
+    [APP_ROUTES.CUSTOMERS]: "Customer Management",
+    [APP_ROUTES.CUSTOMERS_DETAILS]: "Customer Details",
 
     // Account Management
     [APP_ROUTES.ACCOUNT]: "Account",

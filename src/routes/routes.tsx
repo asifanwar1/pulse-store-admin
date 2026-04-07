@@ -29,6 +29,7 @@ import { APP_ROUTES } from "./appRoutes";
 import ShipmentManagement from "@/pages/ShipmentManagement/ShipmentManagement";
 import OrderManagement from "@/pages/OrderManagement/OrderManagement";
 import CustomerManagement from "@/pages/CustomerManagement/CustomerManagement";
+import CustomerDetails from "@/pages/CustomerManagement/CustomerDetails/CustomerDetails";
 import ProductManagement from "@/pages/ProductManagement/ProductManagement";
 
 export const routes: RouteObject[] = [
@@ -42,6 +43,7 @@ export const routes: RouteObject[] = [
             },
             { path: APP_ROUTES.DASHBOARD, element: <Dashboard /> },
             { path: APP_ROUTES.CUSTOMERS, element: <CustomerManagement /> },
+            { path: APP_ROUTES.CUSTOMERS_DETAILS, element: <CustomerDetails /> },
             { path: APP_ROUTES.ORDERS, element: <OrderManagement /> },
             { path: APP_ROUTES.SHIPMENTS, element: <ShipmentManagement /> },
             { path: APP_ROUTES.PRODUCTS, element: <ProductManagement /> },
