@@ -1,7 +1,8 @@
-import { Package, AlertTriangle } from "lucide-react";
+import { Package } from "lucide-react";
 import { lowStockData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
+import ProgressBar from "@/components/custom/ProgressBar";
 
 function getStockLevel(stock: number, threshold: number) {
     const ratio = stock / threshold;
@@ -10,20 +11,17 @@ function getStockLevel(stock: number, threshold: number) {
             label: "Critical",
             barColor: "bg-dash-red",
             textColor: "text-dash-red",
-            bgColor: "bg-dash-red-light",
         };
     if (ratio <= 0.6)
         return {
             label: "Low",
             barColor: "bg-dash-amber",
             textColor: "text-dash-amber",
-            bgColor: "bg-dash-amber-light",
         };
     return {
         label: "Fair",
         barColor: "bg-dash-blue",
         textColor: "text-dash-blue",
-        bgColor: "bg-dash-blue-light",
     };
 }
 
@@ -32,14 +30,10 @@ export default function LowStockAlert() {
         <ChartCard
             title="Low Stock Alerts"
             subtitle="Products below reorder threshold"
-            action={
-                <div className="flex items-center gap-1.5 text-xs text-dash-amber font-medium bg-dash-amber-light rounded-full px-2.5 py-1">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    {lowStockData.length} items
-                </div>
-            }
+            className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
+            bodyClassName="p-2"
         >
-            <ul className="flex flex-col gap-3">
+            <div className="flex flex-col gap-5 mt-2">
                 {lowStockData.map((product) => {
                     const level = getStockLevel(
                         product.stock,
@@ -50,50 +44,50 @@ export default function LowStockAlert() {
                         Math.round((product.stock / product.threshold) * 100),
                     );
                     return (
-                        <li key={product.id} className="flex flex-col gap-1.5">
+                        <div key={product.id} className="flex flex-col gap-1.5">
                             <div className="flex items-center gap-2">
-                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-app-gray shrink-0">
-                                    <Package className="w-4 h-4 text-app-secondary" />
+                                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-pulse-cream-dark shrink-0">
+                                    <Package className="w-4 h-4 text-pulse-green" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <span className="text-xs font-semibold text-app-primary truncate">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs font-semibold text-pulse-green-dark truncate">
                                             {product.name}
                                         </span>
                                         <span
                                             className={cn(
-                                                "text-xss font-semibold rounded-full px-2 py-0.5 shrink-0",
+                                                "text-xs font-semibold rounded-md px-2 py-0.5",
                                                 level.textColor,
-                                                level.bgColor,
                                             )}
                                         >
-                                            {level.label}
+                                            ( {level.label} )
                                         </span>
                                     </div>
-                                    <p className="text-xss text-muted">
+                                    <p className="text-xss text-pulse-green-dark ">
                                         {product.category}
                                     </p>
                                 </div>
-                                <span className="text-xs font-bold text-app-primary shrink-0">
+                                <span className="text-xs font-bold text-pulse-green-dark">
                                     {product.stock}
-                                    <span className="font-normal text-muted">
+                                    <span className="font-normal text-pulse-green-dark">
                                         /{product.threshold}
                                     </span>
                                 </span>
                             </div>
-                            <div className="h-1.5 bg-app-gray rounded-full overflow-hidden ml-10">
-                                <div
-                                    className={cn(
-                                        "h-full rounded-full transition-all",
+                            <div className="ml-10">
+                                <ProgressBar
+                                    percent={pct}
+                                    barClassName={cn(
+                                        "transition-all",
                                         level.barColor,
                                     )}
-                                    style={{ width: `${pct}%` }}
+                                    trackClassName="bg-pulse-green/10"
                                 />
                             </div>
-                        </li>
+                        </div>
                     );
                 })}
-            </ul>
+            </div>
         </ChartCard>
     );
 }

@@ -41,7 +41,10 @@ export default function TopProducts() {
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <ProgressBar percent={barPct} />
+                                    <ProgressBar
+                                        percent={barPct}
+                                        trackClassName="bg-pulse-green/10"
+                                    />
                                     <span
                                         className={cn(
                                             "flex items-center gap-0.5 text-xss font-semibold",
