@@ -20,10 +20,9 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Image } from "./Image";
 import Spinner from "@/components/custom/Spinner";
 
-import dropdownIcon from "@ampd/shared/assets/icons/up-and-down-icon.svg";
+import { ChevronDown } from "lucide-react";
 import { X } from "lucide-react";
 
 export type SelectOption = {
@@ -402,11 +401,12 @@ export const Select: React.FC<SelectProps> = (props) => {
                                             <X className="h-4 w-4" />
                                         </span>
                                     )}
-                                    <Image
+                                    {/* <Image
                                         src={dropdownIcon}
                                         alt="chevron-down"
                                         className="cursor-pointer h-5 w-4 shrink-0 opacity-50"
-                                    />
+                                    /> */}
+                                    <ChevronDown className="h-5 w-4 shrink-0 opacity-50" />
                                 </div>
                             </Button>
                         </PopoverTrigger>

@@ -58,10 +58,8 @@ export default function Dashboard() {
                 <WeeklySalesChart />
             </div>
 
-            {/* ── Recent Orders (full width) ── */}
             <RecentOrders />
 
-            {/* ── Bottom: Top Products + Low Stock ── */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TopProducts />
                 <LowStockAlert />

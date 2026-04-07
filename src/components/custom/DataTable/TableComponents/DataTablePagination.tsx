@@ -1,10 +1,8 @@
 import Button from "@/components/custom/CustomButton/CustomButton";
-import { Image } from "@/components/custom/Image";
 import { Select } from "@/components/custom/Select";
 import type { Table } from "@tanstack/react-table";
 
-import chevronLeft from "@ampd/shared/assets/icons/chevron-left.svg";
-import chevronRight from "@ampd/shared/assets/icons/chevron-right.svg";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type DataTablePaginationProps<TData> = {
     table: Table<TData>;
@@ -76,7 +74,7 @@ const DataTablePagination = <TData,>({
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        <Image src={chevronLeft} className="w-3 h-3" />
+                        <ChevronLeft className="w-3 h-3" />
                     </Button>
 
                     <Button
@@ -86,7 +84,7 @@ const DataTablePagination = <TData,>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        <Image src={chevronRight} className="w-3 h-3" />
+                        <ChevronRight className="w-3 h-3" />
                     </Button>
                 </div>
             </div>

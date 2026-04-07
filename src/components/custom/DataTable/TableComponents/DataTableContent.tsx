@@ -166,7 +166,7 @@ const DataTableContent = <TData,>({
                                                         key={header.id}
                                                         colSpan={header.colSpan}
                                                         className={cn(
-                                                            "h-12 px-4 pl-2 text-left align-middle font-medium text-[13px] text-primary bg-table-header border-r border-border",
+                                                            "h-12 px-4 pl-2 text-left align-middle font-medium text-[13px] text-pulse-green-dark bg-pulse-cream-dark",
                                                         )}
                                                         style={{
                                                             width: meta?.width,
@@ -174,8 +174,8 @@ const DataTableContent = <TData,>({
                                                                 meta?.minWidth,
                                                             maxWidth:
                                                                 meta?.maxWidth,
-                                                            borderRight:
-                                                                "1px solid var(--White, #FFFFFF)",
+                                                            // borderRight:
+                                                            //     "1px solid var(--White, #FFFFFF)",
                                                         }}
                                                     >
                                                         {header.isPlaceholder ? null : (
@@ -241,7 +241,7 @@ const DataTableContent = <TData,>({
                                                 "selected"
                                             }
                                             className={cn(
-                                                "hover:bg-muted/50 text-data-table-text text-[13px] data-[state=selected]:bg-border/60 border-b-2 border-white",
+                                                "hover:bg-pulse-green/20 text-data-table-text text-[13px] data-[state=selected]:bg-border/60 border-b-1 border-pulse-green/20",
 
                                                 "cursor-pointer",
                                             )}

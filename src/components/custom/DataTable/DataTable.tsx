@@ -210,7 +210,7 @@ const DataTable = <TData extends RowData>({
 
     return (
         <>
-            <div className="flex w-full flex-col gap-2 rounded-3xl border-border">
+            <div className="flex w-full flex-col gap-2">
                 <DataTableContent<TData>
                     table={table}
                     selectedRows={table.getFilteredSelectedRowModel().rows}
