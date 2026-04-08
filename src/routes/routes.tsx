@@ -27,6 +27,8 @@ import NotFound from "@/pages/NotFound/NotFound";
 
 import { APP_ROUTES } from "./appRoutes";
 import ShipmentManagement from "@/pages/ShipmentManagement/ShipmentManagement";
+import ShipmentDetails from "@/pages/ShipmentManagement/ShipmentDetails/ShipmentDetails";
+import ManageShipment from "@/pages/ShipmentManagement/ManageShipment/ManageShipment";
 import OrderManagement from "@/pages/OrderManagement/OrderManagement";
 import CustomerManagement from "@/pages/CustomerManagement/CustomerManagement";
 import CustomerDetails from "@/pages/CustomerManagement/CustomerDetails/CustomerDetails";
@@ -62,6 +64,18 @@ export const routes: RouteObject[] = [
                 element: <ManageOrder mode="update" />,
             },
             { path: APP_ROUTES.SHIPMENTS, element: <ShipmentManagement /> },
+            {
+                path: APP_ROUTES.SHIPMENTS_DETAILS,
+                element: <ShipmentDetails />,
+            },
+            {
+                path: APP_ROUTES.SHIPMENTS_CREATE,
+                element: <ManageShipment mode="add" />,
+            },
+            {
+                path: APP_ROUTES.SHIPMENTS_UPDATE,
+                element: <ManageShipment mode="update" />,
+            },
             { path: APP_ROUTES.PRODUCTS, element: <ProductManagement /> },
             { path: APP_ROUTES.PRODUCTS_DETAILS, element: <ProductDetails /> },
             {

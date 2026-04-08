@@ -36,20 +36,20 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
     return (
         <Dialog open={open}>
             <DialogContent
-                className="max-w-sm w-1/3 rounded-2xl p-8 flex flex-col items-center text-center bg-white"
+                className="max-w-sm w-1/3 rounded-2xl p-8 flex flex-col items-center text-center bg-pulse-cream"
                 showCloseButton={false}
             >
                 {icon && (
-                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-accent/30">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pulse-cream-dark text-pulse-green ">
                         {icon}
                     </div>
                 )}
                 <DialogHeader className="w-full">
-                    <DialogTitle className="text-xl font-semibold mb-2 text-center">
+                    <DialogTitle className="text-xl font-semibold mb-2 text-center text-pulse-green-dark">
                         {title}
                     </DialogTitle>
                     {description && (
-                        <DialogDescription className="text-base text-muted-foreground text-center">
+                        <DialogDescription className="text-base text-pulse-green text-center">
                             {description}
                         </DialogDescription>
                     )}
@@ -65,7 +65,6 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
                         {cancelText}
                     </CustomButton>
                     <CustomButton
-                        variant="secondary"
                         className="flex-1"
                         type="button"
                         onClick={onSuccess}
