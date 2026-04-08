@@ -20,36 +20,7 @@ import { customerOrderColumns } from "./CustomerDetails.Config";
 import { STATUS_CONFIG } from "../CustomerManagement.Config";
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
-
-function StatChip({
-    icon,
-    label,
-    value,
-}: {
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-}) {
-    return (
-        <div className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-pulse-cream-dark shadow-dash-card flex-1 min-w-0">
-            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-pulse-cream-dark shrink-0 text-pulse-green">
-                {icon}
-            </div>
-            <div className="min-w-0">
-                <p className="text-xss text-app-secondary truncate">{label}</p>
-                <p className="text-sm font-bold text-pulse-green-dark truncate">
-                    {value}
-                </p>
-            </div>
-        </div>
-    );
-}
-
-// ─── Info row ─────────────────────────────────────────────────────────────────
-
-// ─── Orders table columns ─────────────────────────────────────────────────────
-
-// ─── Main component ───────────────────────────────────────────────────────────
+import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 
 export default function CustomerDetails() {
     const { id } = useParams<{ id: string }>();
@@ -89,7 +60,6 @@ export default function CustomerDetails() {
                 </Button>
             </div>
 
-            {/* Profile header */}
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                     <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-pulse-cream-dark text-pulse-green font-bold text-xl shrink-0">
@@ -131,58 +101,54 @@ export default function CustomerDetails() {
                 </div>
             </div>
 
-            {/* Stat chips */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <StatChip
+                <StatChipCard
                     icon={<ShoppingBag className="w-4 h-4" />}
                     label="Total Orders"
                     value={customer.totalOrders.toString()}
                 />
-                <StatChip
+                <StatChipCard
                     icon={<DollarSign className="w-4 h-4" />}
                     label="Total Spend"
                     value={`$${customer.totalSpend.toLocaleString()}`}
                 />
-                <StatChip
+                <StatChipCard
                     icon={<TrendingUp className="w-4 h-4" />}
                     label="Avg. Order Value"
                     value={`$${customer.avgOrderValue.toLocaleString()}`}
                 />
-                <StatChip
+                <StatChipCard
                     icon={<Calendar className="w-4 h-4" />}
                     label="Last Order"
                     value={customer.lastOrderDate}
                 />
             </div>
 
-            {/* Contact info + Spend overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5 flex flex-col gap-4">
-                    <h3 className="text-sm font-semibold text-pulse-green-dark border-b border-pulse-cream-dark pb-3">
-                        Contact Information
-                    </h3>
-                    <div className="flex flex-col gap-3.5">
-                        <InfoCard
-                            icon={<Mail className="w-4 h-4" />}
-                            label="Email"
-                            value={customer.email}
-                        />
-                        <InfoCard
-                            icon={<Phone className="w-4 h-4" />}
-                            label="Phone"
-                            value={customer.phone}
-                        />
-                        <InfoCard
-                            icon={<MapPin className="w-4 h-4" />}
-                            label="Location"
-                            value={customer.location}
-                        />
-                        <InfoCard
-                            icon={<Calendar className="w-4 h-4" />}
-                            label="Member since"
-                            value={customer.joinedDate}
-                        />
-                    </div>
+            <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5 flex flex-col gap-4">
+                <h3 className="text-sm font-semibold text-pulse-green-dark border-b border-pulse-cream-dark pb-3">
+                    Contact Information
+                </h3>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <InfoCard
+                        icon={<Mail className="w-4 h-4" />}
+                        label="Email"
+                        value={customer.email}
+                    />
+                    <InfoCard
+                        icon={<Phone className="w-4 h-4" />}
+                        label="Phone"
+                        value={customer.phone}
+                    />
+                    <InfoCard
+                        icon={<MapPin className="w-4 h-4" />}
+                        label="Location"
+                        value={customer.location}
+                    />
+                    <InfoCard
+                        icon={<Calendar className="w-4 h-4" />}
+                        label="Member since"
+                        value={customer.joinedDate}
+                    />
                 </div>
             </div>
 

@@ -232,11 +232,13 @@ export const Select: React.FC<SelectProps> = (props) => {
         <>
             <div className={cn("flex flex-col w-full ", containerClass)}>
                 {label && (
-                    <p className={`mb-0 text-sm font-500 ${labelClass}`}>
+                    <p
+                        className={`mb-0 text-sm text-pulse-green font-500 ${labelClass}`}
+                    >
                         {label}{" "}
                         {labelRequired && (
                             <span
-                                className={`text-danger ${labelRequiredClass}`}
+                                className={`text-red-500 ${labelRequiredClass}`}
                             >
                                 *
                             </span>
@@ -254,7 +256,7 @@ export const Select: React.FC<SelectProps> = (props) => {
                                 // disabled={disabled}
                                 onClick={() => {}}
                                 className={cn(
-                                    "border !placeholder:text-placeholder !rounded-sm text-sm w-full justify-between flex items-center bg-white hover:bg-white ",
+                                    "border !placeholder:text-pulse-green/60 !rounded-sm text-sm w-full justify-between flex items-center bg-white hover:bg-white ",
                                     error && "border-danger",
                                     className,
                                     disabled &&
@@ -369,7 +371,7 @@ export const Select: React.FC<SelectProps> = (props) => {
                                       !Array.isArray(resolvedValue) ? (
                                         <span
                                             className={cn(
-                                                "text-black truncate text-left w-[100%] font-normal",
+                                                "text-pulse-green-dark truncate text-left w-[100%] font-normal ",
                                                 getOptionClassName &&
                                                     getOptionClassName(
                                                         resolvedValue.value,
@@ -383,7 +385,7 @@ export const Select: React.FC<SelectProps> = (props) => {
                                     ) : (
                                         <span
                                             className={cn(
-                                                "text-placeholder font-normal",
+                                                "!text-pulse-green/60 font-normal ",
                                                 placeholderClassName,
                                             )}
                                         >
@@ -398,7 +400,7 @@ export const Select: React.FC<SelectProps> = (props) => {
                                             className="cursor-pointer text-[10px] font-bold"
                                             onClick={handleClear}
                                         >
-                                            <X className="h-4 w-4" />
+                                            <X className="h-4 w-4 text-pulse-green-dark" />
                                         </span>
                                     )}
                                     {/* <Image
@@ -512,7 +514,7 @@ export const Select: React.FC<SelectProps> = (props) => {
                         </PopoverContent>
                     </Popover>
                     {error && (
-                        <div className="text-danger font-normal text-sm mt-1">
+                        <div className="text-red-500 font-normal text-sm mt-1">
                             {error}
                         </div>
                     )}

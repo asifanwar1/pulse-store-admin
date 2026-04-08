@@ -20,6 +20,11 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.OTP_VERIFICATION]: "OTP Verification",
     [APP_ROUTES.RESET_PASSWORD]: "Reset Password",
 
+    // Product Management
+    [APP_ROUTES.PRODUCTS]: "Product Management",
+    [APP_ROUTES.PRODUCTS_DETAILS]: "Product Details",
+    [APP_ROUTES.PRODUCTS_ADD]: "Add New Product",
+
     // Chat Management
     [APP_ROUTES.CHATS]: "Chat",
 };

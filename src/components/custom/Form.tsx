@@ -21,6 +21,10 @@ export const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 export const phoneRegex = /^\d{10}$/;
 
+export interface formModesType {
+    mode?: "add" | "update";
+}
+
 export type FieldType<T extends FieldValues> = {
     name: Path<T>;
     label?: string;

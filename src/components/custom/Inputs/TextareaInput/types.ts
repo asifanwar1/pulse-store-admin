@@ -1,7 +1,9 @@
 import type { TextareaHTMLAttributes } from "react";
 
-export interface ITextareaInputProps
-    extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
+export interface ITextareaInputProps extends Omit<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    "size"
+> {
     name?: string;
     label?: string;
     containerClasses?: string;
@@ -12,4 +14,6 @@ export interface ITextareaInputProps
     maxLength?: number;
     showCharacterCount?: boolean;
     characterCountClass?: string;
+    labelRequired?: boolean;
+    labelRequiredClass?: string;
 }

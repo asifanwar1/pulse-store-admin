@@ -31,6 +31,8 @@ import OrderManagement from "@/pages/OrderManagement/OrderManagement";
 import CustomerManagement from "@/pages/CustomerManagement/CustomerManagement";
 import CustomerDetails from "@/pages/CustomerManagement/CustomerDetails/CustomerDetails";
 import ProductManagement from "@/pages/ProductManagement/ProductManagement";
+import ProductDetails from "@/pages/ProductManagement/ProductDetails/ProductDetails";
+import ManageProduct from "@/pages/ProductManagement/ManageProduct/ManageProduct";
 
 export const routes: RouteObject[] = [
     {
@@ -43,10 +45,22 @@ export const routes: RouteObject[] = [
             },
             { path: APP_ROUTES.DASHBOARD, element: <Dashboard /> },
             { path: APP_ROUTES.CUSTOMERS, element: <CustomerManagement /> },
-            { path: APP_ROUTES.CUSTOMERS_DETAILS, element: <CustomerDetails /> },
+            {
+                path: APP_ROUTES.CUSTOMERS_DETAILS,
+                element: <CustomerDetails />,
+            },
             { path: APP_ROUTES.ORDERS, element: <OrderManagement /> },
             { path: APP_ROUTES.SHIPMENTS, element: <ShipmentManagement /> },
             { path: APP_ROUTES.PRODUCTS, element: <ProductManagement /> },
+            { path: APP_ROUTES.PRODUCTS_DETAILS, element: <ProductDetails /> },
+            {
+                path: APP_ROUTES.PRODUCTS_ADD,
+                element: <ManageProduct mode="add" />,
+            },
+            {
+                path: APP_ROUTES.PRODUCTS_UPDATE,
+                element: <ManageProduct mode="update" />,
+            },
 
             // {
             //     path: APP_ROUTES.CHATS,

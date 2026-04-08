@@ -26,6 +26,8 @@ export enum APP_ROUTES {
 
     PRODUCTS = "/products",
     PRODUCTS_DETAILS = "/products/:id",
+    PRODUCTS_ADD = "/products/add",
+    PRODUCTS_UPDATE = "/products/update/:id",
 
     ORDERS = "/orders",
     ORDERS_DETAILS = "/orders/:id",

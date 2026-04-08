@@ -15,7 +15,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import NotFound from "@/pages/NotFound/NotFound";
-import logo from "@/assets/images/pulse-store-black.png";
+import logo from "@/assets/images/pulse-store-green.png";
 import Image from "@/components/custom/Image";
 import type { IErrorBoundaryProps } from "./ErrorBoundary.types";
 
@@ -33,21 +33,21 @@ const ErrorBoundary: React.FC<IErrorBoundaryProps> = ({ error: propError }) => {
 
     if (error instanceof Error) {
         return (
-            <div className="relative min-h-screen bg-gray-50 flex items-center justify-center p-4 overflow-y-auto">
+            <div className="relative min-h-screen bg-pulse-cream flex items-center justify-center p-4 overflow-y-auto">
                 <Image
                     src={logo}
-                    alt="DCD Logo"
-                    className="absolute top-5 left-5 w-45 h-20"
+                    alt="Pulse Store Logo"
+                    className="absolute top-5 left-5 w-15 h-15"
                 />
-                <Card className="w-full max-w-md">
+                <Card className="w-full max-w-md bg-pulse-cream-dark/50">
                     <CardHeader className="text-center">
                         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
                             <AlertTriangle className="h-6 w-6 text-red-600" />
                         </div>
-                        <CardTitle className="text-xl font-semibold text-gray-900">
+                        <CardTitle className="text-xl font-semibold text-pulse-green-dark">
                             Something went wrong
                         </CardTitle>
-                        <CardDescription className="text-gray-600">
+                        <CardDescription className="text-pulse-green">
                             We encountered an unexpected error. Please try again
                             or contact support if the problem persists.
                         </CardDescription>
