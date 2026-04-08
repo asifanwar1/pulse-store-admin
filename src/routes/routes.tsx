@@ -33,6 +33,8 @@ import CustomerDetails from "@/pages/CustomerManagement/CustomerDetails/Customer
 import ProductManagement from "@/pages/ProductManagement/ProductManagement";
 import ProductDetails from "@/pages/ProductManagement/ProductDetails/ProductDetails";
 import ManageProduct from "@/pages/ProductManagement/ManageProduct/ManageProduct";
+import OrderDetails from "@/pages/OrderManagement/OrderDetails/OrderDetails";
+import ManageOrder from "@/pages/OrderManagement/ManageOrder/ManageOrder";
 
 export const routes: RouteObject[] = [
     {
@@ -50,6 +52,15 @@ export const routes: RouteObject[] = [
                 element: <CustomerDetails />,
             },
             { path: APP_ROUTES.ORDERS, element: <OrderManagement /> },
+            { path: APP_ROUTES.ORDERS_DETAILS, element: <OrderDetails /> },
+            {
+                path: APP_ROUTES.ORDERS_CREATE,
+                element: <ManageOrder mode="add" />,
+            },
+            {
+                path: APP_ROUTES.ORDERS_UPDATE,
+                element: <ManageOrder mode="update" />,
+            },
             { path: APP_ROUTES.SHIPMENTS, element: <ShipmentManagement /> },
             { path: APP_ROUTES.PRODUCTS, element: <ProductManagement /> },
             { path: APP_ROUTES.PRODUCTS_DETAILS, element: <ProductDetails /> },

@@ -24,6 +24,13 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.PRODUCTS]: "Product Management",
     [APP_ROUTES.PRODUCTS_DETAILS]: "Product Details",
     [APP_ROUTES.PRODUCTS_ADD]: "Add New Product",
+    [APP_ROUTES.PRODUCTS_UPDATE]: "Update Product",
+
+    // Order Management
+    [APP_ROUTES.ORDERS]: "Order Management",
+    [APP_ROUTES.ORDERS_DETAILS]: "Order Details",
+    [APP_ROUTES.ORDERS_CREATE]: "Create Order",
+    [APP_ROUTES.ORDERS_UPDATE]: "Update Order",
 
     // Chat Management
     [APP_ROUTES.CHATS]: "Chat",
