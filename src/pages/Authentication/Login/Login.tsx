@@ -11,7 +11,7 @@ import { LOGIN_FORM_CONFIG, LOGIN_FORM_INITIAL_VALUES } from "../forms/Config";
 import { LOGIN_FORM_SCHEMA } from "../forms/validationSchemas";
 
 const Login = () => {
-    const { formRef, onSubmit, isPending } = useLoginContainer();
+    const { formRef, isPending, onSubmit } = useLoginContainer();
 
     return (
         <AuthWrapper>
