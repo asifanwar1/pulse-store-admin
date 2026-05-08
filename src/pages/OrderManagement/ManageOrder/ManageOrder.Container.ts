@@ -76,7 +76,6 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
         if (!validateItems()) return;
         setIsSubmitting(true);
         try {
-            // TODO: replace with real API call
             console.log("New order payload:", {
                 ...values,
                 items,
