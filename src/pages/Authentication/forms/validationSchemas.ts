@@ -6,7 +6,7 @@ export const LOGIN_FORM_SCHEMA = z.object({
         .min(1, "Email is required")
         .email("Please enter a valid email address"),
     password: z.string().min(6, "Password must be at least 6 characters long"),
-    type: z.string().min(1, "Type is required"),
+    user_type: z.string().min(1, "Type is required"),
     rememberToken: z.boolean().optional(),
 });
 

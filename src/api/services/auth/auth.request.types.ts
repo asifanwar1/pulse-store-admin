@@ -3,8 +3,7 @@ import type { UserModel } from "@/api/models/user.model";
 export type TLoginBody = {
     email: string;
     password: string;
-    type: string;
-    rememberToken: boolean;
+    user_type: string;
 };
 
 export type TForgetPasswordBody = {
@@ -28,7 +27,10 @@ export type TResetPasswordBody = {
     token: string;
     password: string;
 };
-export type TResetPasswordApiBody = Pick<TResetPasswordBody, "token" | "password">;
+export type TResetPasswordApiBody = Pick<
+    TResetPasswordBody,
+    "token" | "password"
+>;
 
 export type TUpdateUserProfileRequest = Partial<UserModel>;
 

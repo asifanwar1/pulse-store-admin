@@ -19,8 +19,7 @@ export interface IAuthWrapperProps {
 export interface ILoginFormValues {
     email: string;
     password: string;
-    type: string;
-    rememberToken: boolean;
+    user_type: string;
 }
 
 export interface IForgotPasswordFormValues {

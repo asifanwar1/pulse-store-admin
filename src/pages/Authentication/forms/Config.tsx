@@ -60,8 +60,7 @@ export const RESET_PASSWORD_FORM_CONFIG: FieldType<IResetPasswordFormValues>[] =
 export const LOGIN_FORM_INITIAL_VALUES: ILoginFormValues = {
     email: "admin@dcd.com",
     password: "Click123$",
-    type: "ADMIN",
-    rememberToken: true,
+    user_type: "ADMIN",
 };
 
 export const FORGOT_PASSWORD_FORM_INITIAL_VALUES: IForgotPasswordFormValues = {
