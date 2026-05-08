@@ -123,7 +123,7 @@ export const ADD_PRODUCT_FORM_CONFIG: FieldType<ManageProductFormValues>[] = [
         componentProps: {
             multiple: true,
             accept: "image/*",
-            maxSize: 5 * 1024 * 1024, // 5 MB
+            maxSize: 5 * 1024 * 1024,
             maxFiles: 8,
             previewSize: "md",
         },
