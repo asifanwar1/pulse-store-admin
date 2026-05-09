@@ -25,7 +25,6 @@ export const useManageShipment = ({
     const handleSubmit = async (values: ManageShipmentFormValues) => {
         setIsSubmitting(true);
         try {
-            // TODO: replace with real API call
             console.log("Shipment payload:", { ...values, mode });
             navigate(APP_ROUTES.SHIPMENTS);
         } finally {
