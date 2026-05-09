@@ -1,6 +1,5 @@
 export enum APP_ROUTES {
     ROOT = "/",
-    // auth
     LOGIN = "/login",
     FORGOT_PASSWORD = "/forgot-password",
     OTP_VERIFICATION = "/otp-verification/:token",
