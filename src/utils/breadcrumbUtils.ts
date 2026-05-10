@@ -13,7 +13,6 @@ export const getRouteDisplayName = (
 ): string => {
     const routeNames = customRouteNames ?? defaultRouteNames;
 
-    // Find the most specific matching route
     const sortedRoutes = Object.keys(routeNames).sort(
         (a, b) => b.length - a.length,
     );
