@@ -20,7 +20,6 @@ export const titleCase = (str: string): string => {
     );
 };
 
-// Helper function to safely convert any value to string
 export const safeStringConversion = (value: unknown): string => {
     if (value == null) return "";
     if (typeof value === "string") return value;
