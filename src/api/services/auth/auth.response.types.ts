@@ -2,6 +2,8 @@ import type { UserModel } from "@/api/models/user.model";
 
 export type TLoginResponse = {
     token: string;
+    refreshToken: string;
+    tokentype: string;
 };
 
 export type TGetMeResponse = UserModel;

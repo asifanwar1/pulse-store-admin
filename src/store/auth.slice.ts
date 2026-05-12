@@ -7,6 +7,7 @@ export interface AuthStateType {
     userType: UserType;
     isAuthenticated: boolean;
     token: string | null;
+    refreshToken: string | null;
     deviceId: string | null;
     user: UserModel | null;
 }
@@ -20,6 +21,7 @@ export const initialAuthState: AuthStateType = {
     userType: USER_TYPE.CUSTOMER,
     isAuthenticated: false,
     token: null,
+    refreshToken: null,
     deviceId: null,
     user: null,
 };

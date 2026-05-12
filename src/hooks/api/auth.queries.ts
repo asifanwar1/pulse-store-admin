@@ -45,8 +45,9 @@ export const useLogin = () => {
         mutationFn: LoginApi,
         onSuccess: async (response) => {
             const token = response?.token;
+            const refreshToken = response?.refreshToken;
             if (token) {
-                setAuth({ token });
+                setAuth({ token, refreshToken });
                 const data = await GetMe(token);
                 const user = data;
                 if (user) {
