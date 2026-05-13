@@ -32,9 +32,9 @@ export type TResetPasswordApiBody = Pick<
     "token" | "password"
 >;
 
-export type TUpdateUserProfileRequest = Partial<UserModel>;
-
 export type TChangePasswordBody = {
     oldPassword: string;
     newPassword: string;
 };
+
+export type TUpdateUserProfileRequest = Partial<UserModel>;

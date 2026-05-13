@@ -38,7 +38,7 @@ export const GetMe = async (token?: string) => {
 export const ForgetPasswordApi = async (body: TForgetPasswordBody) => {
     return request<TForgetPasswordResponse, TForgetPasswordBody>({
         method: HTTP_METHODS.POST,
-        url: "/auth/forget-password",
+        url: "/auth/forgot-password",
         body,
     });
 };
@@ -51,7 +51,7 @@ export const ForgetPasswordVerification = async (
         TForgetPasswordVerificationBody
     >({
         method: HTTP_METHODS.POST,
-        url: "/auth/forget-password/verification",
+        url: "/auth/forgot-password/verification",
         body,
     });
 };
@@ -59,7 +59,7 @@ export const ForgetPasswordVerification = async (
 export const ResendCode = async (body: TResendCodeBody) => {
     return request<TResendCodeResponse, TResendCodeBody>({
         method: HTTP_METHODS.POST,
-        url: "/auth/forget-password",
+        url: "/auth/forgot-password",
         body,
     });
 };
