@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { useStore } from "@/store";
@@ -17,22 +17,22 @@ import { MessageSquareText, LogOut } from "lucide-react";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/custom/NotificationDropDown";
-// import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
+import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
 
 const MainLayoutWrapper: React.FC = () => {
     const { state, isMobile } = useSidebar();
-    // const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
-    // const { mutateAsync: logout } = useLogout();
+    const { mutateAsync: logout } = useLogout();
     const clearAuth = useStore((state) => state.clearAuth);
     const userData = useStore((state) => state.user);
-    // useGetMe();
+    useGetMe();
     const handleLogout = useCallback(async (): Promise<void> => {
         setIsLoggingOut(true);
         try {
-            // await logout();
+            await logout();
             clearAuth();
             navigate(APP_ROUTES.LOGIN, { replace: true });
         } finally {
@@ -42,15 +42,15 @@ const MainLayoutWrapper: React.FC = () => {
     }, [clearAuth, navigate]);
     const onLogoutClick = () => setShowLogout((prev) => !prev);
 
-    // useEffect(() => {
-    //     if (!isAuthenticated) {
-    //         navigate(APP_ROUTES.LOGIN);
-    //     }
-    // }, [isAuthenticated, navigate]);
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate(APP_ROUTES.LOGIN);
+        }
+    }, [isAuthenticated, navigate]);
 
-    // if (!isAuthenticated) {
-    //     return null;
-    // }
+    if (!isAuthenticated) {
+        return null;
+    }
     return (
         <>
             <div className="relative flex h-screen w-full overflow-hidden overflow-x-hidden">
