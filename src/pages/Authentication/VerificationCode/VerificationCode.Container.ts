@@ -67,8 +67,8 @@ export function useVerificationCodeContainer() {
             code: otp,
             token: token,
         };
-        const result = (await verify(payload)) as { data?: { token?: string } };
-        const newToken = result?.data?.token;
+        const result = (await verify(payload)) as { token?: string };
+        const newToken = result?.token;
         if (newToken) {
             navigate(APP_ROUTES.RESET_PASSWORD.replace(":token", newToken));
         }
