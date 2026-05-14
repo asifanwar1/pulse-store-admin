@@ -25,7 +25,7 @@ export const useManageProduct = ({
     const handleSubmit = async (values: ManageProductFormValues) => {
         setIsSubmitting(true);
         try {
-            console.log("New product payload:", {
+            console.log({
                 ...values,
                 price: Number(values.price),
                 costPrice: Number(values.costPrice),
