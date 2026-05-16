@@ -1,3 +1,7 @@
+import { z } from "zod";
+
+const optionSchema = z.object({ label: z.string(), value: z.string() });
+
 export const ManageProductSchema = z.object({
     name: z
         .string()
