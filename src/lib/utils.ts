@@ -24,7 +24,7 @@ export const getParamsAttachedRoute = (
                     match[match.length - 1] === "?"
                         ? match.slice(1, match.length - 1)
                         : match.slice(1);
-                return obj[formattedMatchedValue].toString(); // Ensure the value is a string
+                return obj[formattedMatchedValue].toString();
             });
         });
 
