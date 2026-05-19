@@ -31,3 +31,38 @@ export type TGetProductsResponse = {
     data: TProductResponse[];
     count: number;
 };
+
+export type TCreateProductResponse = TProductResponse;
+
+export type TGetProductResponse = TProductResponse;
+
+export type TUpdateProductResponse = {
+    name: string;
+    sku: string;
+    brand: string;
+    description: string;
+    retail_price: number;
+    cost_price: number;
+    stock_quantity: number;
+    category_id: number;
+    category: TProductCategory | string;
+    status: TProductStatus | string;
+    tags: string[];
+    media: TProductMedia[];
+};
+
+export type TDeleteProductResponse = {
+    data: boolean;
+};
+
+export type TProductAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
+export type TGetProductAnalyticsResponse = {
+    total_products: TProductAnalyticsMetric;
+    active_products: TProductAnalyticsMetric;
+    out_of_stock_products: TProductAnalyticsMetric;
+    average_price: TProductAnalyticsMetric;
+};
