@@ -1,6 +1,7 @@
 export const PRODUCT_QUERY_KEYS = {
     PRODUCTS: "PRODUCTS",
     PRODUCT: "PRODUCT",
+    ANALYTICS: "PRODUCT_ANALYTICS",
 } as const;
 
 export default PRODUCT_QUERY_KEYS;

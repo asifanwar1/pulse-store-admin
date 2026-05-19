@@ -1,4 +1,9 @@
 import type { dashboardStatsData } from "@/mock/dashboard.mock";
+import type {
+    InvalidateOptions,
+    QueryClient,
+    QueryKey,
+} from "@tanstack/react-query";
 import type { NavigateFunction } from "react-router-dom";
 
 export const objectContainsKey = (
@@ -87,4 +92,21 @@ export const formatStatValue = (
               ? `${(value / 1_000).toFixed(value >= 10_000 ? 0 : 1)}k`
               : value.toString();
     return `${prefix}${display}${suffix}`;
+};
+
+type InvalidateMultipleOptions = Omit<InvalidateOptions, "queryKey">;
+
+export const invalidateMultiple = async (
+    queryClient: QueryClient,
+    keys: QueryKey[],
+    options?: InvalidateMultipleOptions,
+) => {
+    await Promise.all(
+        keys.map((key) =>
+            queryClient.invalidateQueries({
+                queryKey: key,
+                ...options,
+            }),
+        ),
+    );
 };
