@@ -1,6 +1,7 @@
 export const USER_QUERY_KEYS = {
-    USERS: "users",
-    CURRENT_USER: "current-user",
-    INSTALLERS: "installers",
-    INSTALLER_MANAGEMENT: "installer-management"
-};
+    CURRENT_USER: "CURRENT_USER",
+    USERS: "USERS",
+    USER: "USER",
+} as const;
+
+export default USER_QUERY_KEYS;

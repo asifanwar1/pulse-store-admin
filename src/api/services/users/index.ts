@@ -1,123 +1,71 @@
+import { request } from "@/api/client/request";
+import type { TApiArgs, TQueryParams, WithSignal } from "@/api/types/common";
 import { HTTP_METHODS } from "@/constants";
 import type {
     TGetUsersParams,
-    TUpdateUserBody,
+    TUpdateMeBody,
     TUpdateUserStatusBody,
-    TInstallerInviteBody,
-    TCustomerOnboardBody,
-    TUpdateFcmTokenBody,
-    TExportUsersParams
 } from "./users.request.types";
 import type {
-    TGetCurrentUserResponse,
-    TGetUsersResponse,
-    TGetUserByIdResponse,
-    TUpdateUserResponse,
     TDeleteUserResponse,
+    TGetCurrentUserResponse,
+    TGetUserByIdResponse,
+    TGetUsersResponse,
+    TUpdateMeResponse,
     TUpdateUserStatusResponse,
-    TInstallerInviteResponse,
-    TCustomerOnboardResponse,
-    TUpdateFcmTokenResponse,
-    TExportUsersResponse,
-    TInstallerReinviteResponse
 } from "./users.response.types";
-import { request } from "@/api/client/request";
-import type { TQueryParams, WithSignal } from "@/api/types/common";
 import { USER_QUERY_KEYS } from "./queryKeys";
 
-export type UserApiArgs<TBody = unknown, TParams = unknown> = {
-    id?: number;
-    body?: TBody;
-    params?: TParams;
-};
-
-export const GetCurrentUser = async () => {
+export const GetCurrentUser = async (token?: string) => {
     return request<TGetCurrentUserResponse, undefined>({
         method: HTTP_METHODS.GET,
-        url: "/user/me"
+        url: "/users/me",
+        token,
+    });
+};
+
+export const UpdateMe = async (body: TUpdateMeBody) => {
+    return request<TUpdateMeResponse, TUpdateMeBody>({
+        method: HTTP_METHODS.PUT,
+        url: "/users/me",
+        body,
     });
 };
 
 export const GetUsers = async (params?: WithSignal<TGetUsersParams>) => {
     const { signal, ...urlParams } = params || {};
     const abortSignal = signal;
+
     return request<TGetUsersResponse, TGetUsersParams>({
         method: HTTP_METHODS.GET,
         url: "/users",
         params: urlParams as TQueryParams,
-        signal: abortSignal
+        signal: abortSignal,
     });
 };
 
-export const GetUserById = async ({ id }: UserApiArgs) => {
+export const GetUserById = async ({ id }: TApiArgs) => {
     return request<TGetUserByIdResponse, undefined>({
         method: HTTP_METHODS.GET,
-        url: `/users/${id}`
-    });
-};
-
-export const UpdateUser = async ({ id, body }: UserApiArgs<TUpdateUserBody>) => {
-    return request<TUpdateUserResponse, TUpdateUserBody>({
-        method: HTTP_METHODS.PATCH,
         url: `/users/${id}`,
-        body
     });
 };
 
-export const DeleteUser = async ({ id }: UserApiArgs) => {
+export const DeleteUser = async ({ id }: TApiArgs) => {
     return request<TDeleteUserResponse, undefined>({
         method: HTTP_METHODS.DELETE,
-        url: `/users/${id}`
+        url: `/users/${id}`,
     });
 };
 
-export const UpdateUserStatus = async ({ id, body }: UserApiArgs<TUpdateUserStatusBody>) => {
+export const UpdateUserStatus = async ({
+    id,
+    body,
+}: TApiArgs<TUpdateUserStatusBody>) => {
     return request<TUpdateUserStatusResponse, TUpdateUserStatusBody>({
-        method: HTTP_METHODS.PUT,
+        method: HTTP_METHODS.PATCH,
         url: `/users/${id}/status`,
-        body
-    });
-};
-
-export const InstallerInvite = async ({ body }: UserApiArgs<TInstallerInviteBody>) => {
-    return request<TInstallerInviteResponse, TInstallerInviteBody>({
-        method: HTTP_METHODS.POST,
-        url: "/users/installer-invite",
-        body
-    });
-};
-
-export const InstallerReinvite = async ({ id }: UserApiArgs) => {
-    return request<TInstallerReinviteResponse, undefined>({
-        method: HTTP_METHODS.POST,
-        url: `/users/${id}/installer-reinvite`
-    });
-};
-
-export const CustomerOnboard = async ({ body }: UserApiArgs<TCustomerOnboardBody>) => {
-    return request<TCustomerOnboardResponse, TCustomerOnboardBody>({
-        method: HTTP_METHODS.POST,
-        url: "/users/customer-onboard",
-        body
-    });
-};
-
-export const UpdateFcmToken = async ({ body }: UserApiArgs<TUpdateFcmTokenBody>) => {
-    return request<TUpdateFcmTokenResponse, TUpdateFcmTokenBody>({
-        method: HTTP_METHODS.PUT,
-        url: "/users/fcm",
-        body
-    });
-};
-
-export const ExportUsers = async (params?: WithSignal<TExportUsersParams>) => {
-    const { signal, ...urlParams } = params || {};
-    const abortSignal = signal;
-    return request<TExportUsersResponse, TExportUsersParams>({
-        method: HTTP_METHODS.GET,
-        url: "/users/export",
-        params: urlParams as TQueryParams,
-        signal: abortSignal
+        body,
     });
 };
 
