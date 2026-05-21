@@ -22,13 +22,17 @@ export const request = async <TResponse = unknown, TBody = unknown>(
     }
 
     try {
+        const hasBody =
+            config.body instanceof FormData ||
+            (!!config.body && Object.keys(config.body).length > 0);
+
         const axiosConfig = {
             skipAuth: config.skipAuth,
             method: config.method,
             url: config.url,
             headers: config.headers,
             params: config.params,
-            ...(config.body && Object.keys(config.body).length > 0 && { data: config.body }),
+            ...(hasBody && { data: config.body }),
             ...(config.signal && { signal: config.signal })
         };
 
