@@ -5,6 +5,7 @@ import { useState } from "react";
 
 type TSingleFileUploadOptions = {
     fieldName?: string;
+    folder?: string;
 };
 
 type TMultipleFileUploadOptions = TSingleFileUploadOptions & {
@@ -19,25 +20,33 @@ export const useMediaUpload = () => {
         mutationFn: (formData: FormData) => UploadMedia(formData),
     });
 
-    const uploadSingleFile = async (file: File, fieldName: string) => {
+    const uploadSingleFile = async (
+        file: File,
+        fieldName: string,
+        folder?: string,
+    ) => {
         const formData = new FormData();
 
         formData.append(fieldName, file);
+        if (folder) {
+            formData.append("folder", folder);
+        }
 
         return uploadMediaMutation.mutateAsync(formData);
     };
 
     const handleSingleFileUpload = async (
         file: File,
-        options?: TSingleFileUploadOptions
+        options?: TSingleFileUploadOptions,
     ) => {
         const fieldName = options?.fieldName || "file";
+        const folder = options?.folder;
 
         try {
             setIsMediaLoading(true);
             setProgress(0);
 
-            const response = await uploadSingleFile(file, fieldName);
+            const response = await uploadSingleFile(file, fieldName, folder);
 
             setProgress(100);
             return response;
@@ -52,7 +61,7 @@ export const useMediaUpload = () => {
         files: File[],
         options?: TMultipleFileUploadOptions & {
             returnFullResponse?: TReturnFullResponse;
-        }
+        },
     ): Promise<
         TReturnFullResponse extends true ? TMediaUploadResponse[] : string[]
     > => {
@@ -64,6 +73,7 @@ export const useMediaUpload = () => {
 
         const fieldName = options?.fieldName || "file";
         const returnFullResponse = options?.returnFullResponse || false;
+        const folder = options?.folder;
 
         setIsMediaLoading(true);
         setProgress(0);
@@ -73,23 +83,27 @@ export const useMediaUpload = () => {
 
             const settledResults = await Promise.allSettled(
                 files.map(async (file) => {
-                    const response = await uploadSingleFile(file, fieldName);
+                    const response = await uploadSingleFile(
+                        file,
+                        fieldName,
+                        folder,
+                    );
 
                     completedUploads += 1;
                     setProgress(
-                        Math.round((completedUploads / files.length) * 100)
+                        Math.round((completedUploads / files.length) * 100),
                     );
 
                     return response;
-                })
+                }),
             );
 
             const uploadedFiles = settledResults
                 .filter(
                     (
-                        result
+                        result,
                     ): result is PromiseFulfilledResult<TMediaUploadResponse> =>
-                        result.status === "fulfilled"
+                        result.status === "fulfilled",
                 )
                 .map((result) => result.value);
 
@@ -100,16 +114,10 @@ export const useMediaUpload = () => {
             }
 
             return uploadedFiles
-                .map(
-                    (item) =>
-                        item.file_url ||
-                        item.url ||
-                        item.key ||
-                        item.path ||
-                        item.file_name ||
-                        item.filename
-                )
-                .filter((item): item is string => !!item) as TReturnFullResponse extends true
+                .map((item) => item.url)
+                .filter(
+                    (item): item is string => !!item,
+                ) as TReturnFullResponse extends true
                 ? TMediaUploadResponse[]
                 : string[];
         } finally {
