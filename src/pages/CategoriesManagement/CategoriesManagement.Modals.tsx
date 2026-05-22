@@ -20,10 +20,7 @@ type TCategoryFormModalProps = {
     errors: TCategoryFormErrors;
     isSubmitting: boolean;
     onClose: () => void;
-    onChange: (
-        field: keyof TCategoryFormValues,
-        value: string,
-    ) => void;
+    onChange: (field: keyof TCategoryFormValues, value: string) => void;
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
@@ -45,12 +42,7 @@ export const CategoryFormModal = ({
     onChange,
     onSubmit,
 }: TCategoryFormModalProps) => {
-    const title =
-        mode === "add" ? "Add New Category" : "Edit Category";
-    const description =
-        mode === "add"
-            ? "Create a category to organize your product catalogue."
-            : "Update the category details below.";
+    const title = mode === "add" ? "Add New Category" : "Edit Category";
 
     const footer = (
         <div className="flex w-full justify-end gap-3">
@@ -61,7 +53,11 @@ export const CategoryFormModal = ({
             >
                 Cancel
             </CustomButton>
-            <CustomButton type="submit" form="category-form" isLoading={isSubmitting}>
+            <CustomButton
+                type="submit"
+                form="category-form"
+                isLoading={isSubmitting}
+            >
                 {mode === "add" ? "Create Category" : "Save Changes"}
             </CustomButton>
         </div>
@@ -72,7 +68,6 @@ export const CategoryFormModal = ({
             isOpen={open}
             onClose={onClose}
             title={title}
-            description={description}
             size="md"
             footer={footer}
             showCloseButton

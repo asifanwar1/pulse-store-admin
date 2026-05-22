@@ -37,3 +37,17 @@ export type TApiArgs<TBody = unknown, TParams = unknown> = {
 };
 
 export type WithSignal<T> = T & { signal?: AbortSignal };
+
+export type APIError = {
+    message: string;
+    // Only if 400 error
+    error?: {
+        [field: string]: string;
+    };
+    data?: any;
+};
+export type ResponseType<T> = {
+    status: number;
+    data: T | null;
+    error?: APIError;
+};

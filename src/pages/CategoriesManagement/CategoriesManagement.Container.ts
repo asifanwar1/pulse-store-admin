@@ -1,4 +1,5 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
+import { useQueryState } from "nuqs";
 
 import {
     useCreateCategory,
@@ -9,6 +10,7 @@ import {
 import { showToast } from "@/lib/toast";
 import type { TCategoryResponse } from "@/api/services/categories/categories.response";
 import type { TCategoryFormValues } from "./CategoriesManagement.Modals";
+import Config from "@/Config";
 
 type TCategoryFormErrors = Partial<Record<keyof TCategoryFormValues, string>>;
 
@@ -27,17 +29,6 @@ export const getCategoryInitials = (name: string) => {
 };
 
 export const useCategoriesManagement = () => {
-    const { data, isPending: isCategoriesLoading } = useGetCategories({
-        page: 1,
-        limit: 100,
-    });
-    const { mutateAsync: createCategory, isPending: isCreating } =
-        useCreateCategory();
-    const { mutateAsync: updateCategory, isPending: isUpdating } =
-        useUpdateCategory();
-    const { mutateAsync: deleteCategory, isPending: isDeleting } =
-        useDeleteCategory();
-
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [formMode, setFormMode] = useState<"add" | "edit">("add");
@@ -46,19 +37,32 @@ export const useCategoriesManagement = () => {
     const [formValues, setFormValues] =
         useState<TCategoryFormValues>(INITIAL_FORM_VALUES);
     const [formErrors, setFormErrors] = useState<TCategoryFormErrors>({});
+    const [pageSize, setPageSize] = useQueryState("pageSize", {
+        defaultValue: Config.LIMIT,
+        parse: Number,
+        serialize: String,
+    });
+    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
 
-    const categories = data?.data || [];
-    const categoriesCount = data?.count ?? categories.length;
+    const {
+        data: categories,
+        count: categoriesTotalCount,
+        isPending: isCategoriesLoading,
+        page,
+        setPage,
+    } = useGetCategories({
+        search,
+        page: 1,
+        limit: pageSize,
+    });
+    const { mutateAsync: createCategory, isPending: isCreating } =
+        useCreateCategory();
+    const { mutateAsync: updateCategory, isPending: isUpdating } =
+        useUpdateCategory();
+    const { mutateAsync: deleteCategory, isPending: isDeleting } =
+        useDeleteCategory();
+
     const isFormSubmitting = isCreating || isUpdating;
-
-    const summary = useMemo(
-        () => ({
-            total: categoriesCount,
-            described: categories.filter((item) => !!item.description?.trim())
-                .length,
-        }),
-        [categories, categoriesCount],
-    );
 
     const resetForm = () => {
         setFormValues(INITIAL_FORM_VALUES);
@@ -183,10 +187,20 @@ export const useCategoriesManagement = () => {
         }
     };
 
+    const filterItems = [
+        {
+            type: "search",
+            key: "search",
+            placeholder: "Search..",
+            onSearch: setSearch,
+            // label: "Search Properties",
+            clearable: true,
+        } as const,
+    ];
+
     return {
         categories,
-        categoriesCount,
-        summary,
+        categoriesTotalCount,
         formMode,
         formValues,
         formErrors,
@@ -196,6 +210,12 @@ export const useCategoriesManagement = () => {
         isDeleteModalOpen,
         isFormSubmitting,
         isDeleting,
+        page,
+        pageSize,
+        filterItems,
+        setSearch,
+        setPageSize,
+        setPage,
         openAddModal,
         openEditModal,
         openDeleteModal,

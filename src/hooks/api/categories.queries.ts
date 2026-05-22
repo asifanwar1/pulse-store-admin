@@ -11,15 +11,35 @@ import type {
     TGetCategoriesParams,
     TUpdateCategoryBody,
 } from "@/api/services/categories/categories.request";
+import Config from "@/Config";
 import { queryClient } from "@/lib/queryClient";
+import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDataTableQuery } from "@/hooks/useDataTableQuery";
 
-export const useGetCategories = (params?: TGetCategoriesParams) => {
-    return useQuery({
-        queryKey: [CATEGORY_QUERY_KEYS.CATEGORIES, params],
-        queryFn: () => GetCategories(params),
+export const useGetCategories = (
+    props: TGetCategoriesParams,
+    enabled?: boolean,
+) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const { limit = Config.LIMIT, search = "", page } = props;
+
+    const { data, count, ...rest } = useDataTableQuery({
+        queryKey: [
+            CATEGORY_QUERY_KEYS.CATEGORIES,
+            search,
+            String(page ?? 1),
+            String(limit),
+        ],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params) => ({
+            status: 200,
+            data: await GetCategories(params),
+        }),
     });
+    return { data, count, ...rest };
 };
 
 export const useGetCategory = (id?: number) => {
@@ -44,13 +64,8 @@ export const useCreateCategory = () => {
 
 export const useUpdateCategory = () => {
     return useMutation({
-        mutationFn: ({
-            id,
-            body,
-        }: {
-            id: number;
-            body: TUpdateCategoryBody;
-        }) => UpdateCategory({ id, body }),
+        mutationFn: ({ id, body }: { id: number; body: TUpdateCategoryBody }) =>
+            UpdateCategory({ id, body }),
         onSuccess: async () => {
             await invalidateMultiple(queryClient, [
                 [CATEGORY_QUERY_KEYS.CATEGORIES],

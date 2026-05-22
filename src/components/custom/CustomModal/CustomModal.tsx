@@ -90,7 +90,7 @@ export const CustomModal = ({
             <DialogContent
                 className={cn(
                     sizeClasses[size],
-                    "bg-white border-0 shadow-none",
+                    "bg-pulse-cream border-0 shadow-none",
                     className,
                 )}
                 showCloseButton={showCloseButton}
@@ -117,9 +117,11 @@ export const CustomModal = ({
                                 </div>
                             )}
                             {description && (
-                                <DialogDescription>
-                                    {description}
-                                </DialogDescription>
+                                <div className="flex items-center justify-between">
+                                    <DialogDescription>
+                                        {description}
+                                    </DialogDescription>
+                                </div>
                             )}
                         </DialogHeader>
                     )}
