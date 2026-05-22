@@ -6,6 +6,7 @@ import {
     Van,
     Container,
     type LucideIcon,
+    Tag,
 } from "lucide-react";
 
 export type SidebarContainerType = {
@@ -32,6 +33,12 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: Store,
         activeIcon: Store,
         path: [APP_ROUTES.PRODUCTS],
+    },
+    {
+        label: "Categories Management",
+        inactiveIcon: Tag,
+        activeIcon: Tag,
+        path: [APP_ROUTES.CATEGORIES],
     },
     {
         label: "Order Management",

@@ -37,6 +37,7 @@ import ProductDetails from "@/pages/ProductManagement/ProductDetails/ProductDeta
 import ManageProduct from "@/pages/ProductManagement/ManageProduct/ManageProduct";
 import OrderDetails from "@/pages/OrderManagement/OrderDetails/OrderDetails";
 import ManageOrder from "@/pages/OrderManagement/ManageOrder/ManageOrder";
+import CategoriesManagement from "@/pages/CategoriesManagement/CategoriesManagement";
 
 export const routes: RouteObject[] = [
     {
@@ -86,7 +87,7 @@ export const routes: RouteObject[] = [
                 path: APP_ROUTES.PRODUCTS_UPDATE,
                 element: <ManageProduct mode="update" />,
             },
-
+            { path: APP_ROUTES.CATEGORIES, element: <CategoriesManagement /> },
             // {
             //     path: APP_ROUTES.CHATS,
             //     element: <Chats />,
