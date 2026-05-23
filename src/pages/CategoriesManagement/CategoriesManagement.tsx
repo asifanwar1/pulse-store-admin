@@ -69,9 +69,6 @@ const CategoriesManagement = () => {
                                 <h3 className="truncate text-lg font-semibold text-pulse-green-dark">
                                     {category.name}
                                 </h3>
-                                <p className="text-xs uppercase tracking-[0.14em] text-pulse-green/70">
-                                    Category #{category.id}
-                                </p>
                             </div>
                         </div>
 
@@ -124,7 +121,17 @@ const CategoriesManagement = () => {
     return (
         <>
             <div className="flex min-h-0 flex-col gap-6 p-4 sm:p-6">
-                <FilterBar items={filterItems} />
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex-1">
+                        <FilterBar items={filterItems} />
+                    </div>
+                    <CustomButton
+                        onClick={openAddModal}
+                        startIcon={<Plus className="h-4 w-4" />}
+                    >
+                        Create Category
+                    </CustomButton>
+                </div>
 
                 {isCategoriesLoading && <CategoriesManagementSkeleton />}
 
