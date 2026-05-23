@@ -17,6 +17,7 @@ import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDataTableQuery } from "@/hooks/useDataTableQuery";
+import { usePaginatedQuery } from "@/hooks/usePaginatedQuery";
 
 export const useGetCategories = (
     props: TGetCategoriesParams,
@@ -43,6 +44,26 @@ export const useGetCategories = (
         }),
     });
     return { data, count, ...rest };
+};
+
+export const useGetCategoriesPaginated = (
+    props?: Omit<TGetCategoriesParams, "page">,
+    enabled?: boolean,
+) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const { limit = Config.LIMIT, search = "" } = props || {};
+
+    return usePaginatedQuery({
+        queryKey: [CATEGORY_QUERY_KEYS.CATEGORIES, "paginated", search],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params, signal) =>
+            GetCategories({
+                ...params,
+                search,
+                signal,
+            }),
+    });
 };
 
 export const useGetCategory = (id?: number) => {
