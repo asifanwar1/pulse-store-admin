@@ -36,7 +36,10 @@ export const useGetCategories = (
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
             status: 200,
-            data: await GetCategories(params),
+            data: await GetCategories({
+                ...params,
+                search,
+            }),
         }),
     });
     return { data, count, ...rest };
