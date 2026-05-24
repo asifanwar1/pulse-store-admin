@@ -124,7 +124,7 @@ export const getAddProductFormConfig = ({
         name: "description",
         label: "Description",
         component: TextareaInput,
-        placeholder: "Enter a short product descriptionâ€¦",
+        placeholder: "Enter a short product description",
         required: true,
         className: "col-span-12",
         componentProps: {
