@@ -2,7 +2,6 @@ import { ArrowLeft } from "lucide-react";
 
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { FormBuilder } from "@/components/custom/Form";
-import { ADD_PRODUCT_FORM_CONFIG } from "./ManageProduct.config";
 import {
     type ManageProductFormValues,
     INITIAL_PRODUCT_VALUES,
@@ -13,6 +12,7 @@ import type { ManageProductFormProps } from "../ProductManagement.types";
 const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
     const {
         formRef,
+        formConfig,
         ManageProductSchema,
         isSubmitting,
         handleCancel,
@@ -48,7 +48,7 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
 
                 <FormBuilder<ManageProductFormValues>
                     ref={formRef}
-                    config={ADD_PRODUCT_FORM_CONFIG}
+                    config={formConfig}
                     schema={ManageProductSchema}
                     defaultValues={INITIAL_PRODUCT_VALUES}
                     onSubmit={handleSubmit}

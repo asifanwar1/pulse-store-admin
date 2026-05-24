@@ -1,13 +1,28 @@
-import { Select } from "@/components/custom/Select";
+import { Select, type SelectOption } from "@/components/custom/Select";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
 import FileUploader from "@/components/custom/Inputs/FileUploader";
 import { type FieldType } from "@/components/custom/Form";
 import { type ManageProductFormValues } from "./ManageProduct.schema";
-import { CATEGORY_OPTIONS } from "@/constants/product-categories.constants";
 import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 import InputWithChips from "@/components/custom/InputWithChips";
 
-export const ADD_PRODUCT_FORM_CONFIG: FieldType<ManageProductFormValues>[] = [
+type TManageProductFormConfigProps = {
+    categoryOptions: readonly SelectOption[];
+    onCategorySearch: (value: string) => void;
+    onCategoryScroll?: () => void;
+    hasMoreCategories?: boolean;
+    isFetchingMoreCategories?: boolean;
+    isCategoriesLoading?: boolean;
+};
+
+export const getAddProductFormConfig = ({
+    categoryOptions,
+    onCategorySearch,
+    onCategoryScroll,
+    hasMoreCategories = false,
+    isFetchingMoreCategories = false,
+    isCategoriesLoading = false,
+}: TManageProductFormConfigProps): FieldType<ManageProductFormValues>[] => [
     {
         name: "name",
         label: "Product Name",
@@ -43,9 +58,15 @@ export const ADD_PRODUCT_FORM_CONFIG: FieldType<ManageProductFormValues>[] = [
         required: true,
         className: "col-span-12 md:col-span-6",
         componentProps: {
-            options: CATEGORY_OPTIONS,
+            options: categoryOptions,
             labelRequired: true,
             labelClass: "font-normal",
+            autoComplete: true,
+            onSearch: onCategorySearch,
+            onScroll: onCategoryScroll,
+            hasMore: hasMoreCategories,
+            isFetchingNextPage: isFetchingMoreCategories,
+            loading: isCategoriesLoading,
         },
     },
     {
@@ -103,7 +124,7 @@ export const ADD_PRODUCT_FORM_CONFIG: FieldType<ManageProductFormValues>[] = [
         name: "description",
         label: "Description",
         component: TextareaInput,
-        placeholder: "Enter a short product description…",
+        placeholder: "Enter a short product descriptionâ€¦",
         required: true,
         className: "col-span-12",
         componentProps: {
