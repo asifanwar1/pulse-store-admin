@@ -7,7 +7,7 @@ import Config from "../Config";
 import { SortOrder } from "../constants";
 
 type DataTableQueryParams<T> = {
-    queryKey: string[];
+    queryKey: readonly unknown[];
     queryFn: (
         params: BaseQueryType,
         signal: AbortSignal | undefined,

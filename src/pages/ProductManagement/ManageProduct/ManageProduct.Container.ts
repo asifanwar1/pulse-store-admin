@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useGetCategoriesPaginated } from "@/hooks/api/categories.queries";
@@ -42,32 +42,18 @@ export const useManageProduct = ({
     });
 
     const isSubmitting = isMediaLoading || isCreatingProduct;
-    const categoryOptions = useMemo(
-        () =>
-            categories.map((category) => ({
-                label: category.name,
-                value: String(category.id),
-            })),
-        [categories],
-    );
-    const formConfig = useMemo(
-        () =>
-            getAddProductFormConfig({
-                categoryOptions,
-                onCategorySearch: setCategorySearch,
-                onCategoryScroll: hasNextPage ? () => fetchNextPage() : undefined,
-                hasMoreCategories: !!hasNextPage,
-                isFetchingMoreCategories: isFetchingNextPage,
-                isCategoriesLoading,
-            }),
-        [
-            categoryOptions,
-            fetchNextPage,
-            hasNextPage,
-            isFetchingNextPage,
-            isCategoriesLoading,
-        ],
-    );
+    const categoryOptions = categories.map((category) => ({
+        label: category.name,
+        value: String(category.id),
+    }));
+    const formConfig = getAddProductFormConfig({
+        categoryOptions,
+        hasMoreCategories: !!hasNextPage,
+        isFetchingMoreCategories: isFetchingNextPage,
+        isCategoriesLoading,
+        onCategorySearch: setCategorySearch,
+        onCategoryScroll: hasNextPage ? () => fetchNextPage() : undefined,
+    });
 
     const handleCancel = () => {
         navigate(APP_ROUTES.PRODUCTS);

@@ -1,3 +1,5 @@
+import type { BaseQueryType } from "@/api/models";
+
 export type TProductSortDirection = "ASC" | "DESC";
 
 export type TProductStatus = "ACTIVE" | "DRAFT" | "OUT_OF_STOCK";
@@ -13,11 +15,7 @@ export type TProductCategory =
     | "TOYS"
     | "FOOD";
 
-export type TGetProductsParams = {
-    page?: number;
-    limit?: number;
-    column?: string;
-    direction?: TProductSortDirection;
+export type TGetProductsParams = BaseQueryType & {
     search?: string;
     status?: TProductStatus;
     category?: TProductCategory;

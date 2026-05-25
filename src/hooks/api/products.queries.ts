@@ -13,14 +13,53 @@ import type {
     TUpdateProductBody,
 } from "@/api/services/products/products.request.types";
 import { queryClient } from "@/lib/queryClient";
+import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDataTableQuery } from "../useDataTableQuery";
+import Config from "@/Config";
 
-export const useGetProducts = (params?: TGetProductsParams) => {
-    return useQuery({
-        queryKey: [PRODUCT_QUERY_KEYS.PRODUCTS, params],
-        queryFn: () => GetProducts(params),
+export const useGetProducts = (
+    props: TGetProductsParams,
+    enabled?: boolean,
+) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const {
+        limit = Config.LIMIT,
+        search = "",
+        page = 1,
+        status,
+        category,
+        column,
+    } = props;
+
+    const { data, count, ...rest } = useDataTableQuery({
+        queryKey: [
+            PRODUCT_QUERY_KEYS.PRODUCTS,
+            search,
+            status,
+            category,
+            column,
+            String(page),
+            String(limit),
+        ],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params) => ({
+            status: 200,
+            data: await GetProducts({
+                ...params,
+                ...(search && { search }),
+                ...(status && { status }),
+                ...(category && { category }),
+                ...(column && { column }),
+                ...(page && { page }),
+                ...(limit && { limit }),
+                
+            }),
+        }),
     });
+    return { data, count, ...rest };
 };
 
 export const useGetProduct = (id?: number) => {
