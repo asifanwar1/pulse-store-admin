@@ -3,8 +3,10 @@ import { StatCard } from "@/components/custom/CustomCards";
 import { PRODUCT_STAT_CONFIG } from "./ProductManagement.Config";
 import ProductTable from "./ProductTable";
 import { formatStatValue } from "@/utils/common.utils";
+import { useProductManagement } from "./ProductManagement.Container";
 
 const ProductManagement = () => {
+    const { products } = useProductManagement();
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -34,7 +36,7 @@ const ProductManagement = () => {
                     },
                 )}
             </div>
-            <ProductTable />
+            <ProductTable productsListData={products ?? []} />
         </div>
     );
 };

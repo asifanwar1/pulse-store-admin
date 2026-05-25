@@ -22,6 +22,13 @@ import {
     productReviewColumns,
 } from "./ProductDetails.Config";
 import { PRODUCT_STATUS_CONFIG } from "../ProductManagement.Config";
+import type { TProductStatus } from "@/api/services/products/products.request.types";
+
+const MOCK_STATUS_MAP: Record<string, TProductStatus> = {
+    active: "ACTIVE",
+    draft: "DRAFT",
+    out_of_stock: "OUT_OF_STOCK",
+};
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
@@ -49,7 +56,7 @@ export default function ProductDetails() {
         );
     }
 
-    const statusBadge = PRODUCT_STATUS_CONFIG[product.status];
+    const statusBadge = PRODUCT_STATUS_CONFIG[MOCK_STATUS_MAP[product.status] ?? "DRAFT"];
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">

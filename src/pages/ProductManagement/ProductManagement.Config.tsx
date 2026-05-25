@@ -1,5 +1,6 @@
 import { Package, PackageCheck, PackageX, DollarSign } from "lucide-react";
-import { type Product, type ProductStatus } from "@/mock/product.mock";
+import type { TProductResponse } from "@/api/services/products/products.response";
+import type { TProductStatus } from "@/api/services/products/products.request.types";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
 
@@ -39,32 +40,27 @@ export const PRODUCT_STAT_CONFIG = [
 ] as const;
 
 export const PRODUCT_STATUS_CONFIG: Record<
-    ProductStatus,
+    TProductStatus,
     { label: string; textColor: string; bgColor: string }
 > = {
-    active: {
+    ACTIVE: {
         label: "Active",
         textColor: "text-status-delivered",
         bgColor: "bg-status-delivered-bg",
     },
-    draft: {
+    DRAFT: {
         label: "Draft",
         textColor: "text-status-processing",
         bgColor: "bg-status-processing-bg",
     },
-    out_of_stock: {
+    OUT_OF_STOCK: {
         label: "Out of Stock",
         textColor: "text-status-cancelled",
         bgColor: "bg-status-cancelled-bg",
     },
-    archived: {
-        label: "Archived",
-        textColor: "text-status-pending",
-        bgColor: "bg-status-pending-bg",
-    },
 };
 
-export const productManagementTableColumns: TDataColumnDef<Product>[] = [
+export const productManagementTableColumns: TDataColumnDef<TProductResponse>[] = [
     {
         id: "id",
         accessorKey: "id",
@@ -86,6 +82,12 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
             label: "Product",
             cellRenderer: (_value, row) => {
                 const product = row.original;
+                const initials = product.name
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((w) => w[0])
+                    .join("")
+                    .toUpperCase();
 
                 return (
                     <div className="flex items-center gap-2.5 whitespace-nowrap">
@@ -95,7 +97,7 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
                                 "bg-pulse-cream-dark",
                             )}
                         >
-                            {product.initials}
+                            {initials}
                         </div>
                         <div className="flex flex-col">
                             <span className="font-medium text-pulse-green-dark text-xs">
@@ -111,8 +113,8 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
         },
     },
     {
-        id: "category",
-        accessorKey: "category",
+        id: "category_name",
+        accessorKey: "category_name",
         header: "Category",
         meta: {
             label: "Category",
@@ -137,22 +139,22 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
         },
     },
     {
-        id: "price",
-        accessorKey: "price",
+        id: "retail_price",
+        accessorKey: "retail_price",
         header: "Price",
         meta: {
             label: "Price",
             align: "right",
             cellRenderer: (value) => (
                 <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
+                    ${parseFloat(value as string).toLocaleString()}
                 </span>
             ),
         },
     },
     {
-        id: "stock",
-        accessorKey: "stock",
+        id: "stock_quantity",
+        accessorKey: "stock_quantity",
         header: "Stock",
         meta: {
             label: "Stock",
@@ -187,7 +189,7 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
             label: "Status",
             align: "center",
             cellRenderer: (value) => {
-                const status = PRODUCT_STATUS_CONFIG[value as ProductStatus];
+                const status = PRODUCT_STATUS_CONFIG[value as TProductStatus];
                 return (
                     <span
                         className={cn(
@@ -200,34 +202,6 @@ export const productManagementTableColumns: TDataColumnDef<Product>[] = [
                     </span>
                 );
             },
-        },
-    },
-    {
-        id: "sales",
-        accessorKey: "sales",
-        header: "Sales",
-        meta: {
-            label: "Sales",
-            align: "center",
-            cellRenderer: (value) => (
-                <span className="font-medium text-pulse-green-dark text-xs">
-                    {(value as number).toLocaleString()}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "revenue",
-        accessorKey: "revenue",
-        header: "Revenue",
-        meta: {
-            label: "Revenue",
-            align: "right",
-            cellRenderer: (value) => (
-                <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
-                </span>
-            ),
         },
     },
 ];

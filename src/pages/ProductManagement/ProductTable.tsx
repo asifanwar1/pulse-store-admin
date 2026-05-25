@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { productsListData } from "@/mock/product.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { productManagementTableColumns } from "./ProductManagement.Config";
+import type { ProductTableProps } from "./ProductManagement.types";
 
-export default function ProductTable() {
+const ProductTable: React.FC<ProductTableProps> = ({ productsListData }) => {
     const navigate = useNavigate();
 
     return (
@@ -51,4 +51,6 @@ export default function ProductTable() {
             />
         </ChartCard>
     );
-}
+};
+
+export default ProductTable;
