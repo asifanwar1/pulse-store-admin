@@ -1,4 +1,3 @@
-import { useParams, useNavigate } from "react-router-dom";
 import {
     ArrowLeft,
     Tag,
@@ -12,43 +11,37 @@ import {
     Layers,
 } from "lucide-react";
 
-import { productsListData, productDetailsMap } from "@/mock/product.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
-import { APP_ROUTES } from "@/routes/appRoutes";
 import {
     productSalesTrendColumns,
     productReviewColumns,
 } from "./ProductDetails.Config";
 import { PRODUCT_STATUS_CONFIG } from "../ProductManagement.Config";
-import type { TProductStatus } from "@/api/services/products/products.request.types";
 
-const MOCK_STATUS_MAP: Record<string, TProductStatus> = {
-    active: "ACTIVE",
-    draft: "DRAFT",
-    out_of_stock: "OUT_OF_STOCK",
-};
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 import { useProductDetails } from "./ProductDetails.Container";
 
 export default function ProductDetails() {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
+    const {
+        product,
+        isLoading,
+        productMonthlySales,
+        customerReviews,
+        handleNavigateBack,
+    } = useProductDetails();
 
-    const { product, isProductLoading, handleNavigateBack } =
-        useProductDetails();
-
-    if (!product && !isProductLoading) {
+    if (!product && !isLoading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
                 <p className="text-lg font-semibold text-pulse-green-dark">
                     Product not found
                 </p>
                 <button
-                    onClick={() => navigate(APP_ROUTES.PRODUCTS)}
+                    onClick={handleNavigateBack}
                     className="flex items-center gap-2 text-sm text-pulse-green hover:text-pulse-green-dark transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" /> Back to Products
@@ -60,11 +53,7 @@ export default function ProductDetails() {
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="flex">
-                <Button
-                    onClick={() => navigate(APP_ROUTES.PRODUCTS)}
-                    variant="ghost"
-                    size="sm"
-                >
+                <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
                     Back to Products
                 </Button>
@@ -194,7 +183,7 @@ export default function ProductDetails() {
             >
                 <DataTable
                     id="product-sales-trend"
-                    data={}
+                    data={productMonthlySales!}
                     columns={productSalesTrendColumns}
                     features={{
                         rowSelection: false,
@@ -206,17 +195,17 @@ export default function ProductDetails() {
                     }}
                 />
             </ChartCard>
-            {/* 
-            {details.reviews.length > 0 && (
+
+            {customerReviews && (
                 <ChartCard
                     title="Customer Reviews"
-                    subtitle={`${details.reviews.length} review${details.reviews.length !== 1 ? "s" : ""} for this product`}
+                    subtitle={`${customerReviews.length} review${customerReviews.length !== 1 ? "s" : ""} for this product`}
                     className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card py-1"
                     bodyClassName="px-0 py-0"
                 >
                     <DataTable
                         id="product-reviews"
-                        data={details.reviews}
+                        data={customerReviews}
                         columns={productReviewColumns}
                         features={{
                             rowSelection: false,
@@ -228,7 +217,7 @@ export default function ProductDetails() {
                         }}
                     />
                 </ChartCard>
-            )} */}
+            )}
         </div>
     );
 }

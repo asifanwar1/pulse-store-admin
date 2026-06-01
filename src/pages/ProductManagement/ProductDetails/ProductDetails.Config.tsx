@@ -1,56 +1,60 @@
-import type { ProductReview, ProductSalesTrend } from "@/mock/product.mock";
 import { cn } from "@/lib/utils";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { Star } from "lucide-react";
+import type {
+    TProductMonthlySalesItem,
+    TProductReview,
+} from "@/api/services/products/products.response";
 
-export const productSalesTrendColumns: TDataColumnDef<ProductSalesTrend>[] = [
-    {
-        id: "month",
-        accessorKey: "month",
-        header: "Month",
-        meta: {
-            label: "Month",
-            cellRenderer: (value) => (
-                <span className="font-medium text-pulse-green-dark text-xs whitespace-nowrap">
-                    {value as string}
-                </span>
-            ),
+export const productSalesTrendColumns: TDataColumnDef<TProductMonthlySalesItem>[] =
+    [
+        {
+            id: "month",
+            accessorKey: "month",
+            header: "Month",
+            meta: {
+                label: "Month",
+                cellRenderer: (value) => (
+                    <span className="font-medium text-pulse-green-dark text-xs whitespace-nowrap">
+                        {value as string}
+                    </span>
+                ),
+            },
         },
-    },
-    {
-        id: "sales",
-        accessorKey: "sales",
-        header: "Units Sold",
-        meta: {
-            label: "Units Sold",
-            align: "center",
-            cellRenderer: (value) => (
-                <span className="font-medium text-pulse-green-dark text-xs">
-                    {(value as number).toLocaleString()}
-                </span>
-            ),
+        {
+            id: "quantity_sold",
+            accessorKey: "quantity_sold",
+            header: "Units Sold",
+            meta: {
+                label: "Units Sold",
+                align: "center",
+                cellRenderer: (value) => (
+                    <span className="font-medium text-pulse-green-dark text-xs">
+                        {(value as number).toLocaleString()}
+                    </span>
+                ),
+            },
         },
-    },
-    {
-        id: "revenue",
-        accessorKey: "revenue",
-        header: "Revenue",
-        meta: {
-            label: "Revenue",
-            align: "right",
-            cellRenderer: (value) => (
-                <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
-                </span>
-            ),
+        {
+            id: "revenue",
+            accessorKey: "revenue",
+            header: "Revenue",
+            meta: {
+                label: "Revenue",
+                align: "right",
+                cellRenderer: (value) => (
+                    <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
+                        ${(value as number).toLocaleString()}
+                    </span>
+                ),
+            },
         },
-    },
-];
+    ];
 
-export const productReviewColumns: TDataColumnDef<ProductReview>[] = [
+export const productReviewColumns: TDataColumnDef<TProductReview>[] = [
     {
-        id: "customer",
-        accessorKey: "customer",
+        id: "customer_name",
+        accessorKey: "customer_name",
         header: "Customer",
         meta: {
             label: "Customer",

@@ -36,7 +36,7 @@ export interface Product {
 
 export interface ProductReview {
     id: string;
-    customer: string;
+    customer_name: string;
     initials: string;
     rating: number;
     comment: string;
@@ -365,9 +365,33 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 7, revenue: 13293 },
         ],
         reviews: [
-            { id: "REV-001", customer: "Alex Johnson", initials: "AJ", rating: 5, comment: "Absolutely incredible performance. Handles video editing like a breeze.", date: "2026-04-05" },
-            { id: "REV-002", customer: "Michael Chen", initials: "MC", rating: 5, comment: "Best laptop I've ever owned. Battery life is phenomenal.", date: "2026-03-20" },
-            { id: "REV-003", customer: "Emma Davis", initials: "ED", rating: 4, comment: "Great machine, slightly pricey but worth it for serious work.", date: "2026-03-08" },
+            {
+                id: "REV-001",
+                customer: "Alex Johnson",
+                initials: "AJ",
+                rating: 5,
+                comment:
+                    "Absolutely incredible performance. Handles video editing like a breeze.",
+                date: "2026-04-05",
+            },
+            {
+                id: "REV-002",
+                customer: "Michael Chen",
+                initials: "MC",
+                rating: 5,
+                comment:
+                    "Best laptop I've ever owned. Battery life is phenomenal.",
+                date: "2026-03-20",
+            },
+            {
+                id: "REV-003",
+                customer: "Emma Davis",
+                initials: "ED",
+                rating: 4,
+                comment:
+                    "Great machine, slightly pricey but worth it for serious work.",
+                date: "2026-03-08",
+            },
         ],
     },
     "PRD-0002": {
@@ -389,9 +413,33 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 14, revenue: 4886 },
         ],
         reviews: [
-            { id: "REV-004", customer: "Noah Martinez", initials: "NM", rating: 5, comment: "The noise cancellation is unreal. Perfect for open-plan offices.", date: "2026-04-02" },
-            { id: "REV-005", customer: "Ava Thompson", initials: "AT", rating: 5, comment: "Best headphones on the market. Incredibly comfortable for long sessions.", date: "2026-03-15" },
-            { id: "REV-006", customer: "Liam Anderson", initials: "LA", rating: 4, comment: "Excellent sound quality. The touch controls take some getting used to.", date: "2026-02-28" },
+            {
+                id: "REV-004",
+                customer: "Noah Martinez",
+                initials: "NM",
+                rating: 5,
+                comment:
+                    "The noise cancellation is unreal. Perfect for open-plan offices.",
+                date: "2026-04-02",
+            },
+            {
+                id: "REV-005",
+                customer: "Ava Thompson",
+                initials: "AT",
+                rating: 5,
+                comment:
+                    "Best headphones on the market. Incredibly comfortable for long sessions.",
+                date: "2026-03-15",
+            },
+            {
+                id: "REV-006",
+                customer: "Liam Anderson",
+                initials: "LA",
+                rating: 4,
+                comment:
+                    "Excellent sound quality. The touch controls take some getting used to.",
+                date: "2026-02-28",
+            },
         ],
     },
     "PRD-0003": {
@@ -413,8 +461,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 3, revenue: 3897 },
         ],
         reviews: [
-            { id: "REV-007", customer: "James Wilson", initials: "JW", rating: 5, comment: "Picture quality is breathtaking. The QLED panel is vibrant and sharp.", date: "2026-04-03" },
-            { id: "REV-008", customer: "Sophia Garcia", initials: "SG", rating: 4, comment: "Great TV, setup was straightforward. Smart features work flawlessly.", date: "2026-03-22" },
+            {
+                id: "REV-007",
+                customer: "James Wilson",
+                initials: "JW",
+                rating: 5,
+                comment:
+                    "Picture quality is breathtaking. The QLED panel is vibrant and sharp.",
+                date: "2026-04-03",
+            },
+            {
+                id: "REV-008",
+                customer: "Sophia Garcia",
+                initials: "SG",
+                rating: 4,
+                comment:
+                    "Great TV, setup was straightforward. Smart features work flawlessly.",
+                date: "2026-03-22",
+            },
         ],
     },
     "PRD-0004": {
@@ -436,9 +500,32 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 10, revenue: 1490 },
         ],
         reviews: [
-            { id: "REV-009", customer: "Sarah Williams", initials: "SW", rating: 4, comment: "Super comfortable shoes. Great for daily use, though run slightly large.", date: "2026-04-05" },
-            { id: "REV-010", customer: "Ethan Jackson", initials: "EJ", rating: 5, comment: "Love these shoes. The cushioning is exceptional for long walks.", date: "2026-03-29" },
-            { id: "REV-011", customer: "Olivia Brown", initials: "OB", rating: 4, comment: "Stylish and comfortable. Would definitely buy again.", date: "2026-03-10" },
+            {
+                id: "REV-009",
+                customer: "Sarah Williams",
+                initials: "SW",
+                rating: 4,
+                comment:
+                    "Super comfortable shoes. Great for daily use, though run slightly large.",
+                date: "2026-04-05",
+            },
+            {
+                id: "REV-010",
+                customer: "Ethan Jackson",
+                initials: "EJ",
+                rating: 5,
+                comment:
+                    "Love these shoes. The cushioning is exceptional for long walks.",
+                date: "2026-03-29",
+            },
+            {
+                id: "REV-011",
+                customer: "Olivia Brown",
+                initials: "OB",
+                rating: 4,
+                comment: "Stylish and comfortable. Would definitely buy again.",
+                date: "2026-03-10",
+            },
         ],
     },
     "PRD-0005": {
@@ -460,8 +547,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 8, revenue: 4792 },
         ],
         reviews: [
-            { id: "REV-012", customer: "Isabella White", initials: "IW", rating: 5, comment: "Incredible suction power. Makes cleaning so much faster and easier.", date: "2026-03-18" },
-            { id: "REV-013", customer: "Alex Johnson", initials: "AJ", rating: 5, comment: "Worth every penny. Battery life is great for whole-home cleaning.", date: "2026-02-24" },
+            {
+                id: "REV-012",
+                customer: "Isabella White",
+                initials: "IW",
+                rating: 5,
+                comment:
+                    "Incredible suction power. Makes cleaning so much faster and easier.",
+                date: "2026-03-18",
+            },
+            {
+                id: "REV-013",
+                customer: "Alex Johnson",
+                initials: "AJ",
+                rating: 5,
+                comment:
+                    "Worth every penny. Battery life is great for whole-home cleaning.",
+                date: "2026-02-24",
+            },
         ],
     },
     "PRD-0006": {
@@ -483,9 +586,33 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 13, revenue: 1664 },
         ],
         reviews: [
-            { id: "REV-014", customer: "Ava Thompson", initials: "AT", rating: 5, comment: "The magic cream alone is worth it. My skin has never looked better.", date: "2026-04-02" },
-            { id: "REV-015", customer: "Emma Davis", initials: "ED", rating: 5, comment: "Perfect gift set. High quality products with lovely packaging.", date: "2026-03-14" },
-            { id: "REV-016", customer: "Sophia Garcia", initials: "SG", rating: 4, comment: "Great products, though a bit pricey. The Pillow Talk lipstick is a must-have.", date: "2026-02-20" },
+            {
+                id: "REV-014",
+                customer: "Ava Thompson",
+                initials: "AT",
+                rating: 5,
+                comment:
+                    "The magic cream alone is worth it. My skin has never looked better.",
+                date: "2026-04-02",
+            },
+            {
+                id: "REV-015",
+                customer: "Emma Davis",
+                initials: "ED",
+                rating: 5,
+                comment:
+                    "Perfect gift set. High quality products with lovely packaging.",
+                date: "2026-03-14",
+            },
+            {
+                id: "REV-016",
+                customer: "Sophia Garcia",
+                initials: "SG",
+                rating: 4,
+                comment:
+                    "Great products, though a bit pricey. The Pillow Talk lipstick is a must-have.",
+                date: "2026-02-20",
+            },
         ],
     },
     "PRD-0007": {
@@ -507,8 +634,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 8, revenue: 9592 },
         ],
         reviews: [
-            { id: "REV-017", customer: "Noah Martinez", initials: "NM", rating: 5, comment: "Camera system is unbelievable. Best smartphone I have ever used.", date: "2026-04-01" },
-            { id: "REV-018", customer: "Sarah Williams", initials: "SW", rating: 5, comment: "The display is gorgeous and the battery lasts a full day with heavy use.", date: "2026-03-25" },
+            {
+                id: "REV-017",
+                customer: "Noah Martinez",
+                initials: "NM",
+                rating: 5,
+                comment:
+                    "Camera system is unbelievable. Best smartphone I have ever used.",
+                date: "2026-04-01",
+            },
+            {
+                id: "REV-018",
+                customer: "Sarah Williams",
+                initials: "SW",
+                rating: 5,
+                comment:
+                    "The display is gorgeous and the battery lasts a full day with heavy use.",
+                date: "2026-03-25",
+            },
         ],
     },
     "PRD-0008": {
@@ -530,8 +673,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 16, revenue: 7984 },
         ],
         reviews: [
-            { id: "REV-019", customer: "Ethan Jackson", initials: "EJ", rating: 5, comment: "The loading speeds are insane. Games look incredible with ray tracing.", date: "2026-03-30" },
-            { id: "REV-020", customer: "Liam Anderson", initials: "LA", rating: 4, comment: "Great console, DualSense haptics are a game-changer literally.", date: "2026-03-12" },
+            {
+                id: "REV-019",
+                customer: "Ethan Jackson",
+                initials: "EJ",
+                rating: 5,
+                comment:
+                    "The loading speeds are insane. Games look incredible with ray tracing.",
+                date: "2026-03-30",
+            },
+            {
+                id: "REV-020",
+                customer: "Liam Anderson",
+                initials: "LA",
+                rating: 4,
+                comment:
+                    "Great console, DualSense haptics are a game-changer literally.",
+                date: "2026-03-12",
+            },
         ],
     },
     "PRD-0009": {
@@ -553,8 +712,23 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 6, revenue: 534 },
         ],
         reviews: [
-            { id: "REV-021", customer: "Michael Chen", initials: "MC", rating: 4, comment: "Classic fit, great quality. These jeans last for years.", date: "2026-04-04" },
-            { id: "REV-022", customer: "James Wilson", initials: "JW", rating: 5, comment: "The best basic jeans out there. I own three pairs.", date: "2026-03-17" },
+            {
+                id: "REV-021",
+                customer: "Michael Chen",
+                initials: "MC",
+                rating: 4,
+                comment:
+                    "Classic fit, great quality. These jeans last for years.",
+                date: "2026-04-04",
+            },
+            {
+                id: "REV-022",
+                customer: "James Wilson",
+                initials: "JW",
+                rating: 5,
+                comment: "The best basic jeans out there. I own three pairs.",
+                date: "2026-03-17",
+            },
         ],
     },
     "PRD-0010": {
@@ -576,8 +750,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 6, revenue: 534 },
         ],
         reviews: [
-            { id: "REV-023", customer: "Olivia Brown", initials: "OB", rating: 5, comment: "Best yoga mat I've ever bought. The grip is superb even when sweaty.", date: "2026-04-01" },
-            { id: "REV-024", customer: "Sophia Garcia", initials: "SG", rating: 4, comment: "High quality mat. A bit heavy to carry around but worth it for home use.", date: "2026-03-05" },
+            {
+                id: "REV-023",
+                customer: "Olivia Brown",
+                initials: "OB",
+                rating: 5,
+                comment:
+                    "Best yoga mat I've ever bought. The grip is superb even when sweaty.",
+                date: "2026-04-01",
+            },
+            {
+                id: "REV-024",
+                customer: "Sophia Garcia",
+                initials: "SG",
+                rating: 4,
+                comment:
+                    "High quality mat. A bit heavy to carry around but worth it for home use.",
+                date: "2026-03-05",
+            },
         ],
     },
     "PRD-0011": {
@@ -599,8 +789,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 10, revenue: 990 },
         ],
         reviews: [
-            { id: "REV-025", customer: "Sophia Garcia", initials: "SG", rating: 5, comment: "Changed my cooking routine completely. Meals in a fraction of the time.", date: "2026-04-01" },
-            { id: "REV-026", customer: "Emma Davis", initials: "ED", rating: 4, comment: "Very versatile. The slow cooker function is my favourite feature.", date: "2026-03-20" },
+            {
+                id: "REV-025",
+                customer: "Sophia Garcia",
+                initials: "SG",
+                rating: 5,
+                comment:
+                    "Changed my cooking routine completely. Meals in a fraction of the time.",
+                date: "2026-04-01",
+            },
+            {
+                id: "REV-026",
+                customer: "Emma Davis",
+                initials: "ED",
+                rating: 4,
+                comment:
+                    "Very versatile. The slow cooker function is my favourite feature.",
+                date: "2026-03-20",
+            },
         ],
     },
     "PRD-0012": {
@@ -622,8 +828,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 10, revenue: 1390 },
         ],
         reviews: [
-            { id: "REV-027", customer: "Ethan Jackson", initials: "EJ", rating: 5, comment: "Perfect for reading anywhere. Waterproofing is great for the bath!", date: "2026-03-28" },
-            { id: "REV-028", customer: "Michael Chen", initials: "MC", rating: 4, comment: "Great device. Warm light makes evening reading very comfortable.", date: "2026-03-10" },
+            {
+                id: "REV-027",
+                customer: "Ethan Jackson",
+                initials: "EJ",
+                rating: 5,
+                comment:
+                    "Perfect for reading anywhere. Waterproofing is great for the bath!",
+                date: "2026-03-28",
+            },
+            {
+                id: "REV-028",
+                customer: "Michael Chen",
+                initials: "MC",
+                rating: 4,
+                comment:
+                    "Great device. Warm light makes evening reading very comfortable.",
+                date: "2026-03-10",
+            },
         ],
     },
     "PRD-0013": {
@@ -645,8 +867,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 2, revenue: 1198 },
         ],
         reviews: [
-            { id: "REV-029", customer: "Ava Thompson", initials: "AT", rating: 5, comment: "Absolutely worth the investment. My hair has never looked this good.", date: "2026-03-21" },
-            { id: "REV-030", customer: "Sarah Williams", initials: "SW", rating: 5, comment: "The curling attachment creates perfect, long-lasting curls every time.", date: "2026-03-02" },
+            {
+                id: "REV-029",
+                customer: "Ava Thompson",
+                initials: "AT",
+                rating: 5,
+                comment:
+                    "Absolutely worth the investment. My hair has never looked this good.",
+                date: "2026-03-21",
+            },
+            {
+                id: "REV-030",
+                customer: "Sarah Williams",
+                initials: "SW",
+                rating: 5,
+                comment:
+                    "The curling attachment creates perfect, long-lasting curls every time.",
+                date: "2026-03-02",
+            },
         ],
     },
     "PRD-0014": {
@@ -668,8 +906,24 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 1, revenue: 229 },
         ],
         reviews: [
-            { id: "REV-031", customer: "James Wilson", initials: "JW", rating: 4, comment: "Solid garden tools. The trowel and cultivator get used every weekend.", date: "2026-04-03" },
-            { id: "REV-032", customer: "Liam Anderson", initials: "LA", rating: 4, comment: "Good quality set. The handles are comfortable and the steel is durable.", date: "2026-03-14" },
+            {
+                id: "REV-031",
+                customer: "James Wilson",
+                initials: "JW",
+                rating: 4,
+                comment:
+                    "Solid garden tools. The trowel and cultivator get used every weekend.",
+                date: "2026-04-03",
+            },
+            {
+                id: "REV-032",
+                customer: "Liam Anderson",
+                initials: "LA",
+                rating: 4,
+                comment:
+                    "Good quality set. The handles are comfortable and the steel is durable.",
+                date: "2026-03-14",
+            },
         ],
     },
     "PRD-0015": {
@@ -691,9 +945,33 @@ export const productDetailsMap: Record<string, ProductDetailData> = {
             { month: "Dec", sales: 3, revenue: 747 },
         ],
         reviews: [
-            { id: "REV-034", customer: "Alex Johnson", initials: "AJ", rating: 5, comment: "The ANC is dramatically improved over the 1st gen. Truly impressive.", date: "2026-03-18" },
-            { id: "REV-035", customer: "Noah Martinez", initials: "NM", rating: 5, comment: "Seamless switching between devices. Best earbuds for iPhone users.", date: "2026-03-05" },
-            { id: "REV-036", customer: "Olivia Brown", initials: "OB", rating: 4, comment: "Great sound and fit. The stem design is a little polarising but I like it.", date: "2026-02-18" },
+            {
+                id: "REV-034",
+                customer: "Alex Johnson",
+                initials: "AJ",
+                rating: 5,
+                comment:
+                    "The ANC is dramatically improved over the 1st gen. Truly impressive.",
+                date: "2026-03-18",
+            },
+            {
+                id: "REV-035",
+                customer: "Noah Martinez",
+                initials: "NM",
+                rating: 5,
+                comment:
+                    "Seamless switching between devices. Best earbuds for iPhone users.",
+                date: "2026-03-05",
+            },
+            {
+                id: "REV-036",
+                customer: "Olivia Brown",
+                initials: "OB",
+                rating: 4,
+                comment:
+                    "Great sound and fit. The stem design is a little polarising but I like it.",
+                date: "2026-02-18",
+            },
         ],
     },
     "PRD-0016": {
