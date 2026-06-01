@@ -32,15 +32,16 @@ const MOCK_STATUS_MAP: Record<string, TProductStatus> = {
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
+import { useProductDetails } from "./ProductDetails.Container";
 
 export default function ProductDetails() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    const product = productsListData.find((p) => p.id === id);
-    const details = id ? productDetailsMap[id] : undefined;
+    const { product, isProductLoading, handleNavigateBack } =
+        useProductDetails();
 
-    if (!product || !details) {
+    if (!product && !isProductLoading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
                 <p className="text-lg font-semibold text-pulse-green-dark">
@@ -55,8 +56,6 @@ export default function ProductDetails() {
             </div>
         );
     }
-
-    const statusBadge = PRODUCT_STATUS_CONFIG[MOCK_STATUS_MAP[product.status] ?? "DRAFT"];
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
@@ -74,42 +73,40 @@ export default function ProductDetails() {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                     <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-pulse-cream-dark text-pulse-green font-bold text-xl shrink-0">
-                        {product.initials}
+                        AB
                     </div>
                     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                             <h2 className="text-lg font-bold text-pulse-green-dark">
-                                {product.name}
+                                {product?.name || "-"}
                             </h2>
                             <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                                    statusBadge.textColor,
-                                    statusBadge.bgColor,
                                 )}
                             >
-                                {statusBadge.label}
+                                {product?.status}
                             </span>
                         </div>
                         <p className="text-sm text-app-secondary">
-                            {product.brand}
+                            {product?.brand}
                         </p>
                         <div className="flex flex-wrap items-center gap-4 text-xs text-pulse-green">
                             <span className="flex items-center gap-1">
                                 <Hash className="w-3 h-3" />
-                                {product.id}
+                                {product?.id}
                             </span>
                             <span className="flex items-center gap-1">
                                 <Barcode className="w-3 h-3" />
-                                {product.sku}
+                                {product?.sku}
                             </span>
                             <span className="flex items-center gap-1">
                                 <Layers className="w-3 h-3" />
-                                {product.category}
+                                {product?.category_name}
                             </span>
                             <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
-                                Added {product.createdDate}
+                                Added {product?.created_at}
                             </span>
                         </div>
                     </div>
@@ -120,26 +117,22 @@ export default function ProductDetails() {
                 <StatChipCard
                     icon={<DollarSign className="w-4 h-4" />}
                     label="Price"
-                    value={`$${product.price.toLocaleString()}`}
+                    value={`$${product?.retail_price?.toLocaleString()}`}
                 />
                 <StatChipCard
                     icon={<Package className="w-4 h-4" />}
                     label="In Stock"
-                    value={product.stock.toLocaleString()}
+                    value={product?.stock_quantity?.toLocaleString()!}
                 />
                 <StatChipCard
                     icon={<TrendingUp className="w-4 h-4" />}
                     label="Total Sales"
-                    value={product.sales.toLocaleString()}
+                    value={"12"}
                 />
                 <StatChipCard
                     icon={<Star className="w-4 h-4" />}
                     label="Rating"
-                    value={
-                        product.rating > 0
-                            ? `${product.rating} / 5`
-                            : "No ratings"
-                    }
+                    value={"5"}
                 />
             </div>
 
@@ -151,37 +144,37 @@ export default function ProductDetails() {
                     <InfoCard
                         icon={<DollarSign className="w-4 h-4" />}
                         label="Retail Price"
-                        value={`$${product.price.toLocaleString()}`}
+                        value={`$${product?.retail_price?.toLocaleString()}`}
                     />
                     <InfoCard
                         icon={<DollarSign className="w-4 h-4" />}
                         label="Cost Price"
-                        value={`$${product.costPrice.toLocaleString()}`}
+                        value={`$${product?.cost_price?.toLocaleString()}`}
                     />
                     <InfoCard
                         icon={<Layers className="w-4 h-4" />}
                         label="Category"
-                        value={product.category}
+                        value={product?.category_name!}
                     />
                     <InfoCard
                         icon={<Tag className="w-4 h-4" />}
                         label="Brand"
-                        value={product.brand}
+                        value={product?.brand!}
                     />
                 </div>
-                {details.description && (
+                {product?.description && (
                     <div className="flex flex-col gap-1 pt-1 border-t border-pulse-cream-dark">
                         <span className="text-xs text-pulse-green font-medium">
                             Description
                         </span>
                         <p className="text-xs text-pulse-green-dark leading-relaxed">
-                            {details.description}
+                            {product?.description}
                         </p>
                     </div>
                 )}
-                {details.tags.length > 0 && (
+                {product?.tags && product?.tags?.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
-                        {details.tags.map((tag) => (
+                        {product?.tags.map((tag) => (
                             <span
                                 key={tag}
                                 className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xss font-medium bg-pulse-cream-dark text-pulse-green"
@@ -201,7 +194,7 @@ export default function ProductDetails() {
             >
                 <DataTable
                     id="product-sales-trend"
-                    data={details.salesTrend}
+                    data={}
                     columns={productSalesTrendColumns}
                     features={{
                         rowSelection: false,
@@ -213,7 +206,7 @@ export default function ProductDetails() {
                     }}
                 />
             </ChartCard>
-
+            {/* 
             {details.reviews.length > 0 && (
                 <ChartCard
                     title="Customer Reviews"
@@ -235,7 +228,7 @@ export default function ProductDetails() {
                         }}
                     />
                 </ChartCard>
-            )}
+            )} */}
         </div>
     );
 }

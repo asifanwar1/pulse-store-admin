@@ -3,6 +3,8 @@ import {
     DeleteProduct,
     GetProduct,
     GetProductAnalytics,
+    GetProductCustomerReviews,
+    GetProductMonthlySales,
     GetProducts,
     PRODUCT_QUERY_KEYS,
     UpdateProduct,
@@ -55,7 +57,6 @@ export const useGetProducts = (
                 ...(column && { column }),
                 ...(page && { page }),
                 ...(limit && { limit }),
-                
             }),
         }),
     });
@@ -113,5 +114,21 @@ export const useGetProductAnalytics = () => {
     return useQuery({
         queryKey: [PRODUCT_QUERY_KEYS.ANALYTICS],
         queryFn: () => GetProductAnalytics(),
+    });
+};
+
+export const useGetProductMonthlySales = (id?: number) => {
+    return useQuery({
+        queryKey: [PRODUCT_QUERY_KEYS.PRODUCT_MONTHLY_SALES, id],
+        queryFn: () => GetProductMonthlySales({ id }),
+        enabled: !!id,
+    });
+};
+
+export const useGetProductCustomerReviews = (id?: number) => {
+    return useQuery({
+        queryKey: [PRODUCT_QUERY_KEYS.PRODUCT_CUSTOMER_REVIEWS, id],
+        queryFn: () => GetProductCustomerReviews({ id }),
+        enabled: !!id,
     });
 };

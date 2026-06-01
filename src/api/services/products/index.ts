@@ -10,7 +10,9 @@ import type {
     TCreateProductResponse,
     TDeleteProductResponse,
     TGetProductAnalyticsResponse,
+    TGetProductMonthlySalesResponse,
     TGetProductResponse,
+    TGetProductReviewsResponse,
     TGetProductsResponse,
     TUpdateProductResponse,
 } from "./products.response";
@@ -69,6 +71,28 @@ export const GetProductAnalytics = async (params?: WithSignal<{}>) => {
         method: HTTP_METHODS.GET,
         url: "/products/analytics",
         signal: abortSignal,
+    });
+};
+
+export const GetProductMonthlySales = async ({
+    id,
+    signal,
+}: WithSignal<TApiArgs>) => {
+    return request<TGetProductMonthlySalesResponse, undefined>({
+        method: HTTP_METHODS.GET,
+        url: `/products/${id}/monthly-sales`,
+        signal,
+    });
+};
+
+export const GetProductCustomerReviews = async ({
+    id,
+    signal,
+}: WithSignal<TApiArgs>) => {
+    return request<TGetProductReviewsResponse, undefined>({
+        method: HTTP_METHODS.GET,
+        url: `/products/${id}/customer-reviews`,
+        signal,
     });
 };
 

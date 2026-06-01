@@ -66,3 +66,22 @@ export type TGetProductAnalyticsResponse = {
     out_of_stock_products: TProductAnalyticsMetric;
     average_price: TProductAnalyticsMetric;
 };
+
+export type TProductMonthlySalesItem = {
+    month: string;
+    sales: number;
+    revenue: number;
+};
+
+export type TGetProductMonthlySalesResponse = TProductMonthlySalesItem[];
+
+export type TProductReview = {
+    id: string;
+    customer: string;
+    initials: string;
+    rating: number;
+    comment: string;
+    date: string;
+};
+
+export type TGetProductReviewsResponse = TProductReview[];
