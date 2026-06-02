@@ -1,6 +1,28 @@
-import Config from "@/Config";
-import { useGetProducts } from "@/hooks/api/products.queries";
 import { useQueryState } from "nuqs";
+
+import Config from "@/Config";
+import {
+    useGetProductAnalytics,
+    useGetProducts,
+} from "@/hooks/api/products.queries";
+
+import type { TProductAnalyticsMetric } from "@/api/services/products/products.response";
+
+const mapAnalyticsMetricToStat = (metric?: TProductAnalyticsMetric) => {
+    const raw = metric?.change_percentage ?? "0";
+    const parsed = parseFloat(String(raw).replace("%", ""));
+
+    const trendingValue = Number.isFinite(parsed) ? Math.abs(parsed) : 0;
+    const trendDirection: "up" | "down" = parsed >= 0 ? "up" : "down";
+
+    return {
+        value: metric?.value ?? 0,
+        trend: trendingValue,
+        trendDirection,
+        prefix: "",
+        suffix: "",
+    };
+};
 
 export const useProductManagement = () => {
     const [search, setSearch] = useQueryState("search", { defaultValue: "" });
@@ -13,7 +35,7 @@ export const useProductManagement = () => {
     const {
         data: products,
         count: productsTotalCount,
-        isPending: isProductsLoading,
+        isPending: isProductsDataLoading,
         page,
         setPage,
     } = useGetProducts({
@@ -21,15 +43,26 @@ export const useProductManagement = () => {
         page: 1,
         limit: pageSize,
     });
+
+    const {
+        data: productsAnalyticsData,
+        isPending: isProductsAnalyticsLoading,
+    } = useGetProductAnalytics();
+
+    const isProductsLoading =
+        isProductsAnalyticsLoading || isProductsDataLoading;
+
     return {
         products,
         productsTotalCount,
         isProductsLoading,
+        productsAnalyticsData,
         page,
         search,
         pageSize,
         setPage,
         setSearch,
         setPageSize,
+        mapAnalyticsMetricToStat,
     };
 };

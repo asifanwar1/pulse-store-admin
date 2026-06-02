@@ -9,7 +9,7 @@ import {
 
 export const PRODUCT_STAT_CONFIG = [
     {
-        key: "totalProducts" as const,
+        key: "total_products" as const,
         title: "Total Products",
         icon: <Package className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
@@ -17,7 +17,7 @@ export const PRODUCT_STAT_CONFIG = [
         subtitle: "All listed products",
     },
     {
-        key: "activeProducts" as const,
+        key: "active_products" as const,
         title: "Active Products",
         icon: <PackageCheck className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
@@ -25,7 +25,7 @@ export const PRODUCT_STAT_CONFIG = [
         subtitle: "Currently on sale",
     },
     {
-        key: "outOfStock" as const,
+        key: "out_of_stock_products" as const,
         title: "Out of Stock",
         icon: <PackageX className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
@@ -33,7 +33,7 @@ export const PRODUCT_STAT_CONFIG = [
         subtitle: "Needs restocking",
     },
     {
-        key: "avgPrice" as const,
+        key: "average_price" as const,
         title: "Avg. Price",
         icon: <DollarSign className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
