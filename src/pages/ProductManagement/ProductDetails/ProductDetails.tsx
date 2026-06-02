@@ -9,6 +9,8 @@ import {
     Calendar,
     Hash,
     Layers,
+    Edit,
+    Check,
 } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
@@ -35,6 +37,7 @@ import { getInitialsFromName } from "@/utils/common.utils";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import { getFormattedDate } from "@/utils/dateTime.utils";
 import {
+    ProductStatus,
     ProductStatusWithHelpers,
     type ProductStatusType,
 } from "@/constants/product-status.constants";
@@ -45,7 +48,10 @@ export default function ProductDetails() {
         isLoading,
         productMonthlySales,
         customerReviews,
+        isUpdatingProductStatus,
         handleNavigateBack,
+        handleNavigateToEdit,
+        handleMarkAsActiveInactive,
     } = useProductDetails();
 
     if (isLoading) {
@@ -58,23 +64,45 @@ export default function ProductDetails() {
                 <p className="text-lg font-semibold text-pulse-green-dark">
                     Product not found
                 </p>
-                <button
-                    onClick={handleNavigateBack}
-                    className="flex items-center gap-2 text-sm text-pulse-green hover:text-pulse-green-dark transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4" /> Back to Products
-                </button>
+
+                <Button onClick={handleNavigateBack} variant="ghost" size="sm">
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Products
+                </Button>
             </div>
         );
     }
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
-            <div className="flex">
+            <div className="flex items-center justify-between">
                 <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
                     Back to Products
                 </Button>
+                <div className="flex items-center gap-2">
+                    <Button
+                        onClick={handleNavigateToEdit}
+                        variant="outline"
+                        size="sm"
+                        startIcon={<Edit className="w-4 h-4" />}
+                    >
+                        Edit Product
+                    </Button>
+                    <Button
+                        onClick={handleMarkAsActiveInactive}
+                        variant="outline"
+                        size="sm"
+                        disabled={isUpdatingProductStatus}
+                        isLoading={isUpdatingProductStatus}
+                        startIcon={<Check className="w-4 h-4" />}
+                    >
+                        Mark as{" "}
+                        {product?.status === ProductStatus.ACTIVE
+                            ? "Inactive"
+                            : "Active"}
+                    </Button>
+                </div>
             </div>
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">

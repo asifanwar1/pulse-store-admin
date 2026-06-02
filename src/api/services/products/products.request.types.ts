@@ -2,7 +2,7 @@ import type { BaseQueryType } from "@/api/models";
 
 export type TProductSortDirection = "ASC" | "DESC";
 
-export type TProductStatus = "ACTIVE" | "DRAFT" | "OUT_OF_STOCK";
+export type TProductStatus = "ACTIVE" | "DRAFT" | "OUT_OF_STOCK" | "INACTIVE";
 
 export type TProductCategory =
     | "ELECTRONICS"
@@ -41,4 +41,16 @@ export type TCreateProductBody = {
     status: TProductStatus;
 };
 
-export type TUpdateProductBody = TCreateProductBody;
+export type TUpdateProductBody = {
+    name?: string;
+    sku?: string;
+    brand?: string;
+    description?: string;
+    retail_price?: number;
+    cost_price?: number;
+    stock_quantity?: number;
+    tags?: string[];
+    media?: TCreateProductMedia[];
+    category?: TProductCategory;
+    status?: TProductStatus;
+};

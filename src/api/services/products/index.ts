@@ -50,7 +50,7 @@ export const UpdateProduct = async ({
     body,
 }: TApiArgs<TUpdateProductBody>) => {
     return request<TUpdateProductResponse, TUpdateProductBody>({
-        method: HTTP_METHODS.PUT,
+        method: HTTP_METHODS.PATCH,
         url: `/products/${id}`,
         body,
     });
