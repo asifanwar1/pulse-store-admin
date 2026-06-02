@@ -1,8 +1,11 @@
 import { Package, PackageCheck, PackageX, DollarSign } from "lucide-react";
 import type { TProductResponse } from "@/api/services/products/products.response";
-import type { TProductStatus } from "@/api/services/products/products.request.types";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
+import {
+    ProductStatusWithHelpers,
+    type ProductStatusType,
+} from "@/constants/product-status.constants";
 
 export const PRODUCT_STAT_CONFIG = [
     {
@@ -39,169 +42,151 @@ export const PRODUCT_STAT_CONFIG = [
     },
 ] as const;
 
-export const PRODUCT_STATUS_CONFIG: Record<
-    TProductStatus,
-    { label: string; textColor: string; bgColor: string }
-> = {
-    ACTIVE: {
-        label: "Active",
-        textColor: "text-status-delivered",
-        bgColor: "bg-status-delivered-bg",
-    },
-    DRAFT: {
-        label: "Draft",
-        textColor: "text-status-processing",
-        bgColor: "bg-status-processing-bg",
-    },
-    OUT_OF_STOCK: {
-        label: "Out of Stock",
-        textColor: "text-status-cancelled",
-        bgColor: "bg-status-cancelled-bg",
-    },
-};
-
-export const productManagementTableColumns: TDataColumnDef<TProductResponse>[] = [
-    {
-        id: "id",
-        accessorKey: "id",
-        header: "ID",
-        meta: {
-            label: "ID",
-            cellRenderer: (value) => (
-                <span className="font-semibold text-pulse-green-dark whitespace-nowrap text-xs">
-                    {value as string}
-                </span>
-            ),
+export const productManagementTableColumns: TDataColumnDef<TProductResponse>[] =
+    [
+        {
+            id: "id",
+            accessorKey: "id",
+            header: "ID",
+            meta: {
+                label: "ID",
+                cellRenderer: (value) => (
+                    <span className="font-semibold text-pulse-green-dark whitespace-nowrap text-xs">
+                        {value as string}
+                    </span>
+                ),
+            },
         },
-    },
-    {
-        id: "name",
-        accessorKey: "name",
-        header: "Product",
-        meta: {
-            label: "Product",
-            cellRenderer: (_value, row) => {
-                const product = row.original;
-                const initials = product.name
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((w) => w[0])
-                    .join("")
-                    .toUpperCase();
+        {
+            id: "name",
+            accessorKey: "name",
+            header: "Product",
+            meta: {
+                label: "Product",
+                cellRenderer: (_value, row) => {
+                    const product = row.original;
+                    const initials = product.name
+                        .split(" ")
+                        .slice(0, 2)
+                        .map((w) => w[0])
+                        .join("")
+                        .toUpperCase();
 
-                return (
-                    <div className="flex items-center gap-2.5 whitespace-nowrap">
-                        <div
+                    return (
+                        <div className="flex items-center gap-2.5 whitespace-nowrap">
+                            <div
+                                className={cn(
+                                    "w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0",
+                                    "bg-pulse-cream-dark",
+                                )}
+                            >
+                                {initials}
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="font-medium text-pulse-green-dark text-xs">
+                                    {product.name}
+                                </span>
+                                <span className="text-xss text-pulse-green leading-tight">
+                                    {product.sku}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                },
+            },
+        },
+        {
+            id: "category_name",
+            accessorKey: "category_name",
+            header: "Category",
+            meta: {
+                label: "Category",
+                cellRenderer: (value) => (
+                    <span className="text-pulse-green-dark text-xs whitespace-nowrap">
+                        {value as string}
+                    </span>
+                ),
+            },
+        },
+        {
+            id: "brand",
+            accessorKey: "brand",
+            header: "Brand",
+            meta: {
+                label: "Brand",
+                cellRenderer: (value) => (
+                    <span className="text-pulse-green-dark text-xs whitespace-nowrap">
+                        {value as string}
+                    </span>
+                ),
+            },
+        },
+        {
+            id: "retail_price",
+            accessorKey: "retail_price",
+            header: "Price",
+            meta: {
+                label: "Price",
+                align: "right",
+                cellRenderer: (value) => (
+                    <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
+                        ${parseFloat(value as string).toLocaleString()}
+                    </span>
+                ),
+            },
+        },
+        {
+            id: "stock_quantity",
+            accessorKey: "stock_quantity",
+            header: "Stock",
+            meta: {
+                label: "Stock",
+                align: "center",
+                cellRenderer: (value) => {
+                    const qty = value as number;
+                    const isLow = qty > 0 && qty <= 10;
+                    const isOut = qty === 0;
+
+                    return (
+                        <span
                             className={cn(
-                                "w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0",
-                                "bg-pulse-cream-dark",
+                                "font-medium text-xs",
+                                isOut
+                                    ? "text-status-cancelled"
+                                    : isLow
+                                      ? "text-status-pending"
+                                      : "text-pulse-green-dark",
                             )}
                         >
-                            {initials}
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="font-medium text-pulse-green-dark text-xs">
-                                {product.name}
-                            </span>
-                            <span className="text-xss text-pulse-green leading-tight">
-                                {product.sku}
-                            </span>
-                        </div>
-                    </div>
-                );
+                            {isOut ? "0" : qty}
+                        </span>
+                    );
+                },
             },
         },
-    },
-    {
-        id: "category_name",
-        accessorKey: "category_name",
-        header: "Category",
-        meta: {
-            label: "Category",
-            cellRenderer: (value) => (
-                <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                    {value as string}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "brand",
-        accessorKey: "brand",
-        header: "Brand",
-        meta: {
-            label: "Brand",
-            cellRenderer: (value) => (
-                <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                    {value as string}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "retail_price",
-        accessorKey: "retail_price",
-        header: "Price",
-        meta: {
-            label: "Price",
-            align: "right",
-            cellRenderer: (value) => (
-                <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${parseFloat(value as string).toLocaleString()}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "stock_quantity",
-        accessorKey: "stock_quantity",
-        header: "Stock",
-        meta: {
-            label: "Stock",
-            align: "center",
-            cellRenderer: (value) => {
-                const qty = value as number;
-                const isLow = qty > 0 && qty <= 10;
-                const isOut = qty === 0;
-
-                return (
-                    <span
-                        className={cn(
-                            "font-medium text-xs",
-                            isOut
-                                ? "text-status-cancelled"
-                                : isLow
-                                  ? "text-status-pending"
-                                  : "text-pulse-green-dark",
-                        )}
-                    >
-                        {isOut ? "0" : qty}
-                    </span>
-                );
+        {
+            id: "status",
+            accessorKey: "status",
+            header: "Status",
+            meta: {
+                label: "Status",
+                align: "center",
+                cellRenderer: (value) => {
+                    return (
+                        <span
+                            className={cn(
+                                "inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs whitespace-nowrap",
+                                ProductStatusWithHelpers.getLabelClass(
+                                    value as ProductStatusType,
+                                ),
+                            )}
+                        >
+                            {ProductStatusWithHelpers.getDisplayTextKey(
+                                value as ProductStatusType,
+                            )}
+                        </span>
+                    );
+                },
             },
         },
-    },
-    {
-        id: "status",
-        accessorKey: "status",
-        header: "Status",
-        meta: {
-            label: "Status",
-            align: "center",
-            cellRenderer: (value) => {
-                const status = PRODUCT_STATUS_CONFIG[value as TProductStatus];
-                return (
-                    <span
-                        className={cn(
-                            "inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs whitespace-nowrap",
-                            status.textColor,
-                            status.bgColor,
-                        )}
-                    >
-                        {status.label}
-                    </span>
-                );
-            },
-        },
-    },
-];
+    ];

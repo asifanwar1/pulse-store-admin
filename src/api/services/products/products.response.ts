@@ -23,6 +23,8 @@ export type TProductResponse = {
     category_id: number;
     category_name: TProductCategory | string;
     status: TProductStatus | string;
+    total_sales: number;
+    rating: number;
     created_at: string;
     updated_at: string;
 };

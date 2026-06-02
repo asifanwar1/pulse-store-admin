@@ -18,12 +18,26 @@ import {
     productSalesTrendColumns,
     productReviewColumns,
 } from "./ProductDetails.Config";
-import { PRODUCT_STATUS_CONFIG } from "../ProductManagement.Config";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselPrevious,
+    CarouselNext,
+} from "@/components/ui/carousel";
+import Image from "@/components/custom/Image";
 
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 import { useProductDetails } from "./ProductDetails.Container";
+import { getInitialsFromName } from "@/utils/common.utils";
+import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
+import { getFormattedDate } from "@/utils/dateTime.utils";
+import {
+    ProductStatusWithHelpers,
+    type ProductStatusType,
+} from "@/constants/product-status.constants";
 
 export default function ProductDetails() {
     const {
@@ -33,6 +47,10 @@ export default function ProductDetails() {
         customerReviews,
         handleNavigateBack,
     } = useProductDetails();
+
+    if (isLoading) {
+        return <ProductDetailsSkeleton />;
+    }
 
     if (!product && !isLoading) {
         return (
@@ -62,7 +80,7 @@ export default function ProductDetails() {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                     <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-pulse-cream-dark text-pulse-green font-bold text-xl shrink-0">
-                        AB
+                        {getInitialsFromName(product?.name || "")}
                     </div>
                     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
@@ -72,9 +90,14 @@ export default function ProductDetails() {
                             <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
+                                    ProductStatusWithHelpers.getLabelClass(
+                                        product?.status as ProductStatusType,
+                                    ),
                                 )}
                             >
-                                {product?.status}
+                                {ProductStatusWithHelpers.getDisplayTextKey(
+                                    product?.status as ProductStatusType,
+                                )}
                             </span>
                         </div>
                         <p className="text-sm text-app-secondary">
@@ -95,7 +118,7 @@ export default function ProductDetails() {
                             </span>
                             <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
-                                Added {product?.created_at}
+                                Added {getFormattedDate(product?.created_at!)}
                             </span>
                         </div>
                     </div>
@@ -116,12 +139,12 @@ export default function ProductDetails() {
                 <StatChipCard
                     icon={<TrendingUp className="w-4 h-4" />}
                     label="Total Sales"
-                    value={"12"}
+                    value={product?.total_sales?.toLocaleString()!}
                 />
                 <StatChipCard
                     icon={<Star className="w-4 h-4" />}
                     label="Rating"
-                    value={"5"}
+                    value={product?.rating?.toLocaleString() || "-"}
                 />
             </div>
 
@@ -175,6 +198,41 @@ export default function ProductDetails() {
                 )}
             </div>
 
+            {product?.media && product?.media?.length > 0 && (
+                <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5">
+                    <div className="mb-4 flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-pulse-green-dark">
+                            Product Images
+                        </h3>
+                        <span className="text-xs text-app-secondary">
+                            {product.media.length} image
+                            {product.media.length !== 1 ? "s" : ""}
+                        </span>
+                    </div>
+
+                    <Carousel className="relative">
+                        <CarouselContent className="min-h-[260px]">
+                            {product.media.map((item) => (
+                                <CarouselItem key={item.id} className="h-full">
+                                    <div className="overflow-hidden rounded-3xl bg-pulse-cream-dark">
+                                        <Image
+                                            src={item.url}
+                                            alt={
+                                                product.name || "Product image"
+                                            }
+                                            className="h-[260px] w-full object-cover"
+                                        />
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+
+                        <CarouselPrevious className="!left-3" />
+                        <CarouselNext className="!right-3" />
+                    </Carousel>
+                </div>
+            )}
+
             <ChartCard
                 title="Monthly Sales"
                 subtitle="Units sold and revenue by month"
@@ -183,7 +241,7 @@ export default function ProductDetails() {
             >
                 <DataTable
                     id="product-sales-trend"
-                    data={productMonthlySales!}
+                    data={productMonthlySales || []}
                     columns={productSalesTrendColumns}
                     features={{
                         rowSelection: false,
