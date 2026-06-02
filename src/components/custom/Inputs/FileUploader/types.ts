@@ -1,7 +1,18 @@
+export type ExistingFilePreview = {
+    id: string;
+    url: string;
+    name?: string;
+    file_name?: string;
+    type?: string;
+    size?: number;
+};
+
+export type FileUploaderValue = File | ExistingFilePreview;
+
 export interface FileUploaderProps {
     // React Hook Form controller props
-    value?: File[] | string;
-    onChange?: (files: File[]) => void;
+    value?: FileUploaderValue[] | string;
+    onChange?: (files: FileUploaderValue[]) => void;
     onBlur?: () => void;
     name?: string;
 
@@ -24,7 +35,11 @@ export interface FileUploaderProps {
 }
 
 export interface FilePreviewItem {
-    file: File;
+    item: FileUploaderValue;
+    name: string;
+    size?: number;
+    type?: string;
     previewUrl: string | null; // null for non-image files
     id: string;
+    isObjectUrl: boolean;
 }

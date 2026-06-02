@@ -8,7 +8,12 @@ import {
     FileVideo,
     File as FileIcon,
 } from "lucide-react";
-import type { FilePreviewItem, FileUploaderProps } from "./types";
+import type {
+    ExistingFilePreview,
+    FilePreviewItem,
+    FileUploaderProps,
+    FileUploaderValue,
+} from "./types";
 
 const PREVIEW_SIZE_MAP = {
     sm: "w-16 h-16",
@@ -22,8 +27,43 @@ function formatBytes(bytes: number): string {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-function getFileIcon(file: File): React.ReactNode {
-    const type = file.type;
+function isFile(item: FileUploaderValue): item is File {
+    return item instanceof File;
+}
+
+function isExistingFilePreview(
+    item: FileUploaderValue,
+): item is ExistingFilePreview {
+    return !isFile(item) && !!item.url;
+}
+
+function getItemName(item: FileUploaderValue): string {
+    if (isFile(item)) return item.name;
+    return item.name ?? item.file_name ?? item.url.split("/").pop() ?? "Media";
+}
+
+function getItemType(item: FileUploaderValue): string {
+    if (isFile(item)) return item.type;
+    return item.type ?? "";
+}
+
+function getItemSize(item: FileUploaderValue): number | undefined {
+    return isFile(item) ? item.size : item.size;
+}
+
+function isImageItem(item: FileUploaderValue): boolean {
+    const type = getItemType(item);
+    if (type.startsWith("image/")) return true;
+    return /\.(avif|bmp|gif|jpe?g|png|svg|webp)$/i.test(getItemName(item));
+}
+
+function getItemId(item: FileUploaderValue): string {
+    if (isFile(item)) return `${item.name}-${item.size}-${item.lastModified}`;
+    return `${item.id}-${item.url}`;
+}
+
+function getFileIcon(item: FileUploaderValue): React.ReactNode {
+    const type = getItemType(item);
     if (type.startsWith("image/"))
         return <FileImage className="w-5 h-5 text-pulse-green" />;
     if (type.startsWith("video/"))
@@ -33,13 +73,19 @@ function getFileIcon(file: File): React.ReactNode {
     return <FileIcon className="w-5 h-5 text-pulse-green" />;
 }
 
-function buildPreviews(files: File[]): FilePreviewItem[] {
-    return files.map((file) => ({
-        file,
-        previewUrl: file.type.startsWith("image/")
-            ? URL.createObjectURL(file)
+function buildPreviews(items: FileUploaderValue[]): FilePreviewItem[] {
+    return items.map((item) => ({
+        item,
+        name: getItemName(item),
+        size: getItemSize(item),
+        type: getItemType(item),
+        previewUrl: isImageItem(item)
+            ? isFile(item)
+                ? URL.createObjectURL(item)
+                : item.url
             : null,
-        id: `${file.name}-${file.size}-${file.lastModified}`,
+        id: getItemId(item),
+        isObjectUrl: isFile(item) && isImageItem(item),
     }));
 }
 
@@ -71,22 +117,31 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
 
         React.useImperativeHandle(ref, () => inputRef.current!);
 
-        const normalizedFiles: File[] = Array.isArray(value) ? value : [];
+        const normalizedFiles: FileUploaderValue[] = Array.isArray(value)
+            ? value
+            : [];
 
         const [previews, setPreviews] = useState<FilePreviewItem[]>(() =>
             buildPreviews(normalizedFiles),
         );
+        const previewsRef = useRef<FilePreviewItem[]>(previews);
         const [isDragging, setIsDragging] = useState(false);
         const [validationError, setValidationError] = useState<string | null>(
             null,
         );
 
         useEffect(() => {
-            const incoming: File[] = Array.isArray(value) ? value : [];
+            const incoming: FileUploaderValue[] = Array.isArray(value)
+                ? value
+                : [];
             setPreviews((prev) => {
                 // Revoke URLs for files no longer present
                 prev.forEach((p) => {
-                    if (p.previewUrl && !incoming.includes(p.file)) {
+                    if (
+                        p.previewUrl &&
+                        p.isObjectUrl &&
+                        !incoming.includes(p.item)
+                    ) {
                         URL.revokeObjectURL(p.previewUrl);
                     }
                 });
@@ -95,9 +150,14 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
         }, [value]);
 
         useEffect(() => {
+            previewsRef.current = previews;
+        }, [previews]);
+
+        useEffect(() => {
             return () => {
-                previews.forEach((p) => {
-                    if (p.previewUrl) URL.revokeObjectURL(p.previewUrl);
+                previewsRef.current.forEach((p) => {
+                    if (p.previewUrl && p.isObjectUrl)
+                        URL.revokeObjectURL(p.previewUrl);
                 });
             };
         }, []);
@@ -133,7 +193,9 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
 
         const mergeFiles = useCallback(
             (incoming: File[]): File[] => {
-                const current: File[] = Array.isArray(value) ? value : [];
+                const current: File[] = Array.isArray(value)
+                    ? value.filter(isFile)
+                    : [];
                 if (!multiple) return incoming.slice(0, 1);
 
                 const existingNames = new Set(
@@ -157,9 +219,15 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                 }
                 setValidationError(null);
                 const merged = mergeFiles(rawFiles);
-                onChange?.(merged);
+                const existingItems = Array.isArray(value)
+                    ? value.filter(isExistingFilePreview)
+                    : [];
+                const nextFiles = multiple
+                    ? [...existingItems, ...merged].slice(0, maxFiles)
+                    : merged;
+                onChange?.(nextFiles);
             },
-            [validate, mergeFiles, onChange],
+            [validate, mergeFiles, multiple, maxFiles, onChange, value],
         );
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,12 +237,13 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
         };
 
         const handleRemove = (id: string) => {
-            const current: File[] = Array.isArray(value) ? value : [];
+            const current: FileUploaderValue[] = Array.isArray(value)
+                ? value
+                : [];
             const target = previews.find((p) => p.id === id);
-            if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
-            const updated = current.filter(
-                (f) => `${f.name}-${f.size}-${f.lastModified}` !== id,
-            );
+            if (target?.previewUrl && target.isObjectUrl)
+                URL.revokeObjectURL(target.previewUrl);
+            const updated = current.filter((item) => getItemId(item) !== id);
             onChange?.(updated);
         };
 
@@ -198,7 +267,9 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
         };
 
         const displayError = validationError ?? error;
-        const currentFiles: File[] = Array.isArray(value) ? value : [];
+        const currentFiles: FileUploaderValue[] = Array.isArray(value)
+            ? value
+            : [];
         const isAtMax = !multiple
             ? currentFiles.length >= 1
             : currentFiles.length >= maxFiles;
@@ -288,25 +359,27 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                                 {item.previewUrl ? (
                                     <img
                                         src={item.previewUrl}
-                                        alt={item.file.name}
+                                        alt={item.name}
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
                                     <div className="flex flex-col items-center justify-center w-full h-full gap-1 px-1">
-                                        {getFileIcon(item.file)}
+                                        {getFileIcon(item.item)}
                                         <span className="text-[9px] text-pulse-green/70 font-normal text-center leading-tight line-clamp-2 w-full px-1">
-                                            {item.file.name}
+                                            {item.name}
                                         </span>
-                                        <span className="text-[9px] text-pulse-green/50">
-                                            {formatBytes(item.file.size)}
-                                        </span>
+                                        {typeof item.size === "number" && (
+                                            <span className="text-[9px] text-pulse-green/50">
+                                                {formatBytes(item.size)}
+                                            </span>
+                                        )}
                                     </div>
                                 )}
 
                                 {!disabled && (
                                     <button
                                         type="button"
-                                        aria-label={`Remove ${item.file.name}`}
+                                        aria-label={`Remove ${item.name}`}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleRemove(item.id);
@@ -320,7 +393,7 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                                 {item.previewUrl && (
                                     <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform bg-black/60 px-1 py-0.5">
                                         <p className="text-[9px] text-white text-center truncate leading-tight">
-                                            {item.file.name}
+                                            {item.name}
                                         </p>
                                     </div>
                                 )}

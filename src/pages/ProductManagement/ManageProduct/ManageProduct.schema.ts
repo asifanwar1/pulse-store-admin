@@ -1,6 +1,15 @@
 import { z } from "zod";
+import type { FileUploaderValue } from "@/components/custom/Inputs/FileUploader";
 
 const optionSchema = z.object({ label: z.string(), value: z.string() });
+const existingImageSchema = z.object({
+    id: z.string(),
+    url: z.string(),
+    name: z.string().optional(),
+    file_name: z.string().optional(),
+    type: z.string().optional(),
+    size: z.number().optional(),
+});
 
 export const ManageProductSchema = z.object({
     name: z
@@ -55,12 +64,22 @@ export const ManageProductSchema = z.object({
         .max(500, "Description must be between 10 and 500 characters"),
     tags: z.array(z.string()).optional(),
     images: z
-        .array(z.custom<File>((val) => val instanceof File, "Must be a file"))
+        .array(
+            z.union([
+                z.custom<File>((val) => val instanceof File, "Must be a file"),
+                existingImageSchema,
+            ]),
+        )
         .min(1, "At least one image is required")
         .default([]),
 });
 
-export type ManageProductFormValues = z.infer<typeof ManageProductSchema>;
+export type ManageProductFormValues = Omit<
+    z.infer<typeof ManageProductSchema>,
+    "images"
+> & {
+    images: FileUploaderValue[];
+};
 
 export const INITIAL_PRODUCT_VALUES: ManageProductFormValues = {
     name: "",

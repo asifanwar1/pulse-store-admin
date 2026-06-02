@@ -25,6 +25,10 @@ import {
 import { ACTION_MODES } from "@/constants/action-modes.constants";
 import { showToast } from "@/lib/toast";
 import { getAddProductFormConfig } from "./ManageProduct.config";
+import type {
+    ExistingFilePreview,
+    FileUploaderValue,
+} from "@/components/custom/Inputs/FileUploader";
 
 const buildProductPayload = (
     values: ManageProductFormValues,
@@ -45,6 +49,12 @@ const buildProductPayload = (
     category: values.category as TProductCategory,
     status: values.status as TProductStatus,
 });
+
+const isFile = (item: FileUploaderValue): item is File => item instanceof File;
+
+const isExistingMedia = (
+    item: FileUploaderValue,
+): item is ExistingFilePreview => !isFile(item) && !!item.id && !!item.url;
 
 export const useManageProduct = ({
     mode = ACTION_MODES.ADD,
@@ -98,15 +108,22 @@ export const useManageProduct = ({
 
     const handleSubmit = async (values: ManageProductFormValues) => {
         try {
+            const existingMedia = values.images
+                .filter(isExistingMedia)
+                .map((item) => ({ id: item.id, url: item.url }));
+            const newImages = values.images.filter(isFile);
             const uploadedMedia = await handleMultipleFileUpload(
-                values.images,
+                newImages,
                 {
                     returnFullResponse: true,
                     folder: "products",
                 },
             );
 
-            const payload = buildProductPayload(values, uploadedMedia);
+            const payload = buildProductPayload(values, [
+                ...existingMedia,
+                ...uploadedMedia,
+            ]);
 
             if (mode === ACTION_MODES.ADD) {
                 await createProduct(payload, {
@@ -146,7 +163,11 @@ export const useManageProduct = ({
                   stock: String(product.stock_quantity ?? 0),
                   description: product.description ?? "",
                   tags: product.tags ?? [],
-                  images: [],
+                  images: (product.media ?? []).map((item) => ({
+                      id: item.id,
+                      url: item.url,
+                      name: item.file_name,
+                  })),
               }
             : INITIAL_PRODUCT_VALUES;
 

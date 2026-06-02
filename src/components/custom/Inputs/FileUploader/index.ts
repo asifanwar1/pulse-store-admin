@@ -1,2 +1,7 @@
 export { default } from "./FileUploader";
-export type { FileUploaderProps, FilePreviewItem } from "./types";
+export type {
+    ExistingFilePreview,
+    FilePreviewItem,
+    FileUploaderProps,
+    FileUploaderValue,
+} from "./types";
