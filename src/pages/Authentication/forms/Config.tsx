@@ -58,7 +58,7 @@ export const RESET_PASSWORD_FORM_CONFIG: FieldType<IResetPasswordFormValues>[] =
     ];
 
 export const LOGIN_FORM_INITIAL_VALUES: ILoginFormValues = {
-    email: "admin@dcd.com",
+    email: "admin@pulsestore.com",
     password: "Click123$",
     user_type: "ADMIN",
 };
