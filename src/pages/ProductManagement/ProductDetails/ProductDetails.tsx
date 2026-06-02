@@ -148,90 +148,96 @@ export default function ProductDetails() {
                 />
             </div>
 
-            <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5 flex flex-col gap-4">
-                <h3 className="text-sm font-semibold text-pulse-green-dark border-b border-pulse-cream-dark pb-3">
-                    Product Information
-                </h3>
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    <InfoCard
-                        icon={<DollarSign className="w-4 h-4" />}
-                        label="Retail Price"
-                        value={`$${product?.retail_price?.toLocaleString()}`}
-                    />
-                    <InfoCard
-                        icon={<DollarSign className="w-4 h-4" />}
-                        label="Cost Price"
-                        value={`$${product?.cost_price?.toLocaleString()}`}
-                    />
-                    <InfoCard
-                        icon={<Layers className="w-4 h-4" />}
-                        label="Category"
-                        value={product?.category_name!}
-                    />
-                    <InfoCard
-                        icon={<Tag className="w-4 h-4" />}
-                        label="Brand"
-                        value={product?.brand!}
-                    />
-                </div>
-                {product?.description && (
-                    <div className="flex flex-col gap-1 pt-1 border-t border-pulse-cream-dark">
-                        <span className="text-xs text-pulse-green font-medium">
-                            Description
-                        </span>
-                        <p className="text-xs text-pulse-green-dark leading-relaxed">
-                            {product?.description}
-                        </p>
-                    </div>
-                )}
-                {product?.tags && product?.tags?.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                        {product?.tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xss font-medium bg-pulse-cream-dark text-pulse-green"
-                            >
-                                {tag}
+            <div className="flex flex-wrap gap-4">
+                {product?.media && product?.media?.length > 0 && (
+                    <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5 flex-1">
+                        <div className="mb-4 flex items-center justify-between">
+                            <h3 className="text-sm font-semibold text-pulse-green-dark">
+                                Product Images
+                            </h3>
+                            <span className="text-xs text-app-secondary">
+                                {product.media.length} image
+                                {product.media.length !== 1 ? "s" : ""}
                             </span>
-                        ))}
+                        </div>
+
+                        <Carousel className="relative">
+                            <CarouselContent className="min-h-[260px]">
+                                {product.media.map((item) => (
+                                    <CarouselItem
+                                        key={item.id}
+                                        className="h-full"
+                                    >
+                                        <div className="overflow-hidden rounded-3xl bg-pulse-cream-dark">
+                                            <Image
+                                                src={item.url}
+                                                alt={
+                                                    product.name ||
+                                                    "Product image"
+                                                }
+                                                className="h-[260px] w-full object-cover"
+                                            />
+                                        </div>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselContent>
+
+                            <CarouselPrevious className="!left-3" />
+                            <CarouselNext className="!right-3" />
+                        </Carousel>
                     </div>
                 )}
-            </div>
 
-            {product?.media && product?.media?.length > 0 && (
-                <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5">
-                    <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-pulse-green-dark">
-                            Product Images
-                        </h3>
-                        <span className="text-xs text-app-secondary">
-                            {product.media.length} image
-                            {product.media.length !== 1 ? "s" : ""}
-                        </span>
+                <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-5 flex flex-col gap-4 flex-1">
+                    <h3 className="text-sm font-semibold text-pulse-green-dark border-b border-pulse-cream-dark pb-3">
+                        Product Information
+                    </h3>
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <InfoCard
+                            icon={<DollarSign className="w-4 h-4" />}
+                            label="Retail Price"
+                            value={`$${product?.retail_price?.toLocaleString()}`}
+                        />
+                        <InfoCard
+                            icon={<DollarSign className="w-4 h-4" />}
+                            label="Cost Price"
+                            value={`$${product?.cost_price?.toLocaleString()}`}
+                        />
+                        <InfoCard
+                            icon={<Layers className="w-4 h-4" />}
+                            label="Category"
+                            value={product?.category_name!}
+                        />
+                        <InfoCard
+                            icon={<Tag className="w-4 h-4" />}
+                            label="Brand"
+                            value={product?.brand!}
+                        />
                     </div>
-
-                    <Carousel className="relative">
-                        <CarouselContent className="min-h-[260px]">
-                            {product.media.map((item) => (
-                                <CarouselItem key={item.id} className="h-full">
-                                    <div className="overflow-hidden rounded-3xl bg-pulse-cream-dark">
-                                        <Image
-                                            src={item.url}
-                                            alt={
-                                                product.name || "Product image"
-                                            }
-                                            className="h-[260px] w-full object-cover"
-                                        />
-                                    </div>
-                                </CarouselItem>
+                    {product?.description && (
+                        <div className="flex flex-col gap-1 pt-1 border-t border-pulse-cream-dark">
+                            <span className="text-xs text-pulse-green font-medium">
+                                Description
+                            </span>
+                            <p className="text-xs text-pulse-green-dark leading-relaxed">
+                                {product?.description}
+                            </p>
+                        </div>
+                    )}
+                    {product?.tags && product?.tags?.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                            {product?.tags.map((tag) => (
+                                <span
+                                    key={tag}
+                                    className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xss font-medium bg-pulse-cream-dark text-pulse-green"
+                                >
+                                    {tag}
+                                </span>
                             ))}
-                        </CarouselContent>
-
-                        <CarouselPrevious className="!left-3" />
-                        <CarouselNext className="!right-3" />
-                    </Carousel>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
 
             <ChartCard
                 title="Monthly Sales"
