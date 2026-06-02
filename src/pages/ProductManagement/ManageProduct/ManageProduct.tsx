@@ -2,12 +2,10 @@ import { ArrowLeft } from "lucide-react";
 
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { FormBuilder } from "@/components/custom/Form";
-import {
-    type ManageProductFormValues,
-    INITIAL_PRODUCT_VALUES,
-} from "./ManageProduct.schema";
+import { type ManageProductFormValues } from "./ManageProduct.schema";
 import { useManageProduct } from "./ManageProduct.Container";
 import type { ManageProductFormProps } from "../ProductManagement.types";
+import ManageProductSkeleton from "./ManageProductSkeleton";
 
 const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
     const {
@@ -15,11 +13,17 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
         formConfig,
         ManageProductSchema,
         isSubmitting,
+        isProductLoading,
+        productFormDefaultValues,
         handleCancel,
         handleSubmit,
     } = useManageProduct({
         mode,
     });
+
+    if (isProductLoading) {
+        return <ManageProductSkeleton />;
+    }
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
@@ -50,7 +54,7 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
                     ref={formRef}
                     config={formConfig}
                     schema={ManageProductSchema}
-                    defaultValues={INITIAL_PRODUCT_VALUES}
+                    defaultValues={productFormDefaultValues}
                     onSubmit={handleSubmit}
                     className="grid grid-cols-12 gap-4"
                     noValidate

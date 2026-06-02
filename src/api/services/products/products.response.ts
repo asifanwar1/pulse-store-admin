@@ -6,6 +6,7 @@ import type {
 export type TProductMedia = {
     id: string;
     url: string;
+    file_name?: string;
 };
 
 export type TProductResponse = {
