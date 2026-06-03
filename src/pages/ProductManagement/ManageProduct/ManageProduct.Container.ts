@@ -29,7 +29,10 @@ import type {
     ExistingFilePreview,
     FileUploaderValue,
 } from "@/components/custom/Inputs/FileUploader";
-import { resolveOptionValue } from "@/utils/common.utils";
+import {
+    getOptionByValue,
+    resolveOptionValue,
+} from "@/utils/selectOption.utils";
 import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 
 const buildProductPayload = (
@@ -89,12 +92,16 @@ export const useManageProduct = ({
         limit: 20,
     });
 
+    const isLoading = isProductLoading || isCategoriesLoading;
+
     const isSubmitting =
         isMediaLoading || isCreatingProduct || isUpdatingProduct;
+
     const categoryOptions = categories.map((category) => ({
         label: category.name,
-        value: String(category.id),
+        value: category.id,
     }));
+
     const formConfig = getAddProductFormConfig({
         categoryOptions,
         hasMoreCategories: !!hasNextPage,
@@ -153,7 +160,10 @@ export const useManageProduct = ({
                   name: product.name ?? "",
                   sku: product.sku ?? "",
                   brand: product.brand ?? "",
-                  category: String(product.category_id ?? ""),
+                  category: getOptionByValue(
+                      categoryOptions,
+                      product.category_id,
+                  ),
                   status: resolveOptionValue(STATUS_OPTIONS, product.status),
                   price: product.retail_price ?? "",
                   costPrice: product.cost_price ?? "",
@@ -173,7 +183,7 @@ export const useManageProduct = ({
         formConfig,
         ManageProductSchema,
         isSubmitting,
-        isProductLoading,
+        isLoading,
         productFormDefaultValues,
         handleCancel,
         handleSubmit,

@@ -1,4 +1,4 @@
-import { Select, type SelectOption } from "@/components/custom/Select";
+import { Select } from "@/components/custom/Select";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
 import FileUploader from "@/components/custom/Inputs/FileUploader";
 import { type FieldType } from "@/components/custom/Form";
@@ -7,7 +7,7 @@ import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 import InputWithChips from "@/components/custom/InputWithChips";
 
 type TManageProductFormConfigProps = {
-    categoryOptions: readonly SelectOption[];
+    categoryOptions: any;
     onCategorySearch: (value: string) => void;
     onCategoryScroll?: () => void;
     hasMoreCategories?: boolean;

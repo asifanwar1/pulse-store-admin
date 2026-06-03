@@ -14,7 +14,7 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
         formConfig,
         ManageProductSchema,
         isSubmitting,
-        isProductLoading,
+        isLoading,
         productFormDefaultValues,
         handleCancel,
         handleSubmit,
@@ -22,7 +22,7 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
         mode,
     });
 
-    if (isProductLoading) {
+    if (isLoading) {
         return <ManageProductSkeleton />;
     }
 
@@ -44,7 +44,9 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6 flex flex-col gap-6">
                 <div>
                     <h3 className="text-sm font-semibold text-pulse-green-dark">
-                        New Product
+                        {mode === ACTION_MODES.ADD
+                            ? "New Product"
+                            : "Update Product"}
                     </h3>
                     <p className="text-xs text-pulse-green mt-0.5">
                         Fill in the details below to add a new product to the
