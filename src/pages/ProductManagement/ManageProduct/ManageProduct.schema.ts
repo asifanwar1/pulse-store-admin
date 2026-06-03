@@ -28,7 +28,11 @@ export const ManageProductSchema = z.object({
         .union([z.string(), optionSchema, z.null(), z.undefined()])
         .transform((v) => {
             if (v === null || v === undefined) return "";
-            return typeof v === "string" ? v : v.value;
+            if (typeof v === "string") return v;
+            if (v && typeof v === "object" && "value" in v) {
+                return (v as z.infer<typeof optionSchema>).value;
+            }
+            return "";
         })
         .pipe(z.string().nonempty("Category is required")),
     status: z
