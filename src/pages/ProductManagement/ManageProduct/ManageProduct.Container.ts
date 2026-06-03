@@ -29,6 +29,8 @@ import type {
     ExistingFilePreview,
     FileUploaderValue,
 } from "@/components/custom/Inputs/FileUploader";
+import { resolveOptionValue } from "@/utils/common.utils";
+import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 
 const buildProductPayload = (
     values: ManageProductFormValues,
@@ -102,9 +104,7 @@ export const useManageProduct = ({
         onCategoryScroll: hasNextPage ? () => fetchNextPage() : undefined,
     });
 
-    const handleCancel = () => {
-        navigate(APP_ROUTES.PRODUCTS);
-    };
+    const handleCancel = () => navigate(-1);
 
     const handleSubmit = async (values: ManageProductFormValues) => {
         try {
@@ -112,13 +112,10 @@ export const useManageProduct = ({
                 .filter(isExistingMedia)
                 .map((item) => ({ id: item.id, url: item.url }));
             const newImages = values.images.filter(isFile);
-            const uploadedMedia = await handleMultipleFileUpload(
-                newImages,
-                {
-                    returnFullResponse: true,
-                    folder: "products",
-                },
-            );
+            const uploadedMedia = await handleMultipleFileUpload(newImages, {
+                returnFullResponse: true,
+                folder: "products",
+            });
 
             const payload = buildProductPayload(values, [
                 ...existingMedia,
@@ -157,7 +154,7 @@ export const useManageProduct = ({
                   sku: product.sku ?? "",
                   brand: product.brand ?? "",
                   category: String(product.category_id ?? ""),
-                  status: product.status ?? "",
+                  status: resolveOptionValue(STATUS_OPTIONS, product.status),
                   price: product.retail_price ?? "",
                   costPrice: product.cost_price ?? "",
                   stock: String(product.stock_quantity ?? 0),

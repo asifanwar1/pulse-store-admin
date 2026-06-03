@@ -12,7 +12,7 @@ export const STATUS_OPTIONS = [
     { value: "DRAFT", label: "Draft" },
     { value: "OUT_OF_STOCK", label: "Out of Stock" },
     { value: "INACTIVE", label: "Inactive" },
-] as const;
+];
 
 const productStatusTextKeys = {
     [ProductStatus.ACTIVE]: "Active",

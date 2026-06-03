@@ -110,3 +110,13 @@ export const invalidateMultiple = async (
         ),
     );
 };
+
+export function resolveOptionValue<T extends { value: any }>(
+    options: T[],
+    value: any,
+): T | any {
+    if (typeof value === "string") {
+        return options.find((opt) => opt.value === value) || value;
+    }
+    return value;
+}

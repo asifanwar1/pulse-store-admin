@@ -6,6 +6,7 @@ import { type ManageProductFormValues } from "./ManageProduct.schema";
 import { useManageProduct } from "./ManageProduct.Container";
 import type { ManageProductFormProps } from "../ProductManagement.types";
 import ManageProductSkeleton from "./ManageProductSkeleton";
+import { ACTION_MODES } from "@/constants/action-modes.constants";
 
 const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
     const {
@@ -35,7 +36,8 @@ const ManageProduct: React.FC<ManageProductFormProps> = ({ mode }) => {
                     disabled={isSubmitting}
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    Back to Products
+                    Back to{" "}
+                    {mode === ACTION_MODES.ADD ? "Products" : "Product Details"}
                 </Button>
             </div>
 
