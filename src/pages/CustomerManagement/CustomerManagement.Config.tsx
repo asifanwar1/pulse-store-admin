@@ -1,7 +1,11 @@
 import { Users, UserCheck, UserPlus, DollarSign } from "lucide-react";
-import { type Customer, type CustomerStatus } from "@/mock/customer.mock";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
+import type { TUserResponse } from "@/api/services/users/users.response.types";
+import { getInitialsFromName } from "@/utils/common.utils";
+import type { UserStatusType } from "@/constants/user-status.constants";
+import { UserStatusWithHelpers } from "@/constants/user-status.constants";
+import { getFormattedDate } from "@/utils/dateTime.utils";
 
 export const CUSTOMER_STAT_CONFIG = [
     {
@@ -18,48 +22,27 @@ export const CUSTOMER_STAT_CONFIG = [
         icon: <UserCheck className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
         iconColorClass: "text-pulse-green",
-        subtitle: "Ordered in last 90 days",
+        subtitle: "Ordered in last 30 days",
     },
     {
-        key: "newThisMonth" as const,
-        title: "New This Month",
+        key: "InactiveCustomer" as const,
+        title: "Inactive Customers",
         icon: <UserPlus className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
         iconColorClass: "text-pulse-green",
-        subtitle: "Joined in April 2026",
+        subtitle: "Not ordered in last 30 days",
     },
     {
-        key: "avgLifetimeValue" as const,
-        title: "Avg. Lifetime Value",
+        key: "blockedCustomer" as const,
+        title: "Blocked Customers",
         icon: <DollarSign className="w-5 h-5" />,
         iconBgClass: "bg-pulse-cream-dark",
         iconColorClass: "text-pulse-green",
-        subtitle: "Per customer spend",
+        subtitle: "Blocked by admin",
     },
 ] as const;
 
-export const STATUS_CONFIG: Record<
-    CustomerStatus,
-    { label: string; textColor: string; bgColor: string }
-> = {
-    active: {
-        label: "Active",
-        textColor: "text-status-delivered",
-        bgColor: "bg-status-delivered-bg",
-    },
-    inactive: {
-        label: "Inactive",
-        textColor: "text-status-pending",
-        bgColor: "bg-status-pending-bg",
-    },
-    blocked: {
-        label: "Blocked",
-        textColor: "text-status-cancelled",
-        bgColor: "bg-status-cancelled-bg",
-    },
-};
-
-export const customerManagementTablecolumns: TDataColumnDef<Customer>[] = [
+export const customerManagementTablecolumns: TDataColumnDef<TUserResponse>[] = [
     {
         id: "id",
         accessorKey: "id",
@@ -74,13 +57,14 @@ export const customerManagementTablecolumns: TDataColumnDef<Customer>[] = [
         },
     },
     {
-        id: "name",
-        accessorKey: "name",
-        header: "Customer",
+        id: "fullName",
+        accessorKey: "fullName",
+        header: "Customer Name",
         meta: {
-            label: "Customer",
+            label: "Customer Name",
             cellRenderer: (_value, row) => {
                 const customer = row.original;
+                const initials = getInitialsFromName(customer.fullName!);
 
                 return (
                     <div className="flex items-center gap-2.5 whitespace-nowrap">
@@ -90,11 +74,11 @@ export const customerManagementTablecolumns: TDataColumnDef<Customer>[] = [
                                 "bg-pulse-cream-dark",
                             )}
                         >
-                            {customer.initials}
+                            {initials}
                         </div>
                         <div className="flex flex-col">
                             <span className="font-medium text-pulse-green-dark text-xs">
-                                {customer.name}
+                                {customer.fullName}
                             </span>
                             <span className="text-xss text-pulse-green leading-tight">
                                 {customer.email}
@@ -106,56 +90,28 @@ export const customerManagementTablecolumns: TDataColumnDef<Customer>[] = [
         },
     },
     {
-        id: "location",
-        accessorKey: "location",
-        header: "Location",
+        id: "address.city",
+        accessorKey: "address.city",
+        header: "City",
         meta: {
-            label: "Location",
+            label: "City",
             cellRenderer: (value) => (
                 <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                    {value as string}
+                    {(value as string) || "-"}
                 </span>
             ),
         },
     },
     {
-        id: "totalOrders",
-        accessorKey: "totalOrders",
-        header: "Orders",
+        id: "total_orders",
+        accessorKey: "total_orders",
+        header: "Total Orders",
         meta: {
             label: "Orders",
             align: "center",
             cellRenderer: (value) => (
                 <span className="font-medium text-pulse-green-dark text-xs">
                     {(value as number).toLocaleString()}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "totalSpend",
-        accessorKey: "totalSpend",
-        header: "Total Spend",
-        meta: {
-            label: "Total Spend",
-            align: "right",
-            cellRenderer: (value) => (
-                <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "avgOrderValue",
-        accessorKey: "avgOrderValue",
-        header: "Avg. Order",
-        meta: {
-            label: "Avg. Order",
-            align: "right",
-            cellRenderer: (value) => (
-                <span className="font-medium text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
                 </span>
             ),
         },
@@ -168,31 +124,33 @@ export const customerManagementTablecolumns: TDataColumnDef<Customer>[] = [
             label: "Status",
             align: "center",
             cellRenderer: (value) => {
-                const status = STATUS_CONFIG[value as CustomerStatus];
                 return (
                     <span
                         className={cn(
                             "inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs whitespace-nowrap",
-                            status.textColor,
-                            status.bgColor,
+                            UserStatusWithHelpers.getLabelClass(
+                                value as UserStatusType,
+                            ),
                         )}
                     >
-                        {status.label}
+                        {UserStatusWithHelpers.getDisplayTextKey(
+                            value as UserStatusType,
+                        )}
                     </span>
                 );
             },
         },
     },
     {
-        id: "lastOrderDate",
-        accessorKey: "lastOrderDate",
+        id: "last_order",
+        accessorKey: "last_order",
         header: "Last Order",
         meta: {
             label: "Last Order",
             align: "right",
             cellRenderer: (value) => (
                 <span className="text-xs text-pulse-green-dark whitespace-nowrap">
-                    {value as string}
+                    {getFormattedDate(value as string)}
                 </span>
             ),
         },

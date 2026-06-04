@@ -3,6 +3,7 @@ import {
     GetCurrentUser,
     GetUserById,
     GetUsers,
+    GetUsersAnalytics,
     UpdateMe,
     UpdateUserStatus,
     USER_QUERY_KEYS,
@@ -12,9 +13,51 @@ import type {
     TUpdateMeBody,
     TUpdateUserStatusBody,
 } from "@/api/services/users/users.request.types";
+import Config from "@/Config";
 import { queryClient } from "@/lib/queryClient";
+import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDataTableQuery } from "../useDataTableQuery";
+
+export const useGetUsers = (props: TGetUsersParams, enabled?: boolean) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const {
+        limit = Config.LIMIT,
+        search = "",
+        page = 1,
+        status,
+        column,
+        user_type,
+    } = props;
+
+    const { data, count, ...rest } = useDataTableQuery({
+        queryKey: [
+            USER_QUERY_KEYS.USERS,
+            search,
+            status,
+            column,
+            user_type,
+            String(page),
+            String(limit),
+        ],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params) => ({
+            status: 200,
+            data: await GetUsers({
+                ...params,
+                ...(search && { search }),
+                ...(status && { status }),
+                ...(column && { column }),
+                ...(page && { page }),
+                ...(limit && { limit }),
+                ...(user_type && { user_type }),
+            }),
+        }),
+    });
+    return { data, count, ...rest };
+};
 
 export const useGetCurrentUser = () => {
     return useQuery({
@@ -33,13 +76,6 @@ export const useUpdateMe = () => {
                 [USER_QUERY_KEYS.USER],
             ]);
         },
-    });
-};
-
-export const useGetUsers = (params?: TGetUsersParams) => {
-    return useQuery({
-        queryKey: [USER_QUERY_KEYS.USERS, params],
-        queryFn: () => GetUsers(params),
     });
 };
 
@@ -80,5 +116,12 @@ export const useUpdateUserStatus = () => {
                 [USER_QUERY_KEYS.USER],
             ]);
         },
+    });
+};
+
+export const useGetUsersAnalytics = () => {
+    return useQuery({
+        queryKey: [USER_QUERY_KEYS.USER_ANALYTICS],
+        queryFn: () => GetUsersAnalytics(),
     });
 };

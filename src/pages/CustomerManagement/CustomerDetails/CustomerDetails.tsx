@@ -17,7 +17,7 @@ import { DataTable } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { customerOrderColumns } from "./CustomerDetails.Config";
-import { STATUS_CONFIG } from "../CustomerManagement.Config";
+// import { STATUS_CONFIG } from "../CustomerManagement.Config";
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
@@ -45,7 +45,7 @@ export default function CustomerDetails() {
         );
     }
 
-    const statusBadge = STATUS_CONFIG[customer.status];
+    // const statusBadge = STATUS_CONFIG[customer.status];
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
@@ -70,7 +70,7 @@ export default function CustomerDetails() {
                             <h2 className="text-lg font-bold text-pulse-green-dark">
                                 {customer.name}
                             </h2>
-                            <span
+                            {/* <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
                                     statusBadge.textColor,
@@ -78,7 +78,7 @@ export default function CustomerDetails() {
                                 )}
                             >
                                 {statusBadge.label}
-                            </span>
+                            </span> */}
                         </div>
                         <p className="text-sm text-app-secondary">
                             {customer.email}

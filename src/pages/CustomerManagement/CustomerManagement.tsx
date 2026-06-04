@@ -1,10 +1,13 @@
-import { customerStatsData } from "@/mock/customer.mock";
 import { StatCard } from "@/components/custom/CustomCards";
 import { CUSTOMER_STAT_CONFIG } from "./CustomerManagement.Config";
 import CustomerTable from "./CustomerTable";
 import { formatStatValue } from "@/utils/common.utils";
+import { useCustomerManagement } from "./CustomerManagement.Container";
 
 const CustomerManagement = () => {
+    const { users, usersAnalyticsData, mapAnalyticsMetricToStat } =
+        useCustomerManagement();
+
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -17,7 +20,9 @@ const CustomerManagement = () => {
                         iconColorClass,
                         subtitle,
                     }) => {
-                        const stat = customerStatsData[key];
+                        const stat = mapAnalyticsMetricToStat(
+                            usersAnalyticsData?.[key],
+                        );
                         return (
                             <StatCard
                                 key={key}
@@ -35,7 +40,7 @@ const CustomerManagement = () => {
                 )}
             </div>
 
-            <CustomerTable />
+            <CustomerTable usersListData={users ?? []} />
         </div>
     );
 };

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { customersListData } from "@/mock/customer.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import { customerManagementTablecolumns } from "./CustomerManagement.Config";
+import type { UsersTableProps } from "./CustomerManagement.types";
 
-export default function CustomerTable() {
+const CustomerTable: React.FC<UsersTableProps> = ({ usersListData }) => {
     const navigate = useNavigate();
 
     return (
@@ -18,7 +18,7 @@ export default function CustomerTable() {
         >
             <DataTable
                 id="customers-list"
-                data={customersListData}
+                data={usersListData}
                 columns={customerManagementTablecolumns}
                 features={{
                     rowSelection: false,
@@ -40,4 +40,6 @@ export default function CustomerTable() {
             />
         </ChartCard>
     );
-}
+};
+
+export default CustomerTable;

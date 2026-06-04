@@ -10,6 +10,7 @@ import type {
     TDeleteUserResponse,
     TGetCurrentUserResponse,
     TGetUserByIdResponse,
+    TGetUsersAnalyticsResponse,
     TGetUsersResponse,
     TUpdateMeResponse,
     TUpdateUserStatusResponse,
@@ -66,6 +67,18 @@ export const UpdateUserStatus = async ({
         method: HTTP_METHODS.PATCH,
         url: `/users/${id}/status`,
         body,
+    });
+};
+
+export const GetUsersAnalytics = async (params?: WithSignal<{}>) => {
+    const { signal, ...urlParams } = params || {};
+    const abortSignal = signal;
+
+    return request<TGetUsersAnalyticsResponse>({
+        method: HTTP_METHODS.GET,
+        url: "/users/analytics",
+        params: urlParams as TQueryParams,
+        signal: abortSignal,
     });
 };
 

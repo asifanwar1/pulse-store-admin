@@ -29,6 +29,18 @@ export type TGetUsersResponse = {
     count: number;
 };
 
+export type TUserAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
+export type TGetUsersAnalyticsResponse = {
+    totalCustomers: TUserAnalyticsMetric;
+    activeCustomers: TUserAnalyticsMetric;
+    InactiveCustomer: TUserAnalyticsMetric;
+    blockedCustomer: TUserAnalyticsMetric;
+};
+
 export type TGetUserByIdResponse = TUserResponse;
 
 export type TDeleteUserResponse = void;
