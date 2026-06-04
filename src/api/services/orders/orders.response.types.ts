@@ -1,7 +1,4 @@
-import type {
-    TOrderStatus,
-    TPaymentMethod,
-} from "./orders.request.types";
+import type { TOrderStatus, TPaymentMethod } from "./orders.request.types";
 
 export type TOrderAddressResponse = {
     street: string;
@@ -50,8 +47,29 @@ export type TGetOrdersResponse = {
     count: number;
 };
 
+export type TOrderAnalyticsResponse = {
+    totalOrders: number;
+    totalRevenue: number;
+    averageOrderValue: number;
+    ordersByStatus: {
+        [key in TOrderStatus]?: number;
+    };
+    ordersByPaymentMethod: {
+        [key in TPaymentMethod]?: number;
+    };
+    recentOrders: TOrderResponse[];
+    topProducts?: Array<{
+        productId: string;
+        productName: string;
+        totalSold: number;
+        revenue: number;
+    }>;
+};
+
 export type TCreateOrderResponse = TOrderResponse;
 
 export type TGetOrderResponse = TOrderResponse;
 
 export type TUpdateOrderStatusResponse = TOrderResponse;
+
+export type TGetOrdersAnalyticsResponse = TOrderAnalyticsResponse;

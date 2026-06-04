@@ -9,6 +9,7 @@ import type {
 import type {
     TCreateOrderResponse,
     TGetOrderResponse,
+    TGetOrdersAnalyticsResponse,
     TGetOrdersResponse,
     TUpdateOrderStatusResponse,
 } from "./orders.response.types";
@@ -49,6 +50,18 @@ export const UpdateOrderStatus = async ({
         method: HTTP_METHODS.PATCH,
         url: `/orders/${id}/status`,
         body,
+    });
+};
+
+export const GetOrdersAnalytics = async (params?: WithSignal<{}>) => {
+    const { signal, ...urlParams } = params || {};
+    const abortSignal = signal;
+
+    return request<TGetOrdersAnalyticsResponse>({
+        method: HTTP_METHODS.GET,
+        url: "/orders/analytics",
+        params: urlParams as TQueryParams,
+        signal: abortSignal,
     });
 };
 
