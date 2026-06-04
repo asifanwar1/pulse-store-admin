@@ -99,7 +99,7 @@ export const useManageProduct = ({
 
     const categoryOptions = categories.map((category) => ({
         label: category.name,
-        value: category.id,
+        value: String(category.id),
     }));
 
     const formConfig = getAddProductFormConfig({
@@ -162,7 +162,7 @@ export const useManageProduct = ({
                   brand: product.brand ?? "",
                   category: getOptionByValue(
                       categoryOptions,
-                      product.category_id,
+                      String(product.category_id),
                   ),
                   status: resolveOptionValue(STATUS_OPTIONS, product.status),
                   price: product.retail_price ?? "",

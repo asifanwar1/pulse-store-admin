@@ -34,7 +34,7 @@ export const ManageProductSchema = z.object({
             }
             return "";
         })
-        .pipe(z.string().nonempty("Category is required")),
+        .refine((v) => v.length > 0, "Category is required"),
     status: z
         .union([z.string(), optionSchema, z.null(), z.undefined()])
         .transform((v) => {
