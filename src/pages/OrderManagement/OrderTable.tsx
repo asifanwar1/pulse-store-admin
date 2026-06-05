@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { ordersListData } from "@/mock/order.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { orderManagementTableColumns } from "./OrderManagement.Config";
+import type { OrderTableProps } from "./OrderManagement.types";
 
-export default function OrderTable() {
+const OrderTable: React.FC<OrderTableProps> = ({ ordersLIstData }) => {
     const navigate = useNavigate();
 
     return (
@@ -29,7 +29,7 @@ export default function OrderTable() {
         >
             <DataTable
                 id="orders-list"
-                data={ordersListData}
+                data={ordersLIstData}
                 columns={orderManagementTableColumns}
                 features={{
                     rowSelection: false,
@@ -51,4 +51,6 @@ export default function OrderTable() {
             />
         </ChartCard>
     );
-}
+};
+
+export default OrderTable;

@@ -3,10 +3,10 @@ import { CUSTOMER_STAT_CONFIG } from "./CustomerManagement.Config";
 import CustomerTable from "./CustomerTable";
 import { formatStatValue } from "@/utils/common.utils";
 import { useCustomerManagement } from "./CustomerManagement.Container";
+import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 
 const CustomerManagement = () => {
-    const { users, usersAnalyticsData, mapAnalyticsMetricToStat } =
-        useCustomerManagement();
+    const { users, usersAnalyticsData } = useCustomerManagement();
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">

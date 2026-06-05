@@ -20,12 +20,15 @@ import { DataTable } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { orderItemColumns } from "./OrderDetails.Config";
-import { ORDER_STATUS_CONFIG } from "../OrderManagement.Config";
+// import { ORDER_STATUS_CONFIG } from "../OrderManagement.Config";
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 import { Select } from "@/components/custom/Select";
-import { ORDER_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from "@/constants/order-status.constants";
+import {
+    ORDER_STATUS_OPTIONS,
+    PAYMENT_METHOD_OPTIONS,
+} from "@/constants/order-status.constants";
 
 const STATUS_SELECT_OPTIONS = ORDER_STATUS_OPTIONS.map((o) => ({
     value: o.value,
@@ -63,7 +66,7 @@ export default function OrderDetails() {
         );
     }
 
-    const statusBadge = ORDER_STATUS_CONFIG[status];
+    // const statusBadge = ORDER_STATUS_CONFIG[status];
     const selectedStatusOption =
         STATUS_SELECT_OPTIONS.find((o) => o.value === status) ?? null;
 
@@ -98,7 +101,7 @@ export default function OrderDetails() {
                             <h2 className="text-lg font-bold text-pulse-green-dark">
                                 {order.customer}
                             </h2>
-                            <span
+                            {/* <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
                                     statusBadge.textColor,
@@ -106,7 +109,7 @@ export default function OrderDetails() {
                                 )}
                             >
                                 {statusBadge.label}
-                            </span>
+                            </span> */}
                         </div>
                         <p className="text-sm text-app-secondary">
                             {order.email}

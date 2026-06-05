@@ -22,12 +22,14 @@ export type TOrderItemResponse = {
 
 export type TOrderResponse = {
     id: number | string;
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
     paymentMethod: TPaymentMethod | string;
     status: TOrderStatus | string;
     items: TOrderItemResponse[];
+    user: {
+        id: number;
+        name: string;
+        email: string;
+    };
     shippingAddress: TOrderAddressResponse;
     billingAddress?: TOrderAddressResponse;
     subtotal?: number;
@@ -47,23 +49,16 @@ export type TGetOrdersResponse = {
     count: number;
 };
 
+export type TOrderAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
 export type TOrderAnalyticsResponse = {
-    totalOrders: number;
-    totalRevenue: number;
-    averageOrderValue: number;
-    ordersByStatus: {
-        [key in TOrderStatus]?: number;
-    };
-    ordersByPaymentMethod: {
-        [key in TPaymentMethod]?: number;
-    };
-    recentOrders: TOrderResponse[];
-    topProducts?: Array<{
-        productId: string;
-        productName: string;
-        totalSold: number;
-        revenue: number;
-    }>;
+    totalOrders: TOrderAnalyticsMetric;
+    pendingOrders: TOrderAnalyticsMetric;
+    shippedOrders: TOrderAnalyticsMetric;
+    revenue: TOrderAnalyticsMetric;
 };
 
 export type TCreateOrderResponse = TOrderResponse;

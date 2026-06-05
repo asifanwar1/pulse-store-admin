@@ -1,13 +1,14 @@
-import {
-    ShoppingCart,
-    Clock,
-    Truck,
-    DollarSign,
-} from "lucide-react";
-import { type Order, type OrderStatus } from "@/mock/order.mock";
+import { ShoppingCart, Clock, Truck, DollarSign } from "lucide-react";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
-import { PAYMENT_METHOD_OPTIONS } from "@/constants/order-status.constants";
+import {
+    OrderStatusWithHelpers,
+    // PAYMENT_METHOD_OPTIONS,
+    type OrderStatusType,
+} from "@/constants/order-status.constants";
+import type { TOrderResponse } from "@/api/services/orders/orders.response.types";
+import { getInitialsFromName } from "@/utils/common.utils";
+import { getFormattedDate } from "@/utils/dateTime.utils";
 
 export const ORDER_STAT_CONFIG = [
     {
@@ -42,44 +43,9 @@ export const ORDER_STAT_CONFIG = [
         iconColorClass: "text-pulse-green",
         subtitle: "Gross order revenue",
     },
-] as const;
+];
 
-export const ORDER_STATUS_CONFIG: Record<
-    OrderStatus,
-    { label: string; textColor: string; bgColor: string }
-> = {
-    delivered: {
-        label: "Delivered",
-        textColor: "text-status-delivered",
-        bgColor: "bg-status-delivered-bg",
-    },
-    pending: {
-        label: "Pending",
-        textColor: "text-status-pending",
-        bgColor: "bg-status-pending-bg",
-    },
-    processing: {
-        label: "Processing",
-        textColor: "text-status-processing",
-        bgColor: "bg-status-processing-bg",
-    },
-    shipped: {
-        label: "Shipped",
-        textColor: "text-status-shipped",
-        bgColor: "bg-status-shipped-bg",
-    },
-    cancelled: {
-        label: "Cancelled",
-        textColor: "text-status-cancelled",
-        bgColor: "bg-status-cancelled-bg",
-    },
-};
-
-const paymentLabelMap = Object.fromEntries(
-    PAYMENT_METHOD_OPTIONS.map((o) => [o.value, o.label]),
-);
-
-export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
+export const orderManagementTableColumns: TDataColumnDef<TOrderResponse>[] = [
     {
         id: "id",
         accessorKey: "id",
@@ -94,8 +60,8 @@ export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
         },
     },
     {
-        id: "customer",
-        accessorKey: "customer",
+        id: "user",
+        accessorKey: "user",
         header: "Customer",
         meta: {
             label: "Customer",
@@ -104,14 +70,14 @@ export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
                 return (
                     <div className="flex items-center gap-2.5 whitespace-nowrap">
                         <div className="w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0 bg-pulse-cream-dark">
-                            {order.initials}
+                            {getInitialsFromName(order.user.name)}
                         </div>
                         <div className="flex flex-col">
                             <span className="font-medium text-pulse-green-dark text-xs">
-                                {order.customer}
+                                {order.user.name}
                             </span>
                             <span className="text-xss text-pulse-green leading-tight">
-                                {order.email}
+                                {order.user.email}
                             </span>
                         </div>
                     </div>
@@ -120,11 +86,42 @@ export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
         },
     },
     {
-        id: "date",
-        accessorKey: "date",
+        id: "created_at",
+        accessorKey: "created_at",
         header: "Date",
         meta: {
             label: "Date",
+            cellRenderer: (value) => (
+                <span className="text-pulse-green-dark text-xs whitespace-nowrap">
+                    {getFormattedDate(value as string)}
+                </span>
+            ),
+        },
+    },
+    {
+        id: "items",
+        accessorKey: "items",
+        header: "Total Items",
+        meta: {
+            label: "Total Items",
+            cellRenderer: (_value, row) => {
+                const order = row.original;
+                return (
+                    <div className="flex items-center gap-2.5 whitespace-nowrap">
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0 bg-pulse-cream-dark">
+                            {order.items.length}
+                        </div>
+                    </div>
+                );
+            },
+        },
+    },
+    {
+        id: "payment_method",
+        accessorKey: "payment_method",
+        header: "Payment",
+        meta: {
+            label: "Payment",
             cellRenderer: (value) => (
                 <span className="text-pulse-green-dark text-xs whitespace-nowrap">
                     {value as string}
@@ -133,38 +130,11 @@ export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
         },
     },
     {
-        id: "itemCount",
-        accessorKey: "itemCount",
-        header: "Items",
+        id: "total_amount",
+        accessorKey: "total_amount",
+        header: "Total Amount",
         meta: {
-            label: "Items",
-            align: "center",
-            cellRenderer: (value) => (
-                <span className="text-pulse-green-dark text-xs font-medium">
-                    {value as number}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "paymentMethod",
-        accessorKey: "paymentMethod",
-        header: "Payment",
-        meta: {
-            label: "Payment",
-            cellRenderer: (value) => (
-                <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                    {paymentLabelMap[value as string] ?? (value as string)}
-                </span>
-            ),
-        },
-    },
-    {
-        id: "total",
-        accessorKey: "total",
-        header: "Total",
-        meta: {
-            label: "Total",
+            label: "Total Amount",
             align: "right",
             cellRenderer: (value) => (
                 <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
@@ -181,16 +151,18 @@ export const orderManagementTableColumns: TDataColumnDef<Order>[] = [
             label: "Status",
             align: "center",
             cellRenderer: (value) => {
-                const cfg = ORDER_STATUS_CONFIG[value as OrderStatus];
                 return (
                     <span
                         className={cn(
                             "inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs whitespace-nowrap",
-                            cfg.textColor,
-                            cfg.bgColor,
+                            OrderStatusWithHelpers.getLabelClass(
+                                value as OrderStatusType,
+                            ),
                         )}
                     >
-                        {cfg.label}
+                        {OrderStatusWithHelpers.getDisplayTextKey(
+                            value as OrderStatusType,
+                        )}
                     </span>
                 );
             },

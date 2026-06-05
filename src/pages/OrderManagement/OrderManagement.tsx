@@ -1,10 +1,13 @@
-import { orderStatsData } from "@/mock/order.mock";
 import { StatCard } from "@/components/custom/CustomCards";
 import { ORDER_STAT_CONFIG } from "./OrderManagement.Config";
 import OrderTable from "./OrderTable";
 import { formatStatValue } from "@/utils/common.utils";
+import { useOrderManagement } from "./OrderManagement.Container";
+import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 
 const OrderManagement = () => {
+    const { orders, ordersAnalyticsData } = useOrderManagement();
+
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -17,7 +20,9 @@ const OrderManagement = () => {
                         iconColorClass,
                         subtitle,
                     }) => {
-                        const stat = orderStatsData[key];
+                        const stat = mapAnalyticsMetricToStat(
+                            ordersAnalyticsData?.[key],
+                        );
                         return (
                             <StatCard
                                 key={key}
@@ -34,7 +39,7 @@ const OrderManagement = () => {
                     },
                 )}
             </div>
-            <OrderTable />
+            <OrderTable ordersLIstData={orders ?? []} />
         </div>
     );
 };
