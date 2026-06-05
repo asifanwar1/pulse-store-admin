@@ -20,6 +20,7 @@ export type TGetOrdersParams = {
     column?: string;
     direction?: TOrderSortDirection;
     search?: string;
+    user_id?: number;
     status?: TOrderStatus;
 };
 

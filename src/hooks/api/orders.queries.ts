@@ -26,6 +26,7 @@ export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
         page = 1,
         status,
         column,
+        user_id,
     } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
@@ -34,6 +35,7 @@ export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
             search,
             status,
             column,
+            user_id,
             String(page),
             String(limit),
         ],
@@ -48,6 +50,7 @@ export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
                 ...(column && { column }),
                 ...(page && { page }),
                 ...(limit && { limit }),
+                ...(user_id && { user_id }),
             }),
         }),
     });

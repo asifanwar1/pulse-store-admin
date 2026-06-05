@@ -18,6 +18,8 @@ export type TUserResponse = UserModel & {
     location?: TUserLocation;
     settings?: TUserSettings;
     userInfo?: TUserInfo;
+    total_orders: number;
+    last_order: string;
 };
 
 export type TGetCurrentUserResponse = TUserResponse;

@@ -1,60 +1,60 @@
-import { useParams, useNavigate } from "react-router-dom";
 import {
     ArrowLeft,
     Mail,
     Phone,
     MapPin,
     ShoppingBag,
-    DollarSign,
     Calendar,
-    TrendingUp,
     Hash,
 } from "lucide-react";
 
-import { customersListData, customerDetailsMap } from "@/mock/customer.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
-import { APP_ROUTES } from "@/routes/appRoutes";
 import { customerOrderColumns } from "./CustomerDetails.Config";
-// import { STATUS_CONFIG } from "../CustomerManagement.Config";
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
+import { useCustomerDetails } from "./CustomerDetails.Container";
+import { getInitialsFromName } from "@/utils/common.utils";
+import {
+    UserStatusWithHelpers,
+    type UserStatusType,
+} from "@/constants/user-status.constants";
+import { getFormattedDate } from "@/utils/dateTime.utils";
+import { formatAddress } from "@/utils/stringUtils";
+import CustomerDetailsSkeleton from "./CustomerDetails.Skeleton";
 
-export default function CustomerDetails() {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
+const CustomerDetails = () => {
+    const {
+        customer,
+        isCustomerDetailsLoading,
+        customerOrders,
+        handelNavigateBack,
+    } = useCustomerDetails();
 
-    const customer = customersListData.find((c) => c.id === id);
-    const details = id ? customerDetailsMap[id] : undefined;
+    if (isCustomerDetailsLoading) {
+        return <CustomerDetailsSkeleton />;
+    }
 
-    if (!customer || !details) {
+    if (!customer) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
                 <p className="text-lg font-semibold text-pulse-green-dark">
                     Customer not found
                 </p>
-                <button
-                    onClick={() => navigate(APP_ROUTES.CUSTOMERS)}
-                    className="flex items-center gap-2 text-sm text-pulse-green hover:text-pulse-green-dark transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4" /> Back to Customers
-                </button>
+                <Button onClick={handelNavigateBack} variant="ghost" size="sm">
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Customers
+                </Button>
             </div>
         );
     }
 
-    // const statusBadge = STATUS_CONFIG[customer.status];
-
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="flex">
-                <Button
-                    onClick={() => navigate(APP_ROUTES.CUSTOMERS)}
-                    variant="ghost"
-                    size="sm"
-                >
+                <Button onClick={handelNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
                     Back to Customers
                 </Button>
@@ -63,22 +63,25 @@ export default function CustomerDetails() {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                     <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-pulse-cream-dark text-pulse-green font-bold text-xl shrink-0">
-                        {customer.initials}
+                        {getInitialsFromName(customer.fullName!)}
                     </div>
                     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                             <h2 className="text-lg font-bold text-pulse-green-dark">
-                                {customer.name}
+                                {customer.fullName}
                             </h2>
-                            {/* <span
+                            <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                                    statusBadge.textColor,
-                                    statusBadge.bgColor,
+                                    UserStatusWithHelpers.getLabelClass(
+                                        customer.status as UserStatusType,
+                                    ),
                                 )}
                             >
-                                {statusBadge.label}
-                            </span> */}
+                                {UserStatusWithHelpers.getDisplayTextKey(
+                                    customer.status as UserStatusType,
+                                )}
+                            </span>
                         </div>
                         <p className="text-sm text-app-secondary">
                             {customer.email}
@@ -90,37 +93,32 @@ export default function CustomerDetails() {
                             </span>
                             <span className="flex items-center gap-1">
                                 <MapPin className="w-3 h-3" />
-                                {customer.location}
+                                {formatAddress(customer.address!)}
                             </span>
                             <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
-                                Joined {customer.joinedDate}
+                                Joined {getFormattedDate(customer.createdAt)}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                 <StatChipCard
                     icon={<ShoppingBag className="w-4 h-4" />}
                     label="Total Orders"
-                    value={customer.totalOrders.toString()}
-                />
-                <StatChipCard
-                    icon={<DollarSign className="w-4 h-4" />}
-                    label="Total Spend"
-                    value={`$${customer.totalSpend.toLocaleString()}`}
-                />
-                <StatChipCard
-                    icon={<TrendingUp className="w-4 h-4" />}
-                    label="Avg. Order Value"
-                    value={`$${customer.avgOrderValue.toLocaleString()}`}
+                    value={customer.total_orders.toString()}
                 />
                 <StatChipCard
                     icon={<Calendar className="w-4 h-4" />}
                     label="Last Order"
-                    value={customer.lastOrderDate}
+                    value={getFormattedDate(customer.last_order)}
+                />
+                <StatChipCard
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Member since"
+                    value={getFormattedDate(customer.createdAt)}
                 />
             </div>
 
@@ -137,17 +135,17 @@ export default function CustomerDetails() {
                     <InfoCard
                         icon={<Phone className="w-4 h-4" />}
                         label="Phone"
-                        value={customer.phone}
+                        value={customer.phone!}
                     />
                     <InfoCard
                         icon={<MapPin className="w-4 h-4" />}
                         label="Location"
-                        value={customer.location}
+                        value={formatAddress(customer.address!)}
                     />
                     <InfoCard
                         icon={<Calendar className="w-4 h-4" />}
                         label="Member since"
-                        value={customer.joinedDate}
+                        value={getFormattedDate(customer.createdAt)}
                     />
                 </div>
             </div>
@@ -160,11 +158,11 @@ export default function CustomerDetails() {
             >
                 <DataTable
                     id="customer-orders"
-                    data={details.recentOrders}
+                    data={customerOrders || []}
                     columns={customerOrderColumns}
                     features={{
                         rowSelection: false,
-                        pagination: false,
+                        pagination: true,
                         sorting: true,
                         filtering: false,
                         columnVisibility: false,
@@ -174,4 +172,6 @@ export default function CustomerDetails() {
             </ChartCard>
         </div>
     );
-}
+};
+
+export default CustomerDetails;

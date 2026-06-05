@@ -34,3 +34,17 @@ export const safeStringConversion = (value: unknown): string => {
     }
     return String(value);
 };
+
+export const formatAddress = (address: {
+    street?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+}): string => {
+    const { street, city, state, postalCode, country } = address;
+    const addressParts = [street, city, state, postalCode, country].filter(
+        (v): v is string => !!v,
+    );
+    return addressParts.join(", ");
+};

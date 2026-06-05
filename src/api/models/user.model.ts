@@ -19,7 +19,7 @@ export type UserModel = BaseModel & {
     profilePicture?: MediaModel;
     locationId?: number;
     adminDetails?: AdminDetailsModel;
-    location?: AddressModel;
+    address?: AddressModel;
     userInfo?: UserInfoModel;
 };
 

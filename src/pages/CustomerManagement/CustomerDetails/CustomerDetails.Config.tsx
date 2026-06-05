@@ -1,39 +1,12 @@
-import type { CustomerOrder, CustomerOrderStatus } from "@/mock/customer.mock";
 import { cn } from "@/lib/utils";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
+import type { TOrderResponse } from "@/api/services/orders/orders.response.types";
+import {
+    OrderStatusWithHelpers,
+    type OrderStatusType,
+} from "@/constants/order-status.constants";
 
-const ORDER_STATUS_CONFIG: Record<
-    CustomerOrderStatus,
-    { label: string; textColor: string; bgColor: string }
-> = {
-    delivered: {
-        label: "Delivered",
-        textColor: "text-status-delivered",
-        bgColor: "bg-status-delivered-bg",
-    },
-    shipped: {
-        label: "Shipped",
-        textColor: "text-status-shipped",
-        bgColor: "bg-status-shipped-bg",
-    },
-    processing: {
-        label: "Processing",
-        textColor: "text-status-processing",
-        bgColor: "bg-status-processing-bg",
-    },
-    pending: {
-        label: "Pending",
-        textColor: "text-status-pending",
-        bgColor: "bg-status-pending-bg",
-    },
-    cancelled: {
-        label: "Cancelled",
-        textColor: "text-status-cancelled",
-        bgColor: "bg-status-cancelled-bg",
-    },
-};
-
-export const customerOrderColumns: TDataColumnDef<CustomerOrder>[] = [
+export const customerOrderColumns: TDataColumnDef<TOrderResponse>[] = [
     {
         id: "id",
         accessorKey: "id",
@@ -109,16 +82,18 @@ export const customerOrderColumns: TDataColumnDef<CustomerOrder>[] = [
             label: "Status",
             align: "center",
             cellRenderer: (value) => {
-                const s = ORDER_STATUS_CONFIG[value as CustomerOrderStatus];
                 return (
                     <span
                         className={cn(
                             "inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs whitespace-nowrap",
-                            s.textColor,
-                            s.bgColor,
+                            OrderStatusWithHelpers.getLabelClass(
+                                value as OrderStatusType,
+                            ),
                         )}
                     >
-                        {s.label}
+                        {OrderStatusWithHelpers.getDisplayTextKey(
+                            value as OrderStatusType,
+                        )}
                     </span>
                 );
             },
