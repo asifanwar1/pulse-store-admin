@@ -5,6 +5,7 @@ import { type FieldType } from "@/components/custom/Form";
 import { type ManageProductFormValues } from "./ManageProduct.schema";
 import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 import InputWithChips from "@/components/custom/InputWithChips";
+import type { TManageProductFormConfigProps } from "../ProductManagement.types";
 
 export const getAddProductFormConfig = ({
     categoryOptions,

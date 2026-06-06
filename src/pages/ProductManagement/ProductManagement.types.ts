@@ -7,3 +7,12 @@ export type ManageProductFormProps = {
 export type ProductTableProps = {
     productsListData: TGetProductsResponse["data"];
 };
+
+export type TManageProductFormConfigProps = {
+    categoryOptions: any;
+    onCategorySearch: (value: string) => void;
+    onCategoryScroll?: () => void;
+    hasMoreCategories?: boolean;
+    isFetchingMoreCategories?: boolean;
+    isCategoriesLoading?: boolean;
+};
