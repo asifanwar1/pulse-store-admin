@@ -6,15 +6,6 @@ import { type ManageProductFormValues } from "./ManageProduct.schema";
 import { STATUS_OPTIONS } from "@/constants/product-status.constants";
 import InputWithChips from "@/components/custom/InputWithChips";
 
-type TManageProductFormConfigProps = {
-    categoryOptions: any;
-    onCategorySearch: (value: string) => void;
-    onCategoryScroll?: () => void;
-    hasMoreCategories?: boolean;
-    isFetchingMoreCategories?: boolean;
-    isCategoriesLoading?: boolean;
-};
-
 export const getAddProductFormConfig = ({
     categoryOptions,
     onCategorySearch,
