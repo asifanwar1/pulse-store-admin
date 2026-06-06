@@ -7,3 +7,12 @@ export type ManageOrderFormProps = {
 export type OrderTableProps = {
     ordersLIstData: TOrderResponse[];
 };
+
+export type TManageOrderFormConfigProps = {
+    userOptions: any;
+    onUserSearch: (value: string) => void;
+    onUserScroll?: () => void;
+    hasMoreUsers?: boolean;
+    isFetchingMoreUsers?: boolean;
+    isUsersLoading?: boolean;
+};

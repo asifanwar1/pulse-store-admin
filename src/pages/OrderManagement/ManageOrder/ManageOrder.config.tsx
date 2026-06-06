@@ -6,16 +6,34 @@ import {
     PAYMENT_METHOD_OPTIONS,
     COUNTRY_OPTIONS,
 } from "@/constants/order-status.constants";
+import type { TManageOrderFormConfigProps } from "../OrderManagement.types";
 
-export const CREATE_ORDER_FORM_CONFIG: FieldType<ManageOrderFormValues>[] = [
+export const getCreateOrderFormConfig = ({
+    userOptions,
+    onUserSearch,
+    onUserScroll,
+    hasMoreUsers = false,
+    isFetchingMoreUsers = false,
+    isUsersLoading = false,
+}: TManageOrderFormConfigProps): FieldType<ManageOrderFormValues>[] => [
     {
-        name: "customerName",
-        label: "Customer Name",
-        type: "text",
-        placeholder: "e.g. Alex Johnson",
+        name: "user",
+        label: "User",
+        component: Select,
+        placeholder: "Select a user",
         required: true,
         className: "col-span-12 md:col-span-6",
-        labelClass: "font-normal",
+        componentProps: {
+            options: userOptions,
+            labelRequired: true,
+            labelClass: "font-normal",
+            autoComplete: true,
+            onSearch: onUserSearch,
+            onScroll: onUserScroll,
+            hasMore: hasMoreUsers,
+            isFetchingNextPage: isFetchingMoreUsers,
+            loading: isUsersLoading,
+        },
     },
     {
         name: "customerEmail",
