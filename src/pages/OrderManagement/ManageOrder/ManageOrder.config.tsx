@@ -36,15 +36,6 @@ export const getCreateOrderFormConfig = ({
         },
     },
     {
-        name: "customerEmail",
-        label: "Email Address",
-        type: "email",
-        placeholder: "e.g. alex@example.com",
-        required: true,
-        className: "col-span-12 md:col-span-6",
-        labelClass: "font-normal",
-    },
-    {
         name: "customerPhone",
         label: "Phone Number",
         type: "tel",
