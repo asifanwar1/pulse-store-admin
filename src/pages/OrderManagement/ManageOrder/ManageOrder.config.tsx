@@ -36,15 +36,6 @@ export const getCreateOrderFormConfig = ({
         },
     },
     {
-        name: "customerPhone",
-        label: "Phone Number",
-        type: "tel",
-        placeholder: "e.g. 5551234567",
-        required: true,
-        className: "col-span-12 md:col-span-6",
-        labelClass: "font-normal",
-    },
-    {
         name: "paymentMethod",
         label: "Payment Method",
         component: Select,
