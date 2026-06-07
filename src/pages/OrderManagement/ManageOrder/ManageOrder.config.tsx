@@ -49,15 +49,6 @@ export const getCreateOrderFormConfig = ({
         },
     },
     {
-        name: "shippingStreet",
-        label: "Street Address",
-        type: "text",
-        placeholder: "e.g. 142 Maple Drive",
-        required: true,
-        className: "col-span-12",
-        labelClass: "font-normal",
-    },
-    {
         name: "shippingCity",
         label: "City",
         type: "text",
