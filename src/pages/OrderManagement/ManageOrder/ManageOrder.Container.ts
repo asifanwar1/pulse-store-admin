@@ -11,6 +11,7 @@ import {
 } from "./ManageOrder.schema";
 import { ACTION_MODES } from "@/constants/action-modes.constants";
 import { getCreateOrderFormConfig } from "./ManageOrder.config";
+import { useGetUsersPaginated } from "@/hooks/api/user.queries";
 
 export interface OrderLineItem {
     id: string;
@@ -34,14 +35,31 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [items, setItems] = useState<OrderLineItem[]>([createEmptyItem()]);
     const [itemErrors, setItemErrors] = useState<string | null>(null);
+    const [customerSearch, setCustomerSearch] = useState("");
+
+    const {
+        data: customers = [],
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isPending: isCustomersLoading,
+    } = useGetUsersPaginated({
+        search: customerSearch,
+        limit: 20,
+    });
+
+    const customerOptions = customers.map((customer) => ({
+        label: `${customer.firstName} ${customer.lastName}`,
+        value: String(customer.id),
+    }));
 
     const formConfig = getCreateOrderFormConfig({
         customerOptions,
-        onCustomerSearch,
-        onCustomerScroll,
-        hasMoreCustomers = false,
-        isFetchingMoreCustomers = false,
-        isCustomersLoading = false,
+        onCustomerSearch: setCustomerSearch,
+        onCustomerScroll: hasNextPage ? () => fetchNextPage() : undefined,
+        hasMoreCustomers: !!hasNextPage,
+        isFetchingMoreCustomers: isFetchingNextPage,
+        isCustomersLoading,
         productsOptions,
         onProductSearch,
         onProductScroll,
