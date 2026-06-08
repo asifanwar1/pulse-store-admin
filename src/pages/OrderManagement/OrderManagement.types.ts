@@ -9,10 +9,17 @@ export type OrderTableProps = {
 };
 
 export type TManageOrderFormConfigProps = {
-    userOptions: any;
-    onUserSearch: (value: string) => void;
-    onUserScroll?: () => void;
-    hasMoreUsers?: boolean;
-    isFetchingMoreUsers?: boolean;
-    isUsersLoading?: boolean;
+    customerOptions: any;
+    onCustomerSearch: (value: string) => void;
+    onCustomerScroll?: () => void;
+    hasMoreCustomers?: boolean;
+    isFetchingMoreCustomers?: boolean;
+    isCustomersLoading?: boolean;
+
+    productsOptions: any;
+    onProductSearch: (value: string) => void;
+    onProductScroll?: () => void;
+    hasMoreProducts?: boolean;
+    isFetchingMoreProducts?: boolean;
+    isProductsLoading?: boolean;
 };
