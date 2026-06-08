@@ -1,7 +1,6 @@
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { FormBuilder } from "@/components/custom/Form";
-import { CREATE_ORDER_FORM_CONFIG } from "./ManageOrder.config";
 import {
     type ManageOrderFormValues,
     INITIAL_ORDER_VALUES,
@@ -14,6 +13,7 @@ import type { ManageOrderFormProps } from "../OrderManagement.types";
 const ManageOrder: React.FC<ManageOrderFormProps> = ({ mode }) => {
     const {
         formRef,
+        formConfig,
         ManageOrderSchema,
         isSubmitting,
         items,
@@ -59,7 +59,7 @@ const ManageOrder: React.FC<ManageOrderFormProps> = ({ mode }) => {
 
                 <FormBuilder<ManageOrderFormValues>
                     ref={formRef}
-                    config={CREATE_ORDER_FORM_CONFIG}
+                    config={formConfig}
                     schema={ManageOrderSchema}
                     defaultValues={INITIAL_ORDER_VALUES}
                     onSubmit={handleSubmit}

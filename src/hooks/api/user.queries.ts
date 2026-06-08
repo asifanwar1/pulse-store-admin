@@ -19,6 +19,7 @@ import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDataTableQuery } from "../useDataTableQuery";
+import { usePaginatedQuery } from "../usePaginatedQuery";
 
 export const useGetUsers = (props: TGetUsersParams, enabled?: boolean) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
@@ -57,6 +58,26 @@ export const useGetUsers = (props: TGetUsersParams, enabled?: boolean) => {
         }),
     });
     return { data, count, ...rest };
+};
+
+export const useGetUsersPaginated = (
+    props?: Omit<TGetUsersParams, "page">,
+    enabled?: boolean,
+) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const { limit = Config.LIMIT, search = "" } = props || {};
+
+    return usePaginatedQuery({
+        queryKey: [USER_QUERY_KEYS.USERS, "paginated", search],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params, signal) =>
+            GetUsers({
+                ...params,
+                search,
+                signal,
+            }),
+    });
 };
 
 export const useGetCurrentUser = () => {

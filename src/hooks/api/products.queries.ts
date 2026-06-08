@@ -20,6 +20,7 @@ import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDataTableQuery } from "../useDataTableQuery";
 import Config from "@/Config";
+import { usePaginatedQuery } from "../usePaginatedQuery";
 
 export const useGetProducts = (
     props: TGetProductsParams,
@@ -61,6 +62,26 @@ export const useGetProducts = (
         }),
     });
     return { data, count, ...rest };
+};
+
+export const useGetProductsPaginated = (
+    props?: Omit<TGetProductsParams, "page">,
+    enabled?: boolean,
+) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+    const { limit = Config.LIMIT, search = "" } = props || {};
+
+    return usePaginatedQuery({
+        queryKey: [PRODUCT_QUERY_KEYS.PRODUCTS, "paginated", search],
+        limit,
+        enabled: enabled !== false && isAuthenticated,
+        queryFn: async (params, signal) =>
+            GetProducts({
+                ...params,
+                search,
+                signal,
+            }),
+    });
 };
 
 export const useGetProduct = (id?: number) => {

@@ -10,6 +10,7 @@ import {
     type ManageOrderFormValues,
 } from "./ManageOrder.schema";
 import { ACTION_MODES } from "@/constants/action-modes.constants";
+import { getCreateOrderFormConfig } from "./ManageOrder.config";
 
 export interface OrderLineItem {
     id: string;
@@ -33,6 +34,21 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [items, setItems] = useState<OrderLineItem[]>([createEmptyItem()]);
     const [itemErrors, setItemErrors] = useState<string | null>(null);
+
+    const formConfig = getCreateOrderFormConfig({
+        customerOptions,
+        onCustomerSearch,
+        onCustomerScroll,
+        hasMoreCustomers = false,
+        isFetchingMoreCustomers = false,
+        isCustomersLoading = false,
+        productsOptions,
+        onProductSearch,
+        onProductScroll,
+        hasMoreProducts = false,
+        isFetchingMoreProducts = false,
+        isProductsLoading = false,
+    });
 
     const handleCancel = () => {
         navigate(APP_ROUTES.ORDERS);
@@ -98,6 +114,7 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
         isSubmitting,
         items,
         itemErrors,
+        formConfig,
         handleCancel,
         handleSubmit,
         triggerSubmit,
