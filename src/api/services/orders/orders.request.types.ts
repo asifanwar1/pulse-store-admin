@@ -40,13 +40,13 @@ export type TCreateOrderAddressBody = {
 };
 
 export type TCreateOrderBody = {
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
-    paymentMethod: TPaymentMethod;
-    shippingAddress: TCreateOrderAddressBody;
-    items: TCreateOrderItemBody[];
-    notes?: string;
+    user_id: number;
+    items: {
+        product_id: number;
+        quantity: number;
+    }[];
+    payment_method: string;
+    notes: string;
 };
 
 export type TUpdateOrderStatusBody = {

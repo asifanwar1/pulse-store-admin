@@ -2,11 +2,6 @@ import { z } from "zod";
 
 const optionSchema = z.object({ label: z.string(), value: z.string() });
 
-const productSchema = z.object({
-    product_id: z.number().int().positive(),
-    quantity: z.number().int().min(1),
-});
-
 export const ManageOrderSchema = z.object({
     customer: z
         .union([z.string(), optionSchema, z.null(), z.undefined()])
@@ -20,7 +15,7 @@ export const ManageOrderSchema = z.object({
         })
         .refine((v) => v.length > 0, "Customer is required"),
     products: z
-        .array(productSchema)
+        .array(optionSchema)
         .nonempty("At least one product is required"),
 
     paymentMethod: z

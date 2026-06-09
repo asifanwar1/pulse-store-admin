@@ -15,16 +15,34 @@ import { useGetUsersPaginated } from "@/hooks/api/user.queries";
 import { useGetProductsPaginated } from "@/hooks/api/products.queries";
 import type { OrderLineItem } from "../OrderManagement.types";
 import { mapOptionsToSelectedProducts } from "../OrderManagement.Utils";
+import { useCreateOrder } from "@/hooks/api/orders.queries";
+
+const buildCreateOrderPayload = (
+    values: ManageOrderFormValues,
+    selectedProducts: OrderLineItem[],
+) => ({
+    user_id: Number(values.customer || 0),
+    items: selectedProducts.map((product) => ({
+        product_id: Number(product.id),
+        quantity: Number(product.quantity),
+    })),
+    payment_method: String(values.paymentMethod || "cod"),
+    notes: values.notes || "",
+});
 
 export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     const navigate = useNavigate();
     const formRef = useRef<FormBuilderRef<ManageOrderFormValues>>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [customerSearch, setCustomerSearch] = useState("");
     const [productSearch, setProductSearch] = useState("");
     const [selectedProducts, setSelectedProducts] = useState<OrderLineItem[]>(
         [],
     );
+
+    const { mutateAsync: createOrder, isPending: isCreatingOrder } =
+        useCreateOrder();
+
+    const isSubmitting = isCreatingOrder;
 
     const {
         data: customers = [],
@@ -89,19 +107,20 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
         handleProductsChange,
     });
 
-    const handleCancel = () => {
-        navigate(APP_ROUTES.ORDERS);
-    };
+    const handleCancel = () => navigate(APP_ROUTES.ORDERS);
 
     const handleSubmit = async (values: ManageOrderFormValues) => {
-        setIsSubmitting(true);
+        console.log("Form values:", values);
         try {
-            console.log("New order payload:", {
-                ...values,
+            const payload = buildCreateOrderPayload(values, selectedProducts);
+            await createOrder(payload, {
+                onSuccess: () => {
+                    handleCancel();
+                    formRef.current?.reset();
+                },
             });
-            navigate(APP_ROUTES.ORDERS);
-        } finally {
-            setIsSubmitting(false);
+        } catch (error) {
+            console.error("Failed to create order:", error);
         }
     };
 
@@ -132,6 +151,7 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     };
 
     return {
+        mode,
         formRef,
         ManageOrderSchema,
         isSubmitting,
