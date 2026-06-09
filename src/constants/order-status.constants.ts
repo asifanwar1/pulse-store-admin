@@ -40,14 +40,6 @@ export const ORDER_STATUS_OPTIONS = [
     { value: "cancelled", label: "Cancelled" },
 ] as const;
 
-export const PAYMENT_METHOD_OPTIONS = [
-    { value: "credit_card", label: "Credit Card" },
-    { value: "debit_card", label: "Debit Card" },
-    { value: "paypal", label: "PayPal" },
-    { value: "bank_transfer", label: "Bank Transfer" },
-    { value: "cash_on_delivery", label: "Cash on Delivery" },
-] as const;
-
 export const COUNTRY_OPTIONS = [
     { value: "United States", label: "United States" },
     { value: "United Kingdom", label: "United Kingdom" },

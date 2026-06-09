@@ -114,9 +114,21 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     };
 
     const handleRemoveProduct = (productId: string) => {
-        setSelectedProducts((prev) =>
-            prev.filter((item) => item.id !== productId),
-        );
+        setSelectedProducts((prev) => {
+            const next = prev.filter((item) => item.id !== productId);
+
+            const selectValue = next.map((p) => ({
+                value: p.id,
+                label: p.productName,
+            }));
+
+            formRef.current?.setValue("products" as any, selectValue, {
+                shouldValidate: true,
+                shouldDirty: true,
+            });
+
+            return next;
+        });
     };
 
     return {

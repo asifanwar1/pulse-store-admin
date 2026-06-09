@@ -25,10 +25,8 @@ import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 import { Select } from "@/components/custom/Select";
-import {
-    ORDER_STATUS_OPTIONS,
-    PAYMENT_METHOD_OPTIONS,
-} from "@/constants/order-status.constants";
+import { ORDER_STATUS_OPTIONS } from "@/constants/order-status.constants";
+import { PAYMENT_METHOD_OPTIONS } from "@/constants/payment-method.constant";
 
 const STATUS_SELECT_OPTIONS = ORDER_STATUS_OPTIONS.map((o) => ({
     value: o.value,

@@ -2,7 +2,7 @@ import { Select } from "@/components/custom/Select";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
 import { type FieldType } from "@/components/custom/Form";
 import { type ManageOrderFormValues } from "./ManageOrder.schema";
-import { PAYMENT_METHOD_OPTIONS } from "@/constants/order-status.constants";
+import { PAYMENT_METHOD_OPTIONS } from "@/constants/payment-method.constant";
 import type { TManageOrderFormConfigProps } from "../OrderManagement.types";
 
 export const getCreateOrderFormConfig = ({

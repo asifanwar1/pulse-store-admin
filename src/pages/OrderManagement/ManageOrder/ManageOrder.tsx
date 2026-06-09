@@ -46,74 +46,83 @@ const ManageOrder: React.FC<ManageOrderFormProps> = ({ mode }) => {
                     </p>
                 </div>
 
-                <FormBuilder<ManageOrderFormValues>
-                    ref={formRef}
-                    config={formConfig}
-                    schema={ManageOrderSchema}
-                    defaultValues={INITIAL_ORDER_VALUES}
-                    onSubmit={handleSubmit}
-                    className="grid grid-cols-12 gap-4"
-                    noValidate
-                >
-                    <div className="flex flex-wrap justify-end gap-3">
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={handleCancel}
-                            disabled={isSubmitting}
+                <div className="flex flex-wrap gap-4">
+                    <div className="flex-1">
+                        <FormBuilder<ManageOrderFormValues>
+                            ref={formRef}
+                            config={formConfig}
+                            schema={ManageOrderSchema}
+                            defaultValues={INITIAL_ORDER_VALUES}
+                            onSubmit={handleSubmit}
+                            className="grid grid-cols-12 gap-4"
+                            noValidate
                         >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            isLoading={isSubmitting}
-                            disabled={isSubmitting}
-                        >
-                            Create Order
-                        </Button>
-                    </div>
-                </FormBuilder>
-            </div>
-
-            {selectedProducts.length > 0 && (
-                <div className="bg-white rounded-2xl border p-4">
-                    <h4 className="text-sm font-semibold">Selected products</h4>
-                    <div className="space-y-3 mt-4">
-                        {selectedProducts.map((item) => (
-                            <div
-                                key={item.id}
-                                className="flex items-center justify-between gap-3"
-                            >
-                                <div>
-                                    <p className="font-medium">
-                                        {item.productName}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <QuantitySelector
-                                        value={item.quantity}
-                                        onChange={(qty) =>
-                                            handleQuantityChange(item.id, qty)
-                                        }
-                                        min={1}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleRemoveProduct(item.id)
-                                        }
-                                        className="p-2 rounded-md text-red-600 hover:bg-red-50"
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </div>
+                            <div className="flex flex-wrap justify-end gap-3">
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    onClick={handleCancel}
+                                    disabled={isSubmitting}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    isLoading={isSubmitting}
+                                    disabled={isSubmitting}
+                                >
+                                    Create Order
+                                </Button>
                             </div>
-                        ))}
+                        </FormBuilder>
                     </div>
+
+                    {selectedProducts.length > 0 && (
+                        <div className="bg-white rounded-2xl border p-4">
+                            <h4 className="text-sm font-semibold">
+                                Selected products
+                            </h4>
+                            <div className="space-y-3 mt-4">
+                                {selectedProducts.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex items-center justify-between gap-3"
+                                    >
+                                        <div>
+                                            <p className="font-medium">
+                                                {item.productName}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <QuantitySelector
+                                                value={item.quantity}
+                                                onChange={(qty) =>
+                                                    handleQuantityChange(
+                                                        item.id,
+                                                        qty,
+                                                    )
+                                                }
+                                                min={1}
+                                            />
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRemoveProduct(item.id)
+                                                }
+                                                className="p-2 rounded-md text-red-600 hover:bg-red-50"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
