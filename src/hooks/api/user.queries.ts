@@ -75,6 +75,9 @@ export const useGetUsersPaginated = (
             GetUsers({
                 ...params,
                 search,
+                limit,
+                user_type: "CUSTOMER",
+                column: "createdAt",
                 signal,
             }),
     });

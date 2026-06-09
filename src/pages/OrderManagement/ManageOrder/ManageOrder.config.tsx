@@ -18,6 +18,7 @@ export const getCreateOrderFormConfig = ({
     hasMoreProducts = false,
     isFetchingMoreProducts = false,
     isProductsLoading = false,
+    handleProductsChange,
 }: TManageOrderFormConfigProps): FieldType<ManageOrderFormValues>[] => [
     {
         name: "customer",
@@ -46,6 +47,7 @@ export const getCreateOrderFormConfig = ({
         required: true,
         className: "col-span-12 md:col-span-6",
         componentProps: {
+            multiple: true,
             options: productsOptions,
             labelRequired: true,
             labelClass: "font-normal",
@@ -56,6 +58,7 @@ export const getCreateOrderFormConfig = ({
             isFetchingNextPage: isFetchingMoreProducts,
             loading: isProductsLoading,
         },
+        onValueChange: handleProductsChange,
     },
     {
         name: "paymentMethod",

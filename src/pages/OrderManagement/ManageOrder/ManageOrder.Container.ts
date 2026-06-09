@@ -12,108 +12,92 @@ import {
 import { ACTION_MODES } from "@/constants/action-modes.constants";
 import { getCreateOrderFormConfig } from "./ManageOrder.config";
 import { useGetUsersPaginated } from "@/hooks/api/user.queries";
-
-export interface OrderLineItem {
-    id: string;
-    productName: string;
-    sku: string;
-    quantity: number;
-    unitPrice: number;
-}
-
-const createEmptyItem = (): OrderLineItem => ({
-    id: crypto.randomUUID(),
-    productName: "",
-    sku: "",
-    quantity: 1,
-    unitPrice: 0,
-});
+import { useGetProductsPaginated } from "@/hooks/api/products.queries";
+import type { OrderLineItem } from "../OrderManagement.types";
+import { mapOptionsToSelectedProducts } from "../OrderManagement.Utils";
 
 export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
     const navigate = useNavigate();
     const formRef = useRef<FormBuilderRef<ManageOrderFormValues>>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [items, setItems] = useState<OrderLineItem[]>([createEmptyItem()]);
-    const [itemErrors, setItemErrors] = useState<string | null>(null);
     const [customerSearch, setCustomerSearch] = useState("");
+    const [productSearch, setProductSearch] = useState("");
+    const [selectedProducts, setSelectedProducts] = useState<OrderLineItem[]>(
+        [],
+    );
 
     const {
         data: customers = [],
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
+        fetchNextPage: fetchNextPageCustomers,
+        hasNextPage: hasNextPageCustomers,
+        isFetchingNextPage: isFetchingNextPageCustomers,
         isPending: isCustomersLoading,
     } = useGetUsersPaginated({
         search: customerSearch,
         limit: 20,
     });
 
+    const {
+        data: products = [],
+        fetchNextPage: fetchNextPageProducts,
+        hasNextPage: hasNextPageProducts,
+        isFetchingNextPage: isFetchingNextPageProducts,
+        isPending: isProductsLoading,
+    } = useGetProductsPaginated({
+        search: productSearch,
+        limit: 20,
+    });
+
     const customerOptions = customers.map((customer) => ({
-        label: `${customer.firstName} ${customer.lastName}`,
+        label: customer.fullName,
         value: String(customer.id),
     }));
+
+    const productsOptions = products.map((product) => ({
+        label: product.name,
+        value: String(product.id),
+    }));
+
+    const handleProductsChange = (value: any) => {
+        const selectedOptions = Array.isArray(value) ? value : [];
+
+        const nextSelectedProducts = mapOptionsToSelectedProducts(
+            selectedOptions,
+            selectedProducts,
+        );
+
+        setSelectedProducts(nextSelectedProducts);
+    };
 
     const formConfig = getCreateOrderFormConfig({
         customerOptions,
         onCustomerSearch: setCustomerSearch,
-        onCustomerScroll: hasNextPage ? () => fetchNextPage() : undefined,
-        hasMoreCustomers: !!hasNextPage,
-        isFetchingMoreCustomers: isFetchingNextPage,
+        onCustomerScroll: hasNextPageCustomers
+            ? () => fetchNextPageCustomers()
+            : undefined,
+        hasMoreCustomers: !!hasNextPageCustomers,
+        isFetchingMoreCustomers: isFetchingNextPageCustomers,
         isCustomersLoading,
         productsOptions,
-        onProductSearch,
-        onProductScroll,
-        hasMoreProducts = false,
-        isFetchingMoreProducts = false,
-        isProductsLoading = false,
+        onProductSearch: setProductSearch,
+        onProductScroll: hasNextPageProducts
+            ? () => fetchNextPageProducts()
+            : undefined,
+        hasMoreProducts: !!hasNextPageProducts,
+        isFetchingMoreProducts: isFetchingNextPageProducts,
+        isProductsLoading,
+        handleProductsChange,
     });
 
     const handleCancel = () => {
         navigate(APP_ROUTES.ORDERS);
     };
 
-    const addItem = () => {
-        setItems((prev) => [...prev, createEmptyItem()]);
-    };
-
-    const removeItem = (id: string) => {
-        setItems((prev) => prev.filter((item) => item.id !== id));
-    };
-
-    const updateItem = (
-        id: string,
-        field: keyof Omit<OrderLineItem, "id">,
-        value: string | number,
-    ) => {
-        setItems((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, [field]: value } : item,
-            ),
-        );
-    };
-
-    const validateItems = (): boolean => {
-        const hasEmpty = items.some(
-            (item) => !item.productName.trim() || item.quantity < 1,
-        );
-        if (hasEmpty) {
-            setItemErrors(
-                "All items must have a product name and a quantity of at least 1.",
-            );
-            return false;
-        }
-        setItemErrors(null);
-        return true;
-    };
-
     const handleSubmit = async (values: ManageOrderFormValues) => {
-        if (!validateItems()) return;
         setIsSubmitting(true);
         try {
             console.log("New order payload:", {
                 ...values,
-                items,
-                mode,
             });
             navigate(APP_ROUTES.ORDERS);
         } finally {
@@ -121,23 +105,29 @@ export const useManageOrder = ({ mode = ACTION_MODES.ADD }: formModesType) => {
         }
     };
 
-    const triggerSubmit = () => {
-        if (!validateItems()) return;
-        formRef.current?.handleSubmit(handleSubmit)();
+    const handleQuantityChange = (productId: string, quantity: number) => {
+        setSelectedProducts((prev) =>
+            prev.map((item) =>
+                item.id === productId ? { ...item, quantity } : item,
+            ),
+        );
+    };
+
+    const handleRemoveProduct = (productId: string) => {
+        setSelectedProducts((prev) =>
+            prev.filter((item) => item.id !== productId),
+        );
     };
 
     return {
         formRef,
         ManageOrderSchema,
         isSubmitting,
-        items,
-        itemErrors,
         formConfig,
+        selectedProducts,
+        handleQuantityChange,
+        handleRemoveProduct,
         handleCancel,
         handleSubmit,
-        triggerSubmit,
-        addItem,
-        removeItem,
-        updateItem,
     };
 };

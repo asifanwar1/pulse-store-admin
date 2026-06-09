@@ -22,4 +22,15 @@ export type TManageOrderFormConfigProps = {
     hasMoreProducts?: boolean;
     isFetchingMoreProducts?: boolean;
     isProductsLoading?: boolean;
+
+    handleProductsChange?: (products: any) => void;
 };
+
+export interface OrderLineItem {
+    id: string;
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+}
+
+export type SelectedOption = { value: string; label: string };
