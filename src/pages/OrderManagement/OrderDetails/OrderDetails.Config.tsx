@@ -1,7 +1,7 @@
-import { type OrderItem } from "@/mock/order.mock";
+import type { TOrderItemResponse } from "@/api/services/orders/orders.response.types";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 
-export const orderItemColumns: TDataColumnDef<OrderItem>[] = [
+export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
     {
         id: "productName",
         accessorKey: "productName",

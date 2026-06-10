@@ -30,6 +30,9 @@ export type TOrderResponse = {
         name: string;
         email: string;
     };
+    totalOrderedItems: number;
+    total_amount: string;
+
     shippingAddress: TOrderAddressResponse;
     billingAddress?: TOrderAddressResponse;
     subtotal?: number;

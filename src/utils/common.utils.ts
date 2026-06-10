@@ -110,3 +110,42 @@ export const invalidateMultiple = async (
         ),
     );
 };
+
+export const formatNumberCurrency = (
+    amount: number | string | null | undefined,
+    options?: {
+        includeSymbol?: boolean;
+        decimals?: number;
+        locale?: string;
+    },
+): string => {
+    const {
+        includeSymbol = true,
+        decimals = 2,
+        locale = "en-US",
+    } = options || {};
+
+    if (amount === null || amount === undefined) {
+        return includeSymbol ? "$0" : "0";
+    }
+
+    const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+
+    if (isNaN(numAmount)) {
+        return includeSymbol ? "$0" : "0";
+    }
+
+    if (numAmount === 0) {
+        return "-";
+    }
+
+    // Check if it's a whole number
+    const isWholeNumber = numAmount % 1 === 0;
+
+    const formatted = new Intl.NumberFormat(locale, {
+        minimumFractionDigits: isWholeNumber ? 0 : decimals,
+        maximumFractionDigits: decimals,
+    }).format(numAmount);
+
+    return includeSymbol ? `$${formatted}` : formatted;
+};
