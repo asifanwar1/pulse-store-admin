@@ -11,18 +11,18 @@ export type TOrderAddressResponse = {
 export type TOrderItemResponse = {
     id: string;
     productId?: string;
-    productName: string;
-    sku: string;
-    category?: string;
+    product_name: string;
+    product_sku: string;
+    product_category?: string;
     initials?: string;
     quantity: number;
-    unitPrice: number;
-    total: number;
+    unit_price: number;
+    total_amount: number;
 };
 
 export type TOrderResponse = {
     id: number | string;
-    paymentMethod: TPaymentMethod | string;
+    payment_method: TPaymentMethod | string;
     status: TOrderStatus | string;
     items: TOrderItemResponse[];
     user: {
@@ -43,7 +43,7 @@ export type TOrderResponse = {
     notes?: string;
     trackingNumber?: string;
     estimatedDelivery?: string;
-    createdAt?: string;
+    created_at?: string;
     updatedAt?: string;
 };
 

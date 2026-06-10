@@ -7,12 +7,7 @@ export type TOrderStatus =
     | "DELIVERED"
     | "CANCELLED";
 
-export type TPaymentMethod =
-    | "CREDIT_CARD"
-    | "DEBIT_CARD"
-    | "PAYPAL"
-    | "BANK_TRANSFER"
-    | "CASH_ON_DELIVERY";
+export type TPaymentMethod = "CARD" | "BANK_TRANSFER" | "COD";
 
 export type TGetOrdersParams = {
     page?: number;

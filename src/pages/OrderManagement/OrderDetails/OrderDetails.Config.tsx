@@ -1,10 +1,11 @@
 import type { TOrderItemResponse } from "@/api/services/orders/orders.response.types";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
+import { getInitialsFromName } from "@/utils/common.utils";
 
 export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
     {
-        id: "productName",
-        accessorKey: "productName",
+        id: "product_name",
+        accessorKey: "product_name",
         header: "Product",
         meta: {
             label: "Product",
@@ -13,14 +14,14 @@ export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
                 return (
                     <div className="flex items-center gap-2.5 whitespace-nowrap">
                         <div className="w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0 bg-pulse-cream-dark">
-                            {item.initials}
+                            {getInitialsFromName(item.product_name)}
                         </div>
                         <div className="flex flex-col">
                             <span className="font-medium text-pulse-green-dark text-xs">
-                                {item.productName}
+                                {item.product_name}
                             </span>
                             <span className="text-xss text-pulse-green leading-tight">
-                                {item.sku}
+                                {item.product_sku}
                             </span>
                         </div>
                     </div>
@@ -29,8 +30,8 @@ export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
         },
     },
     {
-        id: "category",
-        accessorKey: "category",
+        id: "product_category",
+        accessorKey: "product_category",
         header: "Category",
         meta: {
             label: "Category",
@@ -56,8 +57,8 @@ export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
         },
     },
     {
-        id: "unitPrice",
-        accessorKey: "unitPrice",
+        id: "unit_price",
+        accessorKey: "unit_price",
         header: "Unit Price",
         meta: {
             label: "Unit Price",
@@ -70,8 +71,8 @@ export const orderItemColumns: TDataColumnDef<TOrderItemResponse>[] = [
         },
     },
     {
-        id: "total",
-        accessorKey: "total",
+        id: "total_amount",
+        accessorKey: "total_amount",
         header: "Line Total",
         meta: {
             label: "Line Total",

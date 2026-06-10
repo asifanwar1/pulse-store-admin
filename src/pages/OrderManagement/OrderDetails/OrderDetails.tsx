@@ -3,12 +3,9 @@ import {
     Hash,
     Calendar,
     CreditCard,
-    MapPin,
     Package,
     DollarSign,
-    Percent,
     Truck,
-    StickyNote,
 } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
@@ -16,7 +13,10 @@ import { DataTable } from "@/components/custom/DataTable";
 import { orderItemColumns } from "./OrderDetails.Config";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
-import { PAYMENT_METHOD_OPTIONS } from "@/constants/payment-method.constant";
+import {
+    PaymentMethodsWithHelpers,
+    type PaymentMethodsType,
+} from "@/constants/payment-method.constant";
 import { useOrderDetails } from "./OrderDetails.Container";
 import {
     formatNumberCurrency,
@@ -24,10 +24,11 @@ import {
 } from "@/utils/common.utils";
 import { getFormattedDate } from "@/utils/dateTime.utils";
 import OrderDetailsSkeleton from "./OrderDetails.Skeleton";
-
-const paymentLabelMap = Object.fromEntries(
-    PAYMENT_METHOD_OPTIONS.map((o) => [o.value, o.label]),
-);
+import {
+    OrderStatusWithHelpers,
+    type OrderStatusType,
+} from "@/constants/order-status.constants";
+import { cn } from "@/lib/utils";
 
 export default function OrderDetails() {
     const { order, isOrderDataLoading, handleNavigateBack } = useOrderDetails();
@@ -68,15 +69,18 @@ export default function OrderDetails() {
                             <h2 className="text-lg font-bold text-pulse-green-dark">
                                 {order.user.name}
                             </h2>
-                            {/* <span
+                            <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                                    statusBadge.textColor,
-                                    statusBadge.bgColor,
+                                    OrderStatusWithHelpers.getLabelClass(
+                                        order?.status as OrderStatusType,
+                                    ),
                                 )}
                             >
-                                {statusBadge.label}
-                            </span> */}
+                                {OrderStatusWithHelpers.getDisplayTextKey(
+                                    order?.status as OrderStatusType,
+                                )}
+                            </span>
                         </div>
                         <p className="text-sm text-app-secondary">
                             {order.user.email}
@@ -88,12 +92,14 @@ export default function OrderDetails() {
                             </span>
                             <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
-                                {getFormattedDate(order.createdAt!)}
+                                {getFormattedDate(order.created_at!)}
                             </span>
                             <span className="flex items-center gap-1">
                                 <CreditCard className="w-3 h-3" />
-                                {paymentLabelMap[order.paymentMethod] ??
-                                    order.paymentMethod}
+
+                                {PaymentMethodsWithHelpers.getDisplayTextKey(
+                                    order?.payment_method as PaymentMethodsType,
+                                )}
                             </span>
                         </div>
                     </div>
