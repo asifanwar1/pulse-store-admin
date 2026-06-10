@@ -23,6 +23,7 @@ import {
     getInitialsFromName,
 } from "@/utils/common.utils";
 import { getFormattedDate } from "@/utils/dateTime.utils";
+import OrderDetailsSkeleton from "./OrderDetails.Skeleton";
 
 const paymentLabelMap = Object.fromEntries(
     PAYMENT_METHOD_OPTIONS.map((o) => [o.value, o.label]),
@@ -31,6 +32,9 @@ const paymentLabelMap = Object.fromEntries(
 export default function OrderDetails() {
     const { order, isOrderDataLoading, handleNavigateBack } = useOrderDetails();
 
+    if (isOrderDataLoading) {
+        return <OrderDetailsSkeleton />;
+    }
     if (!order) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
