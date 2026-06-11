@@ -45,5 +45,5 @@ export type TCreateOrderBody = {
 };
 
 export type TUpdateOrderStatusBody = {
-    status: TOrderStatus;
+    status: TOrderStatus | string;
 };

@@ -39,9 +39,9 @@ export default function OrderDetails() {
     const {
         order,
         isOrderDataLoading,
-        selectedStatus,
         isUpdatingOrderStatus,
         statusModalOpen,
+        selectedStatusOption,
         handleStatusChange,
         handleNavigateBack,
         handleOrderStatusModalClose,
@@ -126,7 +126,7 @@ export default function OrderDetails() {
                         </span>
                         <Select
                             options={ORDER_STATUS_OPTIONS}
-                            value={selectedStatus}
+                            value={selectedStatusOption}
                             onChange={(opt) => {
                                 if (opt && !Array.isArray(opt)) {
                                     handleOrderStatusModalOpen(

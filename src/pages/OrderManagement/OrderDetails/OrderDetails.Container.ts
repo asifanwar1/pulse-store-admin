@@ -4,15 +4,22 @@ import type { TOrderStatus } from "@/api/services/orders/orders.request.types";
 import { useGetOrder, useUpdateOrderStatus } from "@/hooks/api/orders.queries";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { useNavigate, useParams } from "react-router-dom";
-import { resolveOptionValue } from "@/utils/selectOption.utils";
 import { ORDER_STATUS_OPTIONS } from "@/constants/order-status.constants";
+import type { SelectOption } from "@/components/custom/Select";
+
+const getOptionObject = (
+    options: { label: string; value: string }[],
+    value: string,
+) => {
+    const resolvedOption = options.find((option) => option.value === value);
+    return resolvedOption;
+};
 
 export const useOrderDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [selectedStatus, setSelectedStatus] = useState<TOrderStatus | null>(
-        null,
-    );
+    const [selectedStatusOption, setSelectedStatusOption] =
+        useState<SelectOption | null>(null);
     const [statusModalOpen, setStatusModalOpen] = useState<boolean>(false);
 
     const { data: order, isLoading: isOrderDataLoading } = useGetOrder(
@@ -23,13 +30,13 @@ export const useOrderDetails = () => {
         useUpdateOrderStatus();
 
     useEffect(() => {
-        if (order?.status && !selectedStatus) {
-            const orderStatus = resolveOptionValue(
+        if (order?.status && !selectedStatusOption) {
+            const orderStatusOption = getOptionObject(
                 ORDER_STATUS_OPTIONS,
                 order.status,
             );
 
-            setSelectedStatus(orderStatus);
+            setSelectedStatusOption(orderStatusOption!);
         }
     }, [order?.status]);
 
@@ -37,7 +44,11 @@ export const useOrderDetails = () => {
 
     const handleOrderStatusModalOpen = (newOrderStatus: TOrderStatus) => {
         setStatusModalOpen(true);
-        setSelectedStatus(newOrderStatus);
+        const orderStatusOption = getOptionObject(
+            ORDER_STATUS_OPTIONS,
+            newOrderStatus,
+        );
+        setSelectedStatusOption(orderStatusOption!);
     };
     const handleOrderStatusModalClose = () => setStatusModalOpen(false);
 
@@ -46,7 +57,7 @@ export const useOrderDetails = () => {
             await updateOrderStatus(
                 {
                     id: Number(id),
-                    body: { status: selectedStatus! },
+                    body: { status: selectedStatusOption?.value! },
                 },
                 {
                     onSuccess: () => {
@@ -55,7 +66,6 @@ export const useOrderDetails = () => {
                 },
             );
         } catch (error) {
-            setSelectedStatus(order?.status as TOrderStatus);
             console.error(error);
         }
     };
@@ -63,9 +73,9 @@ export const useOrderDetails = () => {
     return {
         order,
         isOrderDataLoading,
-        selectedStatus,
         isUpdatingOrderStatus,
         statusModalOpen,
+        selectedStatusOption,
         handleNavigateBack,
         handleStatusChange,
         handleOrderStatusModalOpen,
