@@ -1,0 +1,7 @@
+export const SHIPMENT_QUERY_KEYS = {
+    SHIPMENTS: "SHIPMENTS",
+    SHIPMENT: "SHIPMENT",
+    SHIPMENT_STATUS: "SHIPMENT_STATUS",
+} as const;
+
+export default SHIPMENT_QUERY_KEYS;
