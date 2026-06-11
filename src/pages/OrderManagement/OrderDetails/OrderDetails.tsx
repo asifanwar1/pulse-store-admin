@@ -25,13 +25,23 @@ import {
 import { getFormattedDate } from "@/utils/dateTime.utils";
 import OrderDetailsSkeleton from "./OrderDetails.Skeleton";
 import {
+    ORDER_STATUS_OPTIONS,
     OrderStatusWithHelpers,
     type OrderStatusType,
 } from "@/constants/order-status.constants";
 import { cn } from "@/lib/utils";
+import type { TOrderStatus } from "@/api/services/orders/orders.request.types";
+import { Select } from "@/components/custom/Select";
 
 export default function OrderDetails() {
-    const { order, isOrderDataLoading, handleNavigateBack } = useOrderDetails();
+    const {
+        order,
+        isOrderDataLoading,
+        selectedStatus,
+        isUpdatingOrderStatus,
+        handleStatusChange,
+        handleNavigateBack,
+    } = useOrderDetails();
 
     if (isOrderDataLoading) {
         return <OrderDetailsSkeleton />;
@@ -109,16 +119,19 @@ export default function OrderDetails() {
                         <span className="text-xs font-medium text-pulse-green">
                             Update Status
                         </span>
-                        {/* <Select
-                            options={STATUS_SELECT_OPTIONS}
-                            value={selectedStatusOption}
+                        <Select
+                            options={ORDER_STATUS_OPTIONS}
+                            value={selectedStatus}
                             onChange={(opt) => {
                                 if (opt && !Array.isArray(opt)) {
-                                    setStatus(opt.value as OrderStatus);
+                                    handleStatusChange(
+                                        opt.value as TOrderStatus,
+                                    );
                                 }
                             }}
                             size="sm"
-                        /> */}
+                            disabled={isUpdatingOrderStatus}
+                        />
                     </div>
                 </div>
             </div>
