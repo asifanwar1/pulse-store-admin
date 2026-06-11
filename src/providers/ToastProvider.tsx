@@ -17,8 +17,8 @@ const ToastProvider = ({ children }: TToastProviderProps) => {
                 draggable
                 pauseOnHover
                 theme="light"
-                toastClassName="!bg-app-branding !text-white !border !border-gray-200 !shadow-lg"
-                progressClassName="!bg-white"
+                toastClassName="!bg-pulse-cream-dark !text-pulse-green-dark !border !border-gray-200 !shadow-lg"
+                progressClassName="!bg-pulse-green-dark"
             />
         </>
     );
