@@ -33,12 +33,12 @@ export const OrderStatusWithHelpers = injectBaseConstantMethods(
 export type OrderStatusType = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export const ORDER_STATUS_OPTIONS = [
-    { value: "pending", label: "Pending" },
-    { value: "processing", label: "Processing" },
-    { value: "shipped", label: "Shipped" },
-    { value: "delivered", label: "Delivered" },
-    { value: "cancelled", label: "Cancelled" },
-] as const;
+    { value: "PENDING", label: "Pending" },
+    { value: "PROCESSING", label: "Processing" },
+    { value: "SHIPPED", label: "Shipped" },
+    { value: "DELIVERED", label: "Delivered" },
+    { value: "CANCELLED", label: "Cancelled" },
+];
 
 export const COUNTRY_OPTIONS = [
     { value: "United States", label: "United States" },

@@ -6,6 +6,7 @@ import {
     Package,
     DollarSign,
     Truck,
+    OctagonAlert,
 } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
@@ -32,6 +33,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { TOrderStatus } from "@/api/services/orders/orders.request.types";
 import { Select } from "@/components/custom/Select";
+import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
 
 export default function OrderDetails() {
     const {
@@ -39,8 +41,11 @@ export default function OrderDetails() {
         isOrderDataLoading,
         selectedStatus,
         isUpdatingOrderStatus,
+        statusModalOpen,
         handleStatusChange,
         handleNavigateBack,
+        handleOrderStatusModalClose,
+        handleOrderStatusModalOpen,
     } = useOrderDetails();
 
     if (isOrderDataLoading) {
@@ -124,7 +129,7 @@ export default function OrderDetails() {
                             value={selectedStatus}
                             onChange={(opt) => {
                                 if (opt && !Array.isArray(opt)) {
-                                    handleStatusChange(
+                                    handleOrderStatusModalOpen(
                                         opt.value as TOrderStatus,
                                     );
                                 }
@@ -181,6 +186,20 @@ export default function OrderDetails() {
                     }}
                 />
             </ChartCard>
+
+            {statusModalOpen && (
+                <ConfirmationModal
+                    open={statusModalOpen}
+                    icon={<OctagonAlert size={18} />}
+                    title="Order Status"
+                    description="Are you sure you want to change the order status?"
+                    confirmText="Confirm"
+                    cancelText="Cancel"
+                    onSuccess={handleStatusChange}
+                    onClose={handleOrderStatusModalClose}
+                    isLoading={isUpdatingOrderStatus}
+                />
+            )}
         </div>
     );
 }

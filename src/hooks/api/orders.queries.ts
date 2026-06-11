@@ -17,6 +17,7 @@ import { useStore } from "@/store/store";
 import { invalidateMultiple } from "@/utils/common.utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDataTableQuery } from "../useDataTableQuery";
+import { showToast } from "@/lib/toast";
 
 export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
@@ -91,6 +92,7 @@ export const useUpdateOrderStatus = () => {
                 [ORDER_QUERY_KEYS.ORDERS],
                 [ORDER_QUERY_KEYS.ORDER],
             ]);
+            showToast.success("Status updated successfully");
         },
     });
 };
