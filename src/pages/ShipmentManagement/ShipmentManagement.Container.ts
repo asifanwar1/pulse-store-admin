@@ -1,3 +1,4 @@
+import Config from "@/Config";
 import { useGetShipments } from "@/hooks/api/shipment.queries";
 import { useQueryState } from "nuqs";
 
