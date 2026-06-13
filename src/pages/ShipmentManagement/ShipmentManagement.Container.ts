@@ -22,5 +22,12 @@ export const useShipmentManagement = () => {
         limit: pageSize,
     });
 
-    return { shipments, shipmentsTotalCountm, isShipmentsDataLoading };
+    return {
+        shipments,
+        shipmentsTotalCountm,
+        isShipmentsDataLoading,
+        setPage,
+        setSearch,
+        setPageSize,
+    };
 };
