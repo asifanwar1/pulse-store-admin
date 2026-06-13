@@ -24,8 +24,9 @@ export const useShipmentManagement = () => {
 
     return {
         shipments,
-        shipmentsTotalCountm,
+        shipmentsTotalCount,
         isShipmentsDataLoading,
+        page,
         setPage,
         setSearch,
         setPageSize,
