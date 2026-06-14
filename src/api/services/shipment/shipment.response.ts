@@ -40,6 +40,21 @@ export type TShipmentListResponse = {
     count: number;
 };
 
+export type TShipmentAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
+export type TShipmentAnalyticsResponse = {
+    total_shipments: TShipmentAnalyticsMetric;
+    pending_shipments: TShipmentAnalyticsMetric;
+    in_transit_shipments: TShipmentAnalyticsMetric;
+    delivered_shipments: TShipmentAnalyticsMetric;
+    cancelled_shipments: TShipmentAnalyticsMetric;
+    returned_shipments: TShipmentAnalyticsMetric;
+};
+
+export type TGetShipmentsAnalyticsResponse = TShipmentAnalyticsResponse;
 export type TGetShipmentsResponse = TShipmentListResponse;
 export type TCreateShipmentResponse = TShipmentResponse;
 export type TGetShipmentResponse = TShipmentResponse;
