@@ -10,6 +10,7 @@ import type {
 import type {
     TCreateShipmentResponse,
     TGetShipmentResponse,
+    TGetShipmentsAnalyticsResponse,
     TGetShipmentsResponse,
     TUpdateShipmentResponse,
     TUpdateShipmentStatusResponse,
@@ -64,6 +65,16 @@ export const UpdateShipmentStatus = async ({
         method: HTTP_METHODS.PATCH,
         url: `/shipments/${id}/status`,
         body,
+    });
+};
+
+export const GetShipmentsAnalytics = async (params?: WithSignal<{}>) => {
+    const { signal } = params || {};
+
+    return request<TGetShipmentsAnalyticsResponse>({
+        method: HTTP_METHODS.GET,
+        url: "/shipments/analytics",
+        signal,
     });
 };
 
