@@ -22,26 +22,14 @@ export type TGetShipmentsParams = BaseQueryType & {
 
 export type TCreateShipmentBody = {
     order_id: number;
-    customer_name: string;
-    customer_email: string;
-    carrier: TShipmentCarrier | string;
-    tracking_number: string;
-    weight: number;
-    origin_address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
-        country: string;
-    };
-    destination_address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
-        country: string;
-    };
+    tracking_id: string;
+    shipment_method: string;
+    courier: string;
+    estimated_delivery_date: string;
+    shipped_at?: string;
+    delivered_at?: string;
     notes?: string;
+    status?: string;
 };
 
 export type TUpdateShipmentBody = {

@@ -1,47 +1,64 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { APP_ROUTES } from "@/routes/appRoutes";
+import { useRef } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
     type FormBuilderRef,
     type formModesType,
 } from "@/components/custom/Form";
-import {
-    ManageShipmentSchema,
-    type ManageShipmentFormValues,
-} from "./ManageShipment.schema";
+import { type ManageShipmentFormValues } from "./ManageShipment.schema";
 import { ACTION_MODES } from "@/constants/action-modes.constants";
+import { useCreateShipment } from "@/hooks/api/shipment.queries";
+
+const buildShipmentPayload = (
+    values: ManageShipmentFormValues,
+    orderId: string,
+) => ({
+    order_id: Number(orderId),
+    tracking_id: values.trackingNumber,
+    shipment_method: values.shipmentMethod,
+    courier: values.courier,
+    estimated_delivery_date: values.estimatedDeliveryDate,
+    shipped_at: values.shippedDate,
+    notes: values.notes,
+});
 
 export const useManageShipment = ({
     mode = ACTION_MODES.ADD,
 }: formModesType) => {
     const navigate = useNavigate();
-    const formRef = useRef<FormBuilderRef<ManageShipmentFormValues>>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { id } = useParams<{ id: string }>();
+    const location = useLocation();
 
-    const handleCancel = () => {
-        navigate(APP_ROUTES.SHIPMENTS);
-    };
+    const orderDetails = location.state?.orderData;
+
+    const formRef = useRef<FormBuilderRef<ManageShipmentFormValues>>(null);
+
+    const { mutateAsync: createShipment, isPending: isCreatingShipment } =
+        useCreateShipment();
+
+    const isSubmitting = isCreatingShipment;
+
+    const handleNavigateBack = () => navigate(-1);
 
     const handleSubmit = async (values: ManageShipmentFormValues) => {
-        setIsSubmitting(true);
         try {
-            console.log("Shipment payload:", { ...values, mode });
-            navigate(APP_ROUTES.SHIPMENTS);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+            const payload = buildShipmentPayload(values, id!);
 
-    const triggerSubmit = () => {
-        formRef.current?.handleSubmit(handleSubmit)();
+            createShipment(payload, {
+                onSuccess: () => {
+                    handleNavigateBack();
+                },
+            });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return {
         formRef,
-        ManageShipmentSchema,
+        mode,
         isSubmitting,
-        handleCancel,
+        orderDetails,
         handleSubmit,
-        triggerSubmit,
+        handleNavigateBack,
     };
 };

@@ -7,6 +7,7 @@ import {
     DollarSign,
     Truck,
     OctagonAlert,
+    Plus,
 } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
@@ -27,6 +28,7 @@ import { getFormattedDate } from "@/utils/dateTime.utils";
 import OrderDetailsSkeleton from "./OrderDetails.Skeleton";
 import {
     ORDER_STATUS_OPTIONS,
+    OrderStatus,
     OrderStatusWithHelpers,
     type OrderStatusType,
 } from "@/constants/order-status.constants";
@@ -46,6 +48,7 @@ export default function OrderDetails() {
         handleNavigateBack,
         handleOrderStatusModalClose,
         handleOrderStatusModalOpen,
+        handleNavigateToShipmentCreate,
     } = useOrderDetails();
 
     if (isOrderDataLoading) {
@@ -67,11 +70,17 @@ export default function OrderDetails() {
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
-            <div className="flex">
+            <div className="flex items-center justify-between">
                 <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
                     Back to Orders
                 </Button>
+                {order?.status === OrderStatus.PENDING && (
+                    <Button size="sm" onClick={handleNavigateToShipmentCreate}>
+                        <Plus className="w-4 h-4" />
+                        Create Shipment
+                    </Button>
+                )}
             </div>
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">

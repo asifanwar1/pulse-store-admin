@@ -7,7 +7,7 @@ const CommonSkeleton = () => {
                 {Array.from({ length: 4 }).map((_, index) => (
                     <div
                         key={index}
-                        className="rounded-[20px] border border-border bg-background/80 p-6 shadow-sm"
+                        className="rounded-[20px] border border-border bg-pulse-cream p-6 shadow-sm"
                     >
                         <div className="flex items-center justify-between gap-4">
                             <Skeleton className="h-5 w-28" />
@@ -27,7 +27,7 @@ const CommonSkeleton = () => {
                 ))}
             </div>
 
-            <div className="rounded-[20px] border border-border bg-background/80 p-6 shadow-sm">
+            <div className="rounded-[20px] border border-border bg-pulse-cream p-6 shadow-sm">
                 <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div className="space-y-2">
                         <Skeleton className="h-6 w-40" />
@@ -36,7 +36,7 @@ const CommonSkeleton = () => {
                     <Skeleton className="h-11 w-40 rounded-full" />
                 </div>
 
-                <div className="overflow-hidden rounded-3xl border border-border bg-background/70">
+                <div className="overflow-hidden rounded-3xl border border-border bg-pulse-cream">
                     <div className="grid min-w-[900px] grid-cols-[repeat(7,minmax(160px,1fr))] gap-4 border-b border-border px-4 py-4">
                         {Array.from({ length: 7 }).map((_, index) => (
                             <Skeleton key={index} className="h-4 w-full" />

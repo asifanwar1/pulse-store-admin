@@ -6,6 +6,7 @@ import { APP_ROUTES } from "@/routes/appRoutes";
 import { useNavigate, useParams } from "react-router-dom";
 import { ORDER_STATUS_OPTIONS } from "@/constants/order-status.constants";
 import type { SelectOption } from "@/components/custom/Select";
+import { getRouteWithId } from "@/utils/common.utils";
 
 const getOptionObject = (
     options: { label: string; value: string }[],
@@ -70,6 +71,19 @@ export const useOrderDetails = () => {
         }
     };
 
+    const handleNavigateToShipmentCreate = () =>
+        navigate(
+            getRouteWithId({
+                id: Number(id),
+                route: APP_ROUTES.SHIPMENTS_CREATE,
+            }),
+            {
+                state: {
+                    orderData: order,
+                },
+            },
+        );
+
     return {
         order,
         isOrderDataLoading,
@@ -80,5 +94,6 @@ export const useOrderDetails = () => {
         handleStatusChange,
         handleOrderStatusModalOpen,
         handleOrderStatusModalClose,
+        handleNavigateToShipmentCreate,
     };
 };

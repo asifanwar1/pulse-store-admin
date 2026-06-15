@@ -96,9 +96,10 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
                     style={
                         labelWeight ? { fontWeight: labelWeight } : undefined
                     }
-                    className="mb-0 text-sm font-400"
+                    className="mb-0 text-sm font-400 text-pulse-green"
                 >
-                    {label} {required && <span className="text-danger">*</span>}
+                    {label}{" "}
+                    {required && <span className="text-red-500">*</span>}
                 </label>
             )}
             <Popover>
@@ -118,13 +119,13 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
                             disabled={disabled}
                             autoComplete="off"
                             className={cn(
-                                "data-[empty=true]:text-text-placeholder border border-app-border h-[36px] shadow-search flex justify-between w-[inherit] text-left font-[400] text-black hover:bg-white bg-white placeholder:text-text-secondary hover:ring-none !text-sm !my-2.5 cursor-pointer",
+                                "data-[empty=true]:text-pulse-green border border-app-border h-[36px] shadow-search flex justify-between w-[inherit] text-left font-[400] text-black hover:bg-white bg-white placeholder:text-pulse-green/60 hover:ring-none !text-sm !my-2.5 cursor-pointer",
                                 error && "",
                             )}
                             name={name}
                         />
                         {showIcon && (
-                            <CalendarIcon className="h-4 w-4 text-placeholder absolute right-3 top-[22px] text-right cursor-pointer" />
+                            <CalendarIcon className="h-4 w-4 text-pulse-green/60 absolute right-3 top-[22px] text-right cursor-pointer" />
                         )}
                         {!!date && clearable && (
                             <Button

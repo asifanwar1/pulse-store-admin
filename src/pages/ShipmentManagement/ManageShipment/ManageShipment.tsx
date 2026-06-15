@@ -5,6 +5,7 @@ import { MANAGE_SHIPMENT_FORM_CONFIG } from "./ManageShipment.config";
 import {
     type ManageShipmentFormValues,
     INITIAL_SHIPMENT_VALUES,
+    ManageShipmentSchema,
 } from "./ManageShipment.schema";
 import { useManageShipment } from "./ManageShipment.Container";
 import type { ManageShipmentFormProps } from "../ShipmentManagement.types";
@@ -12,24 +13,23 @@ import type { ManageShipmentFormProps } from "../ShipmentManagement.types";
 const ManageShipment: React.FC<ManageShipmentFormProps> = ({ mode }) => {
     const {
         formRef,
-        ManageShipmentSchema,
         isSubmitting,
-        handleCancel,
+        orderDetails,
         handleSubmit,
-        triggerSubmit,
+        handleNavigateBack,
     } = useManageShipment({ mode });
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="flex">
                 <Button
-                    onClick={handleCancel}
+                    onClick={handleNavigateBack}
                     variant="ghost"
                     size="sm"
                     disabled={isSubmitting}
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    Back to Shipments
+                    Go Back
                 </Button>
             </div>
 
@@ -39,8 +39,8 @@ const ManageShipment: React.FC<ManageShipmentFormProps> = ({ mode }) => {
                         Shipment Details
                     </h3>
                     <p className="text-xs text-pulse-green">
-                        Fill in the shipment information, carrier details, and
-                        origin &amp; destination addresses
+                        Fill in the shipment information for order id:{" "}
+                        {orderDetails.id}
                     </p>
                 </div>
 
@@ -52,25 +52,23 @@ const ManageShipment: React.FC<ManageShipmentFormProps> = ({ mode }) => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-12 gap-4"
                     noValidate
-                />
-            </div>
-
-            <div className="flex items-center justify-end gap-3 pb-4">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleCancel}
-                    disabled={isSubmitting}
                 >
-                    Cancel
-                </Button>
-                <Button
-                    size="sm"
-                    onClick={triggerSubmit}
-                    disabled={isSubmitting}
-                >
-                    {mode === "add" ? "Create Shipment" : "Save Changes"}
-                </Button>
+                    <div className="flex items-center justify-end gap-3 pb-4">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleNavigateBack}
+                            disabled={isSubmitting}
+                        >
+                            Cancel
+                        </Button>
+                        <Button type="submit" size="sm" disabled={isSubmitting}>
+                            {mode === "add"
+                                ? "Create Shipment"
+                                : "Save Changes"}
+                        </Button>
+                    </div>
+                </FormBuilder>
             </div>
         </div>
     );
