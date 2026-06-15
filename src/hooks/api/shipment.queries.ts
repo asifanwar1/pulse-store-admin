@@ -2,6 +2,7 @@ import {
     CreateShipment,
     GetShipment,
     GetShipments,
+    GetShipmentsAnalytics,
     SHIPMENT_QUERY_KEYS,
     UpdateShipment,
     UpdateShipmentStatus,
@@ -136,5 +137,12 @@ export const useUpdateShipmentStatus = () => {
                 [SHIPMENT_QUERY_KEYS.SHIPMENT],
             ]);
         },
+    });
+};
+
+export const useGetShipmentAnalytics = () => {
+    return useQuery({
+        queryKey: [SHIPMENT_QUERY_KEYS.ANALYTICS],
+        queryFn: () => GetShipmentsAnalytics(),
     });
 };

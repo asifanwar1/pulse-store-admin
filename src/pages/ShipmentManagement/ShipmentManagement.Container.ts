@@ -1,5 +1,8 @@
 import Config from "@/Config";
-import { useGetShipments } from "@/hooks/api/shipment.queries";
+import {
+    useGetShipmentAnalytics,
+    useGetShipments,
+} from "@/hooks/api/shipment.queries";
 import { useQueryState } from "nuqs";
 
 export const useShipmentManagement = () => {
@@ -13,7 +16,7 @@ export const useShipmentManagement = () => {
     const {
         data: shipments,
         count: shipmentsTotalCount,
-        isPending: isShipmentsDataLoading,
+        isPending: isShipmentLoading,
         page,
         setPage,
     } = useGetShipments({
@@ -22,10 +25,19 @@ export const useShipmentManagement = () => {
         limit: pageSize,
     });
 
+    const {
+        data: shipmentAnalyticsData,
+        isPending: isShipmentAnalyticsLoading,
+    } = useGetShipmentAnalytics();
+
+    const isShipmentsDataLoading =
+        isShipmentAnalyticsLoading || isShipmentLoading;
+
     return {
         shipments,
         shipmentsTotalCount,
         isShipmentsDataLoading,
+        shipmentAnalyticsData,
         page,
         setPage,
         setSearch,
