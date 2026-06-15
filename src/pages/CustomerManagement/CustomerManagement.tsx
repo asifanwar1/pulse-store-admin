@@ -4,9 +4,15 @@ import CustomerTable from "./CustomerTable";
 import { formatStatValue } from "@/utils/common.utils";
 import { useCustomerManagement } from "./CustomerManagement.Container";
 import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
+import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const CustomerManagement = () => {
-    const { users, usersAnalyticsData } = useCustomerManagement();
+    const { users, usersAnalyticsData, isUserDataLoading } =
+        useCustomerManagement();
+
+    if (isUserDataLoading) {
+        return <CommonSkeleton />;
+    }
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">

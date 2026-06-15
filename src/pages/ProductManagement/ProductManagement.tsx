@@ -4,9 +4,15 @@ import ProductTable from "./ProductTable";
 import { formatStatValue } from "@/utils/common.utils";
 import { useProductManagement } from "./ProductManagement.Container";
 import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
+import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const ProductManagement = () => {
-    const { products, productsAnalyticsData } = useProductManagement();
+    const { products, productsAnalyticsData, isProductsLoading } =
+        useProductManagement();
+
+    if (isProductsLoading) {
+        return <CommonSkeleton />;
+    }
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

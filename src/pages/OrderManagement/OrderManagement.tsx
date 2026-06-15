@@ -4,9 +4,15 @@ import OrderTable from "./OrderTable";
 import { formatStatValue } from "@/utils/common.utils";
 import { useOrderManagement } from "./OrderManagement.Container";
 import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
+import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const OrderManagement = () => {
-    const { orders, ordersAnalyticsData } = useOrderManagement();
+    const { orders, ordersAnalyticsData, isOrdersLoading } =
+        useOrderManagement();
+
+    if (isOrdersLoading) {
+        return <CommonSkeleton />;
+    }
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
