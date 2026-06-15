@@ -9,14 +9,21 @@ import {
 } from "./ManageShipment.schema";
 import { useManageShipment } from "./ManageShipment.Container";
 import type { ManageShipmentFormProps } from "../ShipmentManagement.types";
+import ProductOrderCard from "@/components/custom/CustomCards/ProductOrderCard";
+import type { TOrderItemResponse } from "@/api/services/orders/orders.response.types";
+
+const BoxURL =
+    "https://dftybolqcutmxzqcsogd.supabase.co/storage/v1/object/public/pulsestore/products/beige-box.jpg";
 
 const ManageShipment: React.FC<ManageShipmentFormProps> = ({ mode }) => {
     const {
+        NO_VALUE,
         formRef,
         isSubmitting,
         orderDetails,
         handleSubmit,
         handleNavigateBack,
+        handleNavigateToProduct,
     } = useManageShipment({ mode });
 
     return (
@@ -70,6 +77,29 @@ const ManageShipment: React.FC<ManageShipmentFormProps> = ({ mode }) => {
                     </div>
                 </FormBuilder>
             </div>
+            {orderDetails?.items && orderDetails?.items.length > NO_VALUE && (
+                <div className="flex flex-col gap-0.5">
+                    <h3 className="text-lg font-semibold text-pulse-green-dark">
+                        Ordered Items
+                    </h3>
+
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {orderDetails?.items.map((item: TOrderItemResponse) => (
+                            <ProductOrderCard
+                                key={item.id}
+                                image={BoxURL}
+                                title={item.product_name || "-"}
+                                category={item.product_category}
+                                unitPrice={item.unit_price}
+                                totalAmount={item.total_amount}
+                                quantity={item.quantity}
+                                sku={item.product_sku}
+                                onClick={() => handleNavigateToProduct(item.id)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

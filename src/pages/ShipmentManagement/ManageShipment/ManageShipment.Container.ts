@@ -7,6 +7,10 @@ import {
 import { type ManageShipmentFormValues } from "./ManageShipment.schema";
 import { ACTION_MODES } from "@/constants/action-modes.constants";
 import { useCreateShipment } from "@/hooks/api/shipment.queries";
+import { getRouteWithId } from "@/utils/common.utils";
+import { APP_ROUTES } from "@/routes/appRoutes";
+
+const NO_VALUE = 0;
 
 const buildShipmentPayload = (
     values: ManageShipmentFormValues,
@@ -53,12 +57,22 @@ export const useManageShipment = ({
         }
     };
 
+    const handleNavigateToProduct = (id: string) =>
+        navigate(
+            getRouteWithId({
+                route: APP_ROUTES.PRODUCTS_DETAILS,
+                id,
+            }),
+        );
+
     return {
+        NO_VALUE,
         formRef,
         mode,
         isSubmitting,
         orderDetails,
         handleSubmit,
         handleNavigateBack,
+        handleNavigateToProduct,
     };
 };
