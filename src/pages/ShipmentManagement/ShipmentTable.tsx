@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { shipmentsListData } from "@/mock/shipment.mock";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { shipmentManagementTableColumns } from "./ShipmentManagement.Config";
+import type { ShipmentTableProps } from "./ShipmentManagement.types";
 
-export default function ShipmentTable() {
+const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipmentListData }) => {
     const navigate = useNavigate();
 
     return (
@@ -29,7 +29,7 @@ export default function ShipmentTable() {
         >
             <DataTable
                 id="shipments-list"
-                data={shipmentsListData}
+                data={shipmentListData}
                 columns={shipmentManagementTableColumns}
                 features={{
                     rowSelection: false,
@@ -51,4 +51,6 @@ export default function ShipmentTable() {
             />
         </ChartCard>
     );
-}
+};
+
+export default ShipmentTable;

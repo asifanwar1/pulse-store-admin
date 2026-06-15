@@ -24,15 +24,29 @@ export type TShipmentResponse = {
     order_id: number;
     customer_name: string;
     customer_email: string;
-    carrier: TShipmentCarrier | string;
-    tracking_number: string;
+    courier: TShipmentCarrier | string;
+    tracking_id: string;
     status: TShipmentStatus | string;
     weight: number;
-    origin_address: TShipmentAddressResponse;
-    destination_address: TShipmentAddressResponse;
+    shipment_address: TShipmentAddressResponse;
     notes?: string;
     created_at: string;
     updated_at: string;
+    customer: {
+        name: string;
+        email: string;
+        phone: string;
+    };
+    ordered_items: Array<{
+        id: number;
+        product_id: number;
+        product_name: string;
+        product_sku: string;
+        product_category: string;
+        quantity: number;
+        unit_price: string;
+        total_amount: string;
+    }>;
 };
 
 export type TShipmentListResponse = {
@@ -46,12 +60,10 @@ export type TShipmentAnalyticsMetric = {
 };
 
 export type TShipmentAnalyticsResponse = {
-    total_shipments: TShipmentAnalyticsMetric;
-    pending_shipments: TShipmentAnalyticsMetric;
-    in_transit_shipments: TShipmentAnalyticsMetric;
-    delivered_shipments: TShipmentAnalyticsMetric;
-    cancelled_shipments: TShipmentAnalyticsMetric;
-    returned_shipments: TShipmentAnalyticsMetric;
+    totalShipments: TShipmentAnalyticsMetric;
+    inTransit: TShipmentAnalyticsMetric;
+    delivered: TShipmentAnalyticsMetric;
+    failed: TShipmentAnalyticsMetric;
 };
 
 export type TGetShipmentsAnalyticsResponse = TShipmentAnalyticsResponse;

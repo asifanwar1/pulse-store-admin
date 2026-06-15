@@ -1,10 +1,10 @@
-import { shipmentStatsData } from "@/mock/shipment.mock";
 import { StatCard } from "@/components/custom/CustomCards";
 import { SHIPMENT_STAT_CONFIG } from "./ShipmentManagement.Config";
 import ShipmentTable from "./ShipmentTable";
 import { formatStatValue } from "@/utils/common.utils";
 import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 import { useShipmentManagement } from "./ShipmentManagement.Container";
+import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 
 const ShipmentManagement = () => {
     const { shipments, shipmentAnalyticsData, isShipmentsDataLoading } =
@@ -25,7 +25,9 @@ const ShipmentManagement = () => {
                         iconColorClass,
                         subtitle,
                     }) => {
-                        const stat = shipmentStatsData[key];
+                        const stat = mapAnalyticsMetricToStat(
+                            shipmentAnalyticsData?.[key],
+                        );
                         return (
                             <StatCard
                                 key={key}
@@ -42,7 +44,7 @@ const ShipmentManagement = () => {
                     },
                 )}
             </div>
-            <ShipmentTable />
+            <ShipmentTable shipmentListData={shipments ?? []} />
         </div>
     );
 };
