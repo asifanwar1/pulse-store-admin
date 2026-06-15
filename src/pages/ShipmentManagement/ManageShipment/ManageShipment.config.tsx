@@ -2,7 +2,7 @@ import { Select } from "@/components/custom/Select";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
 import { type FieldType } from "@/components/custom/Form";
 import { type ManageShipmentFormValues } from "./ManageShipment.schema";
-import { CARRIER_OPTIONS } from "@/constants/shipment-status.constants";
+// import { CARRIER_OPTIONS } from "@/constants/shipment-status.constants";
 import { COUNTRY_OPTIONS } from "@/constants/order-status.constants";
 
 export const MANAGE_SHIPMENT_FORM_CONFIG: FieldType<ManageShipmentFormValues>[] =
@@ -42,7 +42,7 @@ export const MANAGE_SHIPMENT_FORM_CONFIG: FieldType<ManageShipmentFormValues>[] 
             required: true,
             className: "col-span-12 md:col-span-6",
             componentProps: {
-                options: CARRIER_OPTIONS,
+                options: [{}],
                 labelRequired: true,
                 labelClass: "font-normal",
             },

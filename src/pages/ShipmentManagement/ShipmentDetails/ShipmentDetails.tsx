@@ -18,24 +18,16 @@ import { DataTable } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { shipmentItemColumns } from "./ShipmentDetails.Config";
-import { SHIPMENT_STATUS_CONFIG } from "../ShipmentManagement.Config";
 import InfoCard from "@/components/custom/CustomCards/InfoCard";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
 import { Select } from "@/components/custom/Select";
-import {
-    SHIPMENT_STATUS_OPTIONS,
-    CARRIER_OPTIONS,
-} from "@/constants/shipment-status.constants";
+import { SHIPMENT_STATUS_OPTIONS } from "@/constants/shipment-status.constants";
 
 const STATUS_SELECT_OPTIONS = SHIPMENT_STATUS_OPTIONS.map((o) => ({
     value: o.value,
     label: o.label,
 }));
-
-const carrierLabelMap = Object.fromEntries(
-    CARRIER_OPTIONS.map((o) => [o.value, o.label]),
-);
 
 export default function ShipmentDetails() {
     const { id } = useParams<{ id: string }>();
@@ -64,7 +56,6 @@ export default function ShipmentDetails() {
         );
     }
 
-    const statusBadge = SHIPMENT_STATUS_CONFIG[status];
     const selectedStatusOption =
         STATUS_SELECT_OPTIONS.find((o) => o.value === status) ?? null;
 
@@ -95,7 +86,7 @@ export default function ShipmentDetails() {
                             <h2 className="text-lg font-bold text-pulse-green-dark">
                                 {shipment.customer}
                             </h2>
-                            <span
+                            {/* <span
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
                                     statusBadge.textColor,
@@ -103,7 +94,7 @@ export default function ShipmentDetails() {
                                 )}
                             >
                                 {statusBadge.label}
-                            </span>
+                            </span> */}
                         </div>
                         <p className="text-sm text-app-secondary">
                             {shipment.email}
@@ -117,11 +108,11 @@ export default function ShipmentDetails() {
                                 <Package className="w-3 h-3" />
                                 {shipment.orderId}
                             </span>
-                            <span className="flex items-center gap-1">
+                            {/* <span className="flex items-center gap-1">
                                 <Truck className="w-3 h-3" />
                                 {carrierLabelMap[shipment.carrier] ??
                                     shipment.carrier}
-                            </span>
+                            </span> */}
                             <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
                                 {shipment.createdAt}
@@ -163,9 +154,7 @@ export default function ShipmentDetails() {
                 <StatChipCard
                     icon={<Truck className="w-4 h-4" />}
                     label="Carrier"
-                    value={
-                        carrierLabelMap[shipment.carrier] ?? shipment.carrier
-                    }
+                    value={"3"}
                 />
                 <StatChipCard
                     icon={<Calendar className="w-4 h-4" />}
@@ -219,14 +208,14 @@ export default function ShipmentDetails() {
                         Shipment Summary
                     </h3>
                     <div className="flex flex-col gap-3">
-                        <InfoCard
+                        {/* <InfoCard
                             icon={<Truck className="w-4 h-4" />}
                             label="Carrier"
                             value={
                                 carrierLabelMap[shipment.carrier] ??
                                 shipment.carrier
                             }
-                        />
+                        /> */}
                         <InfoCard
                             icon={<Weight className="w-4 h-4" />}
                             label="Weight"
