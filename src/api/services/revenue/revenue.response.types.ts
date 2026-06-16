@@ -81,6 +81,11 @@ export type TRevenueListItem = {
     completed_order: TCompletedOrder;
     order_items: TOrderItemDetail[];
     shipment_details: TShipmentDetail[];
+    customer: {
+        name: string;
+        email: string;
+        phone: string;
+    };
 };
 
 export type TGetRevenuesListResponse = {

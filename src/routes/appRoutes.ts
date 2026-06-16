@@ -39,4 +39,7 @@ export enum APP_ROUTES {
     SHIPMENTS_UPDATE = "/shipments/update/:id",
 
     CATEGORIES = "/categories",
+
+    REVENUE = "/revenue",
+    REVENUE_DETAILS = "/revenue/:id",
 }
