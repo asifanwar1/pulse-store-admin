@@ -168,7 +168,7 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
                 </PopoverContent>
             </Popover>
             {error && (
-                <div className="text-danger font-normal text-sm -mt-1">
+                <div className="text-red-500 font-normal text-sm -mt-1">
                     {error}
                 </div>
             )}

@@ -40,8 +40,8 @@ export const MANAGE_SHIPMENT_FORM_CONFIG: FieldType<ManageShipmentFormValues>[] 
             labelClass: "font-normal",
         },
         {
-            name: "estimatedDeliveryDate",
-            label: "Estimated Delivery Date",
+            name: "shippedDate",
+            label: "Shipped Date",
             type: "text",
             component: DatePicker,
             componentProps: {
@@ -53,8 +53,8 @@ export const MANAGE_SHIPMENT_FORM_CONFIG: FieldType<ManageShipmentFormValues>[] 
             labelClass: "font-normal",
         },
         {
-            name: "shippedDate",
-            label: "Shipped Date",
+            name: "estimatedDeliveryDate",
+            label: "Estimated Delivery Date",
             type: "text",
             component: DatePicker,
             componentProps: {

@@ -2,45 +2,54 @@ import { z } from "zod";
 
 const optionSchema = z.object({ label: z.string(), value: z.string() });
 
-const DATE_SCHEMA = z
-    .string()
-    .min(1, "Enter a date")
-    .refine(
-        (val) => {
-            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-            if (!dateRegex.test(val)) return false;
+const DATE_SCHEMA = z.preprocess(
+    (value) => {
+        if (value instanceof Date) {
+            return value.toISOString().slice(0, 10);
+        }
+        return value;
+    },
+    z
+        .string()
+        .min(1, "Enter a date")
 
-            const [year, month, day] = val.split("-").map(Number);
-            const isRepeating = /^(\d)\1{3}$/.test(String(year));
-            if (isRepeating) return false;
+        .refine(
+            (val) => {
+                const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                if (!dateRegex.test(val)) return false;
 
-            const date = new Date(val);
-            if (
-                date.getFullYear() !== year ||
-                date.getMonth() + 1 !== month ||
-                date.getDate() !== day
-            ) {
-                return false;
-            }
+                const [year, month, day] = val.split("-").map(Number);
+                const isRepeating = /^(\d)\1{3}$/.test(String(year));
+                if (isRepeating) return false;
 
-            return true;
-        },
-        {
-            message: "Enter a valid date",
-        },
-    )
-    .refine(
-        (val) => {
-            const inputDate = new Date(val);
-            const today = new Date();
-            inputDate.setHours(0, 0, 0, 0);
-            today.setHours(0, 0, 0, 0);
-            return inputDate >= today;
-        },
-        {
-            message: "Date cannot be in the past",
-        },
-    );
+                const date = new Date(val);
+                if (
+                    date.getFullYear() !== year ||
+                    date.getMonth() + 1 !== month ||
+                    date.getDate() !== day
+                ) {
+                    return false;
+                }
+
+                return true;
+            },
+            {
+                message: "Enter a valid date",
+            },
+        )
+        .refine(
+            (val) => {
+                const inputDate = new Date(val);
+                const today = new Date();
+                inputDate.setHours(0, 0, 0, 0);
+                today.setHours(0, 0, 0, 0);
+                return inputDate >= today;
+            },
+            {
+                message: "Date cannot be in the past",
+            },
+        ),
+);
 
 export const ManageShipmentSchema = z.object({
     courier: z

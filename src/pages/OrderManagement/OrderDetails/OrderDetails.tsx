@@ -165,12 +165,12 @@ export default function OrderDetails() {
                 <StatChipCard
                     icon={<Truck className="w-4 h-4" />}
                     label="Shipping"
-                    value={"-"}
+                    value={getFormattedDate(order.shipped_at!)}
                 />
                 <StatChipCard
                     icon={<Calendar className="w-4 h-4" />}
                     label="Est. Delivery"
-                    value={"—"}
+                    value={getFormattedDate(order.estimated_delivery_date!)}
                 />
             </div>
 

@@ -42,7 +42,8 @@ export type TOrderResponse = {
     total?: number;
     notes?: string;
     trackingNumber?: string;
-    estimatedDelivery?: string;
+    estimated_delivery_date?: string;
+    shipped_at?: string;
     created_at?: string;
     updatedAt?: string;
 };
