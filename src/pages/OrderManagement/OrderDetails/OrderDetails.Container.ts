@@ -7,14 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ORDER_STATUS_OPTIONS } from "@/constants/order-status.constants";
 import type { SelectOption } from "@/components/custom/Select";
 import { getRouteWithId } from "@/utils/common.utils";
-
-const getOptionObject = (
-    options: { label: string; value: string }[],
-    value: string,
-) => {
-    const resolvedOption = options.find((option) => option.value === value);
-    return resolvedOption;
-};
+import { getOptionObject } from "@/utils/selectOption.utils";
 
 export const useOrderDetails = () => {
     const navigate = useNavigate();

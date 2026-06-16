@@ -7,6 +7,7 @@ import {
     Truck,
     StickyNote,
     DollarSign,
+    OctagonAlert,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ import {
 } from "@/utils/common.utils";
 import { getFormattedDate } from "@/utils/dateTime.utils";
 import ProductOrderCard from "@/components/custom/CustomCards/ProductOrderCard";
+import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
 
 const BoxURL =
     "https://dftybolqcutmxzqcsogd.supabase.co/storage/v1/object/public/pulsestore/products/beige-box.jpg";
@@ -35,7 +37,13 @@ const ShipmentDetails = () => {
         NO_VALUE,
         shipment,
         isShipmentDataLoading,
+        statusModalOpen,
+        selectedStatusOption,
+        isUpdatingShipmentStatus,
         handleNavigateBack,
+        handleShipmentStatusModalOpen,
+        handleShipmentStatusModalClose,
+        handleStatusChange,
         handleNavigateToProduct,
     } = useShimentDetails();
 
@@ -112,21 +120,24 @@ const ShipmentDetails = () => {
                         </div>
                     </div>
 
-                    {/* <div className="flex flex-col gap-1.5 shrink-0 w-full sm:w-48">
+                    <div className="flex flex-col gap-1.5 shrink-0 w-full sm:w-48">
                         <span className="text-xs font-medium text-pulse-green">
                             Update Status
                         </span>
                         <Select
-                            options={STATUS_SELECT_OPTIONS}
+                            options={SHIPMENT_STATUS_OPTIONS}
                             value={selectedStatusOption}
                             onChange={(opt) => {
                                 if (opt && !Array.isArray(opt)) {
-                                    setStatus(opt.value as ShipmentStatus);
+                                    handleShipmentStatusModalOpen(
+                                        opt.value as ShipmentStatusType,
+                                    );
                                 }
                             }}
                             size="sm"
+                            disabled={isUpdatingShipmentStatus}
                         />
-                    </div> */}
+                    </div>
                 </div>
             </div>
 
@@ -224,6 +235,20 @@ const ShipmentDetails = () => {
                         </div>
                     </div>
                 )}
+
+            {statusModalOpen && (
+                <ConfirmationModal
+                    open={statusModalOpen}
+                    icon={<OctagonAlert size={18} />}
+                    title="Shipment Status"
+                    description="Are you sure you want to change the shipment status?"
+                    confirmText="Confirm"
+                    cancelText="Cancel"
+                    onSuccess={handleStatusChange}
+                    onClose={handleShipmentStatusModalClose}
+                    isLoading={isUpdatingShipmentStatus}
+                />
+            )}
         </div>
     );
 };

@@ -11,3 +11,11 @@ export function resolveOptionValue<T extends { value: any }>(
 export function getOptionByValue(options: { value: any }[], value: any) {
     return options.find((opt) => opt.value === value) || value;
 }
+
+export const getOptionObject = (
+    options: { label: string; value: string }[],
+    value: string,
+) => {
+    const resolvedOption = options.find((option) => option.value === value);
+    return resolvedOption;
+};
