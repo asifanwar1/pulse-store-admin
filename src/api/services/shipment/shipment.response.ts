@@ -32,10 +32,18 @@ export type TShipmentResponse = {
     notes?: string;
     created_at: string;
     updated_at: string;
+    estimated_delivery_date: string;
+    shipped_at: string;
     customer: {
         name: string;
         email: string;
         phone: string;
+    };
+    order: {
+        total_amount: string;
+        id: number;
+        user_id: number;
+        status: string;
     };
     ordered_items: Array<{
         id: number;

@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Plus } from "lucide-react";
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { DataTable } from "@/components/custom/DataTable";
 import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
-import Button from "@/components/custom/CustomButton/CustomButton";
 import { shipmentManagementTableColumns } from "./ShipmentManagement.Config";
 import type { ShipmentTableProps } from "./ShipmentManagement.types";
 
@@ -17,15 +15,6 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipmentListData }) => {
             subtitle="Complete shipment history with carrier, tracking and status details"
             className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card py-1"
             bodyClassName="px-0 py-0"
-            action={
-                <Button
-                    size="sm"
-                    onClick={() => navigate(APP_ROUTES.SHIPMENTS_CREATE)}
-                >
-                    <Plus className="w-4 h-4" />
-                    Create Shipment
-                </Button>
-            }
         >
             <DataTable
                 id="shipments-list"

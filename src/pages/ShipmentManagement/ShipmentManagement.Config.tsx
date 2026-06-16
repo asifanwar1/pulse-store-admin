@@ -123,19 +123,19 @@ export const shipmentManagementTableColumns: TDataColumnDef<TShipmentResponse>[]
                 ),
             },
         },
-        // {
-        //     id: "shipment_address",
-        //     accessorKey: "shipment_address",
-        //     header: "Destination",
-        //     meta: {
-        //         label: "Destination",
-        //         cellRenderer: (value) => (
-        //             <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-        //                 {value as string}
-        //             </span>
-        //         ),
-        //     },
-        // },
+        {
+            id: "shipment_address.city",
+            accessorKey: "shipment_address.city",
+            header: "Destination",
+            meta: {
+                label: "Destination",
+                cellRenderer: (value) => (
+                    <span className="text-pulse-green-dark text-xs whitespace-nowrap">
+                        {value as string}
+                    </span>
+                ),
+            },
+        },
         {
             id: "estimated_delivery_date",
             accessorKey: "estimated_delivery_date",
