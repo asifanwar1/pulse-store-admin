@@ -1,0 +1,7 @@
+export const REVENUE_QUERY_KEYS = {
+    REVENUES: "REVENUES",
+    REVENUE: "REVENUE",
+    ANALYTICS: "REVENUES_ANALYTICS",
+} as const;
+
+export default REVENUE_QUERY_KEYS;
