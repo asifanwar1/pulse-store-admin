@@ -3,6 +3,8 @@ import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import { useNavigate, useParams } from "react-router-dom";
 
+const NO_VALUE = 0;
+
 export const useRevenueDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
@@ -26,10 +28,23 @@ export const useRevenueDetails = () => {
             }),
         );
 
+    const handleNavigateToProduct = (id: number) =>
+        navigate(
+            getRouteWithId({
+                id: Number(id),
+                route: APP_ROUTES.PRODUCTS_DETAILS,
+            }),
+        );
+
+    const handleNavigateBack = () => navigate(-1);
+
     return {
+        NO_VALUE,
         revenue,
         isRevenueLoading,
         handleNavigateToOrder,
         handleNavigateToShipment,
+        handleNavigateBack,
+        handleNavigateToProduct,
     };
 };

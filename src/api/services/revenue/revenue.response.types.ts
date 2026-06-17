@@ -86,6 +86,7 @@ export type TRevenueListItem = {
         email: string;
         phone: string;
     };
+    created_at: string;
 };
 
 export type TGetRevenuesListResponse = {
