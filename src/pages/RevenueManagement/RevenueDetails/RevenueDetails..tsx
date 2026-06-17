@@ -23,7 +23,7 @@ import {
 } from "@/constants/payment-method.constant";
 import OrderRevenueCard from "@/components/custom/CustomCards/OrderRevenueCard";
 
-const ShipmentDetails = () => {
+const RevenueDetails = () => {
     const {
         revenue,
         isRevenueLoading,
@@ -63,16 +63,18 @@ const ShipmentDetails = () => {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                     <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-pulse-cream-dark text-pulse-green font-bold text-xl shrink-0">
-                        {getInitialsFromName(revenue.customer.name)}
+                        {getInitialsFromName(
+                            revenue.completed_order.customer.name,
+                        )}
                     </div>
                     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                             <h2 className="text-lg font-bold text-pulse-green-dark">
-                                {revenue.customer.name}
+                                {revenue.completed_order.customer.name}
                             </h2>
                         </div>
                         <p className="text-sm text-app-secondary">
-                            {revenue.customer.email}
+                            {revenue.completed_order.customer.email}
                         </p>
                         <div className="flex flex-wrap items-center gap-4 text-xs text-pulse-green">
                             <span className="flex items-center gap-1">
@@ -88,6 +90,7 @@ const ShipmentDetails = () => {
                                             revenue.shipment_details[0].id,
                                         )
                                     }
+                                    className="cursor-pointer underline"
                                 >
                                     {revenue.shipment_details[0].id}
                                 </span>
@@ -162,4 +165,4 @@ const ShipmentDetails = () => {
     );
 };
 
-export default ShipmentDetails;
+export default RevenueDetails;

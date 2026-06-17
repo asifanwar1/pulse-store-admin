@@ -10,8 +10,20 @@ import RecentOrders from "./components/RecentOrders";
 import LowStockAlert from "./components/LowStockAlert";
 import { formatStatValue } from "@/utils/common.utils";
 import { STAT_CONFIG } from "./Dashboard.Config";
+import { useDashboard } from "./Dashboard.Container";
 
 export default function Dashboard() {
+    const {
+        dashboardStats,
+        revenueOverview,
+        ordersByCategory,
+        salesDistribution,
+        customerGrowth,
+        weeklySales,
+        topProducts,
+        lowStockAlerts,
+    } = useDashboard();
+
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -50,13 +50,13 @@ export const revenueManagementTableColumns: TDataColumnDef<TRevenueListItem>[] =
             },
         },
         {
-            id: "customer",
-            accessorKey: "customer",
+            id: "completed_order.customer",
+            accessorKey: "completed_order.customer",
             header: "Customer",
             meta: {
                 label: "Customer",
                 cellRenderer: (_value, row) => {
-                    const customer = row.original.customer;
+                    const customer = row.original.completed_order.customer;
                     return (
                         <div className="flex items-center gap-2.5 whitespace-nowrap">
                             <div className="w-7 h-7 rounded-full flex items-center justify-center text-xss font-bold shrink-0 bg-pulse-cream-dark">
@@ -76,8 +76,8 @@ export const revenueManagementTableColumns: TDataColumnDef<TRevenueListItem>[] =
             },
         },
         {
-            id: "totalOrderedItems",
-            accessorKey: "totalOrderedItems",
+            id: "completed_order.totalOrderedItems",
+            accessorKey: "completed_order.totalOrderedItems",
             header: "Ordered Items",
             meta: {
                 label: "Ordered Items",

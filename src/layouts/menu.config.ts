@@ -7,6 +7,7 @@ import {
     Container,
     type LucideIcon,
     Tag,
+    CircleDollarSign,
 } from "lucide-react";
 
 export type SidebarContainerType = {
@@ -51,5 +52,11 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: Van,
         activeIcon: Van,
         path: [APP_ROUTES.SHIPMENTS],
+    },
+    {
+        label: "Revenue Management",
+        inactiveIcon: CircleDollarSign,
+        activeIcon: CircleDollarSign,
+        path: [APP_ROUTES.REVENUE],
     },
 ];

@@ -1,11 +1,16 @@
-export enum AnalyticsRangeType {
-    WEEK = "week",
-    MONTH = "month",
-    YEAR = "year"
-}
+export type TGetYearParam = {
+    year?: number;
+};
 
-export type TGetAnalyticsParams = {
-    type: AnalyticsRangeType;
-    startDate: string;
-    endDate: string;
+export type TGetTargetDateParam = {
+    target_date?: string;
+};
+
+export type TGetLimitParam = {
+    limit?: number;
+};
+
+export type TGetLowStockParams = {
+    reorder_threshold?: number;
+    limit?: number;
 };

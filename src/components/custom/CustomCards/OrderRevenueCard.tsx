@@ -32,16 +32,86 @@ const OrderRevenueCard: React.FC<OrderRevenueCardProps> = ({
     return (
         <div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <div>Order Id: {orderId}</div>
-                <div>Product Id: {productId}</div>
-                <div>Product Name: {productName}</div>
-                <div>Product SKU: {productSku}</div>
-                <div>Category: {productCategory}</div>
-                <div>Quantity: {quantity}</div>
-                <div>Retail Price: {retailPrice}</div>
-                <div>Cost Price: {costPrice}</div>
-                <div>Total Amount: {totalAmount}</div>
-                <div>Profit: {profit}</div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Order Id:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate underline cursor-pointer">
+                        <span onClick={onOrderIdClick}>{orderId}</span>
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Product Id:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate underline cursor-pointer">
+                        <span onClick={onProductIdClick}>{productId}</span>
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Product Name:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {productName}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Product SKU:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {productSku}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Category:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {productCategory}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Quantity:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {quantity}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Retail Price:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {retailPrice}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Cost Price:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {costPrice}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Total Amount:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {totalAmount}
+                    </p>
+                </div>
+                <div>
+                    <p className="text-xss text-app-secondary truncate">
+                        Profit:
+                    </p>
+                    <p className="text-sm font-bold text-pulse-green-dark truncate">
+                        {profit}
+                    </p>
+                </div>
             </div>
         </div>
     );
