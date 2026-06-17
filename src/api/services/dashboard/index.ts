@@ -9,7 +9,7 @@ export const GetDashboardStats = async (params?: WithSignal<{}>) => {
     const { signal } = params || {};
     return request<T.DashboardStatsResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/stats",
+        url: "/dashboard/stats",
         signal,
     });
 };
@@ -20,7 +20,7 @@ export const GetRevenueOverview = async (
     const { signal, ...urlParams } = params || {};
     return request<T.RevenueOverviewResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/revenue-overview",
+        url: "/dashboard/charts/revenue-overview",
         params: urlParams as R.TGetYearParam,
         signal,
     });
@@ -32,7 +32,7 @@ export const GetOrdersByCategory = async (
     const { signal, ...urlParams } = params || {};
     return request<T.OrdersByCategoryResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/orders-by-category",
+        url: "/dashboard/charts/orders-by-category",
         params: urlParams as R.TGetYearParam,
         signal,
     });
@@ -44,7 +44,7 @@ export const GetSalesDistribution = async (
     const { signal, ...urlParams } = params || {};
     return request<T.SalesDistributionResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/sales-distribution",
+        url: "/dashboard/charts/sales-distribution",
         params: urlParams as R.TGetYearParam,
         signal,
     });
@@ -56,7 +56,7 @@ export const GetCustomerGrowth = async (
     const { signal, ...urlParams } = params || {};
     return request<T.CustomerGrowthResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/customer-growth",
+        url: "/dashboard/charts/customer-growth",
         params: urlParams as R.TGetYearParam,
         signal,
     });
@@ -74,7 +74,7 @@ export const GetWeeklySales = async (
 
     return request<T.WeeklySalesResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/weekly-sales",
+        url: "/dashboard/charts/weekly-sales",
         params: filteredParams,
         signal,
     });
@@ -84,7 +84,7 @@ export const GetTopProducts = async (params?: WithSignal<R.TGetLimitParam>) => {
     const { signal, ...urlParams } = params || {};
     return request<T.TopProductsResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/top-products",
+        url: "/dashboard/charts/top-products",
         params: urlParams as R.TGetLimitParam,
         signal,
     });
@@ -96,7 +96,7 @@ export const GetLowStockAlerts = async (
     const { signal, ...urlParams } = params || {};
     return request<T.LowStockAlertsResponse>({
         method: HTTP_METHODS.GET,
-        url: "/api/v1/dashboard/charts/low-stock-alerts",
+        url: "/dashboard/charts/low-stock-alerts",
         params: urlParams as R.TGetLowStockParams,
         signal,
     });

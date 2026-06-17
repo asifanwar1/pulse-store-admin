@@ -8,14 +8,14 @@ import {
     Cell,
     ResponsiveContainer,
 } from "recharts";
-import { ordersByCategoryData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
+import type { OrdersByCategoryChartItem } from "../Dashboard.Container";
 
 interface CustomTooltipProps {
     active?: boolean;
     payload?: Array<{
         value: number;
-        payload: { category: string; revenue: number };
+        payload: { category: string };
     }>;
 }
 
@@ -32,18 +32,18 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
                         {payload[0].value.toLocaleString()}
                     </span>
                 </span>
-                <span className="text-app-secondary">
-                    Revenue:{" "}
-                    <span className="font-semibold text-app-primary">
-                        ${d.revenue.toLocaleString()}
-                    </span>
-                </span>
             </div>
         </div>
     );
 }
 
-export default function OrdersByCategoryChart() {
+interface OrdersByCategoryChartProps {
+    data: OrdersByCategoryChartItem[];
+}
+
+export default function OrdersByCategoryChart({
+    data,
+}: OrdersByCategoryChartProps) {
     return (
         <ChartCard
             title="Orders by Category"
@@ -52,7 +52,7 @@ export default function OrdersByCategoryChart() {
         >
             <ResponsiveContainer width="100%" height={280}>
                 <BarChart
-                    data={ordersByCategoryData}
+                    data={data}
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                     barSize={28}
                 >
@@ -81,7 +81,7 @@ export default function OrdersByCategoryChart() {
                         cursor={{ fill: "#d1ddd6", radius: 6 }}
                     />
                     <Bar dataKey="orders" radius={[6, 6, 0, 0]}>
-                        {ordersByCategoryData.map((entry, index) => (
+                        {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                     </Bar>

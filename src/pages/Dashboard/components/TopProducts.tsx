@@ -1,12 +1,14 @@
-import { TrendingUp, TrendingDown } from "lucide-react";
-import { topProductsData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
-import { cn } from "@/lib/utils";
 import ProgressBar from "@/components/custom/ProgressBar";
+import type { TopProductItem } from "../Dashboard.Container";
 
-const MAX_REVENUE = Math.max(...topProductsData.map((p) => p.revenue));
+interface TopProductsProps {
+    data: TopProductItem[];
+}
 
-export default function TopProducts() {
+export default function TopProducts({ data }: TopProductsProps) {
+    const maxRevenue = Math.max(...data.map((p) => p.revenue), 1);
+
     return (
         <ChartCard
             title="Top Products"
@@ -15,15 +17,21 @@ export default function TopProducts() {
             bodyClassName="p-2"
         >
             <div className="flex flex-col gap-3 mt-2">
-                {topProductsData.map((product, index) => {
-                    const isUp = product.trend >= 0;
+                {data.length === 0 && (
+                    <p className="text-xs text-muted px-2 py-6 text-center">
+                        No top products available.
+                    </p>
+                )}
+
+                {data.map((product, index) => {
                     const barPct = Math.round(
-                        (product.revenue / MAX_REVENUE) * 100,
+                        (product.revenue / maxRevenue) * 100,
                     );
+
                     return (
                         <div
                             key={product.id}
-                            className="flex items-center gap-3 "
+                            className="flex items-center gap-3"
                         >
                             <span className="text-xs font-bold text-pulse-green-dark w-4 text-right">
                                 {index + 1}
@@ -31,39 +39,24 @@ export default function TopProducts() {
                             <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-pulse-cream-dark text-pulse-green font-bold text-xs">
                                 {product.initials}
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between gap-2">
                                     <span className="text-xs font-semibold text-pulse-green-dark truncate">
                                         {product.name}
                                     </span>
-                                    <span className="text-xs font-bold text-pulse-green-dark">
+                                    <span className="text-xs font-bold text-pulse-green-dark whitespace-nowrap">
                                         ${product.revenue.toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <ProgressBar
-                                        percent={barPct}
-                                        trackClassName="bg-pulse-green/10"
-                                    />
-                                    <span
-                                        className={cn(
-                                            "flex items-center gap-0.5 text-xss font-semibold",
-                                            isUp
-                                                ? "text-status-delivered"
-                                                : "text-status-cancelled",
-                                        )}
-                                    >
-                                        {isUp ? (
-                                            <TrendingUp className="w-3 h-3" />
-                                        ) : (
-                                            <TrendingDown className="w-3 h-3" />
-                                        )}
-                                        {Math.abs(product.trend)}%
-                                    </span>
-                                </div>
+                                <ProgressBar
+                                    percent={barPct}
+                                    trackClassName="bg-pulse-green/10"
+                                />
                                 <p className="text-xss text-muted mt-0.5">
-                                    {product.sales.toLocaleString()} sales ·{" "}
-                                    {product.stock} in stock
+                                    {product.sales.toLocaleString()} sales
+                                    {typeof product.stock === "number"
+                                        ? ` - ${product.stock} in stock`
+                                        : ""}
                                 </p>
                             </div>
                         </div>

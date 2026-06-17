@@ -8,8 +8,8 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-import { customerGrowthData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
+import type { CustomerGrowthChartItem } from "../Dashboard.Container";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -32,7 +32,7 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
                         style={{ backgroundColor: entry.color }}
                     />
                     <span className="text-app-secondary">
-                        {entry.name === "newCustomers" ? "New" : "Returning"}:
+                        New:
                     </span>
                     <span className="font-semibold text-app-primary">
                         {entry.value.toLocaleString()}
@@ -43,16 +43,20 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
     );
 }
 
-export default function CustomerGrowthChart() {
+interface CustomerGrowthChartProps {
+    data: CustomerGrowthChartItem[];
+}
+
+export default function CustomerGrowthChart({ data }: CustomerGrowthChartProps) {
     return (
         <ChartCard
             title="Customer Growth"
-            subtitle="New vs returning customers month over month"
+            subtitle="New customers month over month"
             className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
         >
             <ResponsiveContainer width="100%" height={240}>
                 <LineChart
-                    data={customerGrowthData}
+                    data={data}
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                 >
                     <CartesianGrid
@@ -76,24 +80,12 @@ export default function CustomerGrowthChart() {
                         iconType="circle"
                         iconSize={8}
                         wrapperStyle={{ fontSize: "12px", paddingTop: "12px" }}
-                        formatter={(value) =>
-                            value === "newCustomers"
-                                ? "New Customers"
-                                : "Returning Customers"
-                        }
+                        formatter={() => "New Customers"}
                     />
                     <Line
                         type="monotone"
                         dataKey="newCustomers"
                         stroke="#2A5C42"
-                        strokeWidth={2.5}
-                        dot={false}
-                        activeDot={{ r: 4, strokeWidth: 0 }}
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="returningCustomers"
-                        stroke="#F59E0B"
                         strokeWidth={2.5}
                         dot={false}
                         activeDot={{ r: 4, strokeWidth: 0 }}

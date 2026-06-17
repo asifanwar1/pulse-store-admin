@@ -6,8 +6,8 @@ import {
     ResponsiveContainer,
     Legend,
 } from "recharts";
-import { salesDistributionData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
+import type { SalesDistributionChartItem } from "../Dashboard.Container";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -58,7 +58,13 @@ function renderLegend(props: {
     );
 }
 
-export default function SalesDistributionChart() {
+interface SalesDistributionChartProps {
+    data: SalesDistributionChartItem[];
+}
+
+export default function SalesDistributionChart({
+    data,
+}: SalesDistributionChartProps) {
     return (
         <ChartCard
             title="Sales Distribution"
@@ -68,7 +74,7 @@ export default function SalesDistributionChart() {
             <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
                     <Pie
-                        data={salesDistributionData}
+                        data={data}
                         cx="50%"
                         cy="45%"
                         innerRadius={70}
@@ -77,7 +83,7 @@ export default function SalesDistributionChart() {
                         dataKey="value"
                         strokeWidth={0}
                     >
-                        {salesDistributionData.map((entry, index) => (
+                        {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                     </Pie>

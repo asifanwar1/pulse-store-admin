@@ -1,4 +1,3 @@
-import { dashboardStatsData } from "@/mock/dashboard.mock";
 import { StatCard } from "@/components/custom/CustomCards";
 import RevenueAreaChart from "./components/RevenueAreaChart";
 import OrdersByCategoryChart from "./components/OrdersByCategoryChart";
@@ -20,6 +19,7 @@ export default function Dashboard() {
         salesDistribution,
         customerGrowth,
         weeklySales,
+        recentOrders,
         topProducts,
         lowStockAlerts,
     } = useDashboard();
@@ -36,7 +36,7 @@ export default function Dashboard() {
                         iconColorClass,
                         subtitle,
                     }) => {
-                        const stat = dashboardStatsData[key];
+                        const stat = dashboardStats[key];
                         return (
                             <StatCard
                                 key={key}
@@ -54,27 +54,27 @@ export default function Dashboard() {
                 )}
             </div>
 
-            <RevenueAreaChart />
+            <RevenueAreaChart data={revenueOverview} />
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-3">
-                    <OrdersByCategoryChart />
+                    <OrdersByCategoryChart data={ordersByCategory} />
                 </div>
                 <div className="lg:col-span-2">
-                    <SalesDistributionChart />
+                    <SalesDistributionChart data={salesDistribution} />
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <CustomerGrowthChart />
-                <WeeklySalesChart />
+                <CustomerGrowthChart data={customerGrowth} />
+                <WeeklySalesChart data={weeklySales} />
             </div>
 
-            <RecentOrders />
+            <RecentOrders data={recentOrders} />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <TopProducts />
-                <LowStockAlert />
+                <TopProducts data={topProducts} />
+                <LowStockAlert data={lowStockAlerts} />
             </div>
         </div>
     );

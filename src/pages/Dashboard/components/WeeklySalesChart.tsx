@@ -7,8 +7,8 @@ import {
     ResponsiveContainer,
     CartesianGrid,
 } from "recharts";
-import { weeklySalesData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
+import type { WeeklySalesChartItem } from "../Dashboard.Container";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -31,7 +31,11 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
     );
 }
 
-export default function WeeklySalesChart() {
+interface WeeklySalesChartProps {
+    data: WeeklySalesChartItem[];
+}
+
+export default function WeeklySalesChart({ data }: WeeklySalesChartProps) {
     return (
         <ChartCard
             title="Weekly Sales"
@@ -40,7 +44,7 @@ export default function WeeklySalesChart() {
         >
             <ResponsiveContainer width="100%" height={200}>
                 <BarChart
-                    data={weeklySalesData}
+                    data={data}
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                     barSize={32}
                 >

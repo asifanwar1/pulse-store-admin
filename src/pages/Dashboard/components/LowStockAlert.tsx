@@ -1,8 +1,8 @@
 import { Package } from "lucide-react";
-import { lowStockData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
 import ProgressBar from "@/components/custom/ProgressBar";
+import type { LowStockAlertItem } from "../Dashboard.Container";
 
 function getStockLevel(stock: number, threshold: number) {
     const ratio = stock / threshold;
@@ -25,7 +25,11 @@ function getStockLevel(stock: number, threshold: number) {
     };
 }
 
-export default function LowStockAlert() {
+interface LowStockAlertProps {
+    data: LowStockAlertItem[];
+}
+
+export default function LowStockAlert({ data }: LowStockAlertProps) {
     return (
         <ChartCard
             title="Low Stock Alerts"
@@ -34,7 +38,12 @@ export default function LowStockAlert() {
             bodyClassName="p-2"
         >
             <div className="flex flex-col gap-5 mt-2">
-                {lowStockData.map((product) => {
+                {data.length === 0 && (
+                    <p className="text-xs text-muted px-2 py-6 text-center">
+                        No low stock alerts.
+                    </p>
+                )}
+                {data.map((product) => {
                     const level = getStockLevel(
                         product.stock,
                         product.threshold,
@@ -64,7 +73,7 @@ export default function LowStockAlert() {
                                         </span>
                                     </div>
                                     <p className="text-xss text-pulse-green-dark ">
-                                        {product.category}
+                                        Reorder threshold: {product.threshold}
                                     </p>
                                 </div>
                                 <span className="text-xs font-bold text-pulse-green-dark">

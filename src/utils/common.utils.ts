@@ -1,4 +1,3 @@
-import type { dashboardStatsData } from "@/mock/dashboard.mock";
 import type {
     InvalidateOptions,
     QueryClient,
@@ -7,7 +6,7 @@ import type {
 import type { NavigateFunction } from "react-router-dom";
 
 export const objectContainsKey = (
-    object: Record<string | number, any>,
+    object: Record<string | number, unknown>,
     key: number | string,
 ) => {
     return typeof object === "object" && object && object[key] !== undefined;
@@ -25,9 +24,9 @@ export const getInitialsFromName = (name: string) => {
     if (!name) {
         return "";
     }
-    var parts = name?.split(" ");
-    var initials = "";
-    for (var i = 0; i < parts.length; i++) {
+    const parts = name?.split(" ");
+    let initials = "";
+    for (let i = 0; i < parts.length; i++) {
         if (i < 2)
             if (parts[i].length > 0 && parts[i] !== "") {
                 initials += parts[i][0];
@@ -81,9 +80,13 @@ export const navigateBack = (
     else navigate(-1);
 };
 
-export const formatStatValue = (
-    stat: (typeof dashboardStatsData)["totalRevenue"],
-) => {
+type FormattableStat = {
+    value: number;
+    prefix?: string;
+    suffix?: string;
+};
+
+export const formatStatValue = (stat: FormattableStat) => {
     const { value, prefix = "", suffix = "" } = stat;
     const display =
         value >= 1_000_000

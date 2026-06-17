@@ -8,8 +8,8 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-import { monthlyRevenueData } from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
+import type { RevenueOverviewChartItem } from "../Dashboard.Container";
 
 const formatCurrency = (value: number) => `$${(value / 1000).toFixed(0)}k`;
 
@@ -45,16 +45,20 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
     );
 }
 
-export default function RevenueAreaChart() {
+interface RevenueAreaChartProps {
+    data: RevenueOverviewChartItem[];
+}
+
+export default function RevenueAreaChart({ data }: RevenueAreaChartProps) {
     return (
         <ChartCard
             title="Revenue Overview"
-            subtitle="Monthly revenue, expenses & profit for 2026"
+            subtitle="Monthly revenue overview"
             className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-1"
         >
             <ResponsiveContainer width="100%" height={280}>
                 <AreaChart
-                    data={monthlyRevenueData}
+                    data={data}
                     margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
                 >
                     <defs>
@@ -142,24 +146,6 @@ export default function RevenueAreaChart() {
                         stroke="#2A5C42"
                         strokeWidth={2}
                         fill="url(#gradRevenue)"
-                        dot={false}
-                        activeDot={{ r: 4, strokeWidth: 0 }}
-                    />
-                    <Area
-                        type="monotone"
-                        dataKey="expenses"
-                        stroke="#3B82F6"
-                        strokeWidth={2}
-                        fill="url(#gradExpenses)"
-                        dot={false}
-                        activeDot={{ r: 4, strokeWidth: 0 }}
-                    />
-                    <Area
-                        type="monotone"
-                        dataKey="profit"
-                        stroke="#8B5CF6"
-                        strokeWidth={2}
-                        fill="url(#gradProfit)"
                         dot={false}
                         activeDot={{ r: 4, strokeWidth: 0 }}
                     />

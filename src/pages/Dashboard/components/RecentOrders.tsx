@@ -1,14 +1,13 @@
-import {
-    recentOrdersData,
-    type RecentOrder,
-    type OrderStatus,
-} from "@/mock/dashboard.mock";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { DataTable, type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
+import type {
+    RecentOrderItem,
+    RecentOrderStatus,
+} from "../Dashboard.Container";
 
 const STATUS_CONFIG: Record<
-    OrderStatus,
+    RecentOrderStatus,
     { label: string; textColor: string; bgColor: string }
 > = {
     delivered: {
@@ -49,7 +48,7 @@ const AVATAR_COLORS = [
     "bg-dash-orange-light text-dash-orange",
 ];
 
-const columns: TDataColumnDef<RecentOrder>[] = [
+const columns: TDataColumnDef<RecentOrderItem>[] = [
     {
         id: "id",
         accessorKey: "id",
@@ -71,10 +70,8 @@ const columns: TDataColumnDef<RecentOrder>[] = [
             label: "Customer",
             cellRenderer: (_value, row) => {
                 const order = row.original;
-                const idx = recentOrdersData.findIndex(
-                    (o) => o.id === order.id,
-                );
-                const avatarColor = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+                const avatarColor =
+                    AVATAR_COLORS[row.index % AVATAR_COLORS.length];
                 return (
                     <div className="flex items-center gap-2.5 whitespace-nowrap">
                         <div
@@ -143,7 +140,7 @@ const columns: TDataColumnDef<RecentOrder>[] = [
             label: "Status",
             align: "center",
             cellRenderer: (value) => {
-                const status = STATUS_CONFIG[value as OrderStatus];
+                const status = STATUS_CONFIG[value as RecentOrderStatus];
                 return (
                     <span
                         className={cn(
@@ -174,7 +171,11 @@ const columns: TDataColumnDef<RecentOrder>[] = [
     },
 ];
 
-export default function RecentOrders() {
+interface RecentOrdersProps {
+    data: RecentOrderItem[];
+}
+
+export default function RecentOrders({ data }: RecentOrdersProps) {
     return (
         <ChartCard
             title="Recent Orders"
@@ -184,7 +185,7 @@ export default function RecentOrders() {
         >
             <DataTable
                 id="recent-orders"
-                data={recentOrdersData}
+                data={data}
                 columns={columns}
                 features={{
                     rowSelection: false,
