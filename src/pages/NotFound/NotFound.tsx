@@ -15,7 +15,7 @@ const NotFound: React.FC = () => {
                 <Image
                     src={logo}
                     alt="Pulse Store Logo"
-                    className=" w-10 h-10"
+                    className="w-10 h-10"
                 />
                 <h5 className="text-pulse-green font-semibold ">Pulse Store</h5>
             </div>
