@@ -7,7 +7,7 @@ import {
     Legend,
 } from "recharts";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
-import type { SalesDistributionChartItem } from "../Dashboard.Container";
+import type { DistributionItem } from "@/api/services/dashboard/dashboard.response.types";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -59,7 +59,7 @@ function renderLegend(props: {
 }
 
 interface SalesDistributionChartProps {
-    data: SalesDistributionChartItem[];
+    data: DistributionItem[];
 }
 
 export default function SalesDistributionChart({

@@ -47,26 +47,9 @@ export interface RevenueOverviewChartItem {
     revenue: number;
 }
 
-export interface OrdersByCategoryChartItem {
-    category: string;
-    orders: number;
-    color: string;
-}
-
-export interface SalesDistributionChartItem {
-    name: string;
-    value: number;
-    color: string;
-}
-
 export interface CustomerGrowthChartItem {
     month: string;
     newCustomers: number;
-}
-
-export interface WeeklySalesChartItem {
-    day: string;
-    sales: number;
 }
 
 export type RecentOrderStatus =
@@ -87,46 +70,12 @@ export interface RecentOrderItem {
     date: string;
 }
 
-export interface TopProductItem {
-    id: string;
-    name: string;
-    sales: number;
-    revenue: number;
-    stock?: number;
-    initials: string;
-}
-
-export interface LowStockAlertItem {
-    id: string;
-    name: string;
-    stock: number;
-    threshold: number;
-}
-
-const emptyStat = (
-    value = 0,
-    options?: Pick<DashboardStatItem, "prefix" | "suffix">,
-): DashboardStatItem => ({
-    value,
-    trend: 0,
-    trendDirection: "up",
-    ...options,
-});
-
 const formatMonth = (month: string) => {
     const parsed = new Date(`${month}-01T00:00:00`);
     if (!Number.isNaN(parsed.getTime())) {
         return parsed.toLocaleString("en-US", { month: "short" });
     }
     return month;
-};
-
-const formatDay = (date: string) => {
-    const parsed = new Date(date);
-    if (!Number.isNaN(parsed.getTime())) {
-        return parsed.toLocaleString("en-US", { weekday: "short" });
-    }
-    return date;
 };
 
 const toNumber = (value: unknown) => {
@@ -166,39 +115,24 @@ export const useDashboard = () => {
             column: "created_at",
         });
 
-    const avgOrderValue =
-        dashboardStats?.totalOrders && dashboardStats.totalOrders > 0
-            ? dashboardStats.totalRevenue / dashboardStats.totalOrders
-            : 0;
-
-    const dashboardStatsViewModel: DashboardStatsViewModel = {
-        totalRevenue: emptyStat(dashboardStats?.totalRevenue ?? 0, {
-            prefix: "$",
-        }),
-        totalOrders: emptyStat(dashboardStats?.totalOrders ?? 0),
-        totalCustomers: emptyStat(dashboardStats?.totalCustomers ?? 0),
-        totalProducts: emptyStat(dashboardStats?.totalProducts ?? 0),
-        avgOrderValue: emptyStat(avgOrderValue, { prefix: "$" }),
-        conversionRate: emptyStat(0, { suffix: "%" }),
-    };
-
     const revenueOverviewChartData: RevenueOverviewChartItem[] =
         revenueOverview?.data?.map((item) => ({
             month: formatMonth(item.month),
             revenue: item.revenue,
         })) ?? [];
 
-    const ordersByCategoryChartData: OrdersByCategoryChartItem[] =
-        ordersByCategory?.categories?.map((item, index) => ({
+    const ordersByCategoryChartData =
+        ordersByCategory?.data?.map((item, index) => ({
             category: item.category,
             orders: item.orders,
             color: CHART_COLORS[index % CHART_COLORS.length],
         })) ?? [];
 
-    const salesDistributionChartData: SalesDistributionChartItem[] =
-        salesDistribution?.distribution?.map((item, index) => ({
-            name: item.label,
-            value: item.value,
+    const salesDistributionChartData =
+        salesDistribution?.data?.map((item, index) => ({
+            category: item.category,
+            revenue: item.revenue,
+            percentage: item.percentage,
             color: CHART_COLORS[index % CHART_COLORS.length],
         })) ?? [];
 
@@ -208,29 +142,36 @@ export const useDashboard = () => {
             newCustomers: item.newCustomers,
         })) ?? [];
 
-    const weeklySalesChartData: WeeklySalesChartItem[] =
+    const weeklySalesChartData =
         weeklySales?.data?.map((item) => ({
-            day: formatDay(item.date),
-            sales: item.sales,
+            day: item.day,
+            revenue: item.revenue,
+            order: item.order,
         })) ?? [];
 
-    const topProductsData: TopProductItem[] =
-        topProducts?.products?.map((product) => ({
-            id: String(product.id),
+    const topProductsData =
+        topProducts?.data?.map((product) => ({
+            product_id: product.product_id,
             name: product.name,
-            sales: product.sold,
-            revenue: toNumber(product.revenue),
-            stock:
-                product.stock !== undefined ? toNumber(product.stock) : undefined,
-            initials: getInitialsFromName(product.name),
+            sales: product.sales,
+            revenue: String(product.revenue),
+            stock: toNumber(product.stock ?? 0),
+            change_percentage: product.change_percentage,
+            category: product.category,
+            rank: product.rank,
+            sku: product.sku,
         })) ?? [];
 
-    const lowStockAlertsData: LowStockAlertItem[] =
-        lowStockAlerts?.products?.map((product) => ({
-            id: String(product.id),
+    const lowStockAlertsData =
+        lowStockAlerts?.data?.map((product) => ({
+            product_id: product.product_id,
+            category: product.category,
             name: product.name,
-            stock: product.stock,
-            threshold: Math.max(product.reorderThreshold ?? 1, 1),
+            reorderThreshold: product.reorderThreshold,
+            severity: product.severity,
+            sku: product.sku,
+            stock: toNumber(product.stock ?? 0),
+            stockPercentage: product.stockPercentage,
         })) ?? [];
 
     const recentOrdersData: RecentOrderItem[] =
@@ -244,17 +185,15 @@ export const useDashboard = () => {
                 product: firstItem?.product_name ?? "Multiple products",
                 category: firstItem?.product_category ?? "-",
                 amount: toNumber(order.total_amount ?? order.total),
-                status: (
-                    [
-                        "delivered",
-                        "pending",
-                        "processing",
-                        "cancelled",
-                        "shipped",
-                    ].includes(status)
-                        ? status
-                        : "pending"
-                ) as RecentOrderStatus,
+                status: ([
+                    "delivered",
+                    "pending",
+                    "processing",
+                    "cancelled",
+                    "shipped",
+                ].includes(status)
+                    ? status
+                    : "pending") as RecentOrderStatus,
                 date: order.created_at
                     ? new Date(order.created_at).toLocaleDateString("en-US")
                     : "-",
@@ -273,15 +212,15 @@ export const useDashboard = () => {
         isRecentOrdersLoading;
 
     return {
-        dashboardStats: dashboardStatsViewModel,
+        dashboardStats,
         revenueOverview: revenueOverviewChartData,
-        ordersByCategory: ordersByCategoryChartData,
-        salesDistribution: salesDistributionChartData,
+        ordersByCategoryChartData,
+        salesDistributionChartData,
         customerGrowth: customerGrowthChartData,
-        weeklySales: weeklySalesChartData,
+        weeklySalesChartData,
         recentOrders: recentOrdersData,
-        topProducts: topProductsData,
-        lowStockAlerts: lowStockAlertsData,
+        topProductsData,
+        lowStockAlertsData,
         isLoading,
         isDashboardStatsLoading,
         isRevenueOverviewLoading,

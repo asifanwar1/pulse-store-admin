@@ -7,7 +7,7 @@ import type { TQueryParams } from "@/api/types/common";
 
 export const GetDashboardStats = async (params?: WithSignal<{}>) => {
     const { signal } = params || {};
-    return request<T.DashboardStatsResponse>({
+    return request<T.TDashboardAnalyticsResponse>({
         method: HTTP_METHODS.GET,
         url: "/dashboard/stats",
         signal,

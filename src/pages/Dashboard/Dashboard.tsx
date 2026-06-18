@@ -10,18 +10,19 @@ import LowStockAlert from "./components/LowStockAlert";
 import { formatStatValue } from "@/utils/common.utils";
 import { STAT_CONFIG } from "./Dashboard.Config";
 import { useDashboard } from "./Dashboard.Container";
+import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 
 export default function Dashboard() {
     const {
         dashboardStats,
         revenueOverview,
-        ordersByCategory,
-        salesDistribution,
+        ordersByCategoryChartData,
+        salesDistributionChartData,
         customerGrowth,
-        weeklySales,
+        weeklySalesChartData,
         recentOrders,
-        topProducts,
-        lowStockAlerts,
+        topProductsData,
+        lowStockAlertsData,
     } = useDashboard();
 
     return (
@@ -36,7 +37,9 @@ export default function Dashboard() {
                         iconColorClass,
                         subtitle,
                     }) => {
-                        const stat = dashboardStats[key];
+                        const stat = mapAnalyticsMetricToStat(
+                            dashboardStats?.[key],
+                        );
                         return (
                             <StatCard
                                 key={key}
@@ -58,23 +61,23 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-3">
-                    <OrdersByCategoryChart data={ordersByCategory} />
+                    <OrdersByCategoryChart data={ordersByCategoryChartData} />
                 </div>
                 <div className="lg:col-span-2">
-                    <SalesDistributionChart data={salesDistribution} />
+                    <SalesDistributionChart data={salesDistributionChartData} />
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <CustomerGrowthChart data={customerGrowth} />
-                <WeeklySalesChart data={weeklySales} />
+                <WeeklySalesChart data={weeklySalesChartData} />
             </div>
 
             <RecentOrders data={recentOrders} />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <TopProducts data={topProducts} />
-                <LowStockAlert data={lowStockAlerts} />
+                <TopProducts data={topProductsData} />
+                <LowStockAlert data={lowStockAlertsData} />
             </div>
         </div>
     );

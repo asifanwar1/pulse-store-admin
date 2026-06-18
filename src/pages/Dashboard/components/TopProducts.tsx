@@ -1,14 +1,13 @@
+import type { TopProductItem } from "@/api/services/dashboard/dashboard.response.types";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import ProgressBar from "@/components/custom/ProgressBar";
-import type { TopProductItem } from "../Dashboard.Container";
+import { getInitialsFromName } from "@/utils/common.utils";
 
 interface TopProductsProps {
     data: TopProductItem[];
 }
 
 export default function TopProducts({ data }: TopProductsProps) {
-    const maxRevenue = Math.max(...data.map((p) => p.revenue), 1);
-
     return (
         <ChartCard
             title="Top Products"
@@ -25,19 +24,19 @@ export default function TopProducts({ data }: TopProductsProps) {
 
                 {data.map((product, index) => {
                     const barPct = Math.round(
-                        (product.revenue / maxRevenue) * 100,
+                        (product.stock / product.sales) * 100,
                     );
 
                     return (
                         <div
-                            key={product.id}
+                            key={product.product_id}
                             className="flex items-center gap-3"
                         >
                             <span className="text-xs font-bold text-pulse-green-dark w-4 text-right">
                                 {index + 1}
                             </span>
                             <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-pulse-cream-dark text-pulse-green font-bold text-xs">
-                                {product.initials}
+                                {getInitialsFromName(product.name)}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between gap-2">

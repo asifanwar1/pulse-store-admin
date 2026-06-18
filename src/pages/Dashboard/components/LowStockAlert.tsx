@@ -2,7 +2,7 @@ import { Package } from "lucide-react";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
 import { cn } from "@/lib/utils";
 import ProgressBar from "@/components/custom/ProgressBar";
-import type { LowStockAlertItem } from "../Dashboard.Container";
+import type { LowStockProduct } from "@/api/services/dashboard/dashboard.response.types";
 
 function getStockLevel(stock: number, threshold: number) {
     const ratio = stock / threshold;
@@ -26,7 +26,7 @@ function getStockLevel(stock: number, threshold: number) {
 }
 
 interface LowStockAlertProps {
-    data: LowStockAlertItem[];
+    data: LowStockProduct[];
 }
 
 export default function LowStockAlert({ data }: LowStockAlertProps) {
@@ -46,14 +46,19 @@ export default function LowStockAlert({ data }: LowStockAlertProps) {
                 {data.map((product) => {
                     const level = getStockLevel(
                         product.stock,
-                        product.threshold,
+                        product.reorderThreshold,
                     );
                     const pct = Math.min(
                         100,
-                        Math.round((product.stock / product.threshold) * 100),
+                        Math.round(
+                            (product.stock / product.reorderThreshold) * 100,
+                        ),
                     );
                     return (
-                        <div key={product.id} className="flex flex-col gap-1.5">
+                        <div
+                            key={product.product_id}
+                            className="flex flex-col gap-1.5"
+                        >
                             <div className="flex items-center gap-2">
                                 <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-pulse-cream-dark shrink-0">
                                     <Package className="w-4 h-4 text-pulse-green" />
@@ -73,13 +78,14 @@ export default function LowStockAlert({ data }: LowStockAlertProps) {
                                         </span>
                                     </div>
                                     <p className="text-xss text-pulse-green-dark ">
-                                        Reorder threshold: {product.threshold}
+                                        Reorder threshold:{" "}
+                                        {product.reorderThreshold}
                                     </p>
                                 </div>
                                 <span className="text-xs font-bold text-pulse-green-dark">
                                     {product.stock}
                                     <span className="font-normal text-pulse-green-dark">
-                                        /{product.threshold}
+                                        /{product.reorderThreshold}
                                     </span>
                                 </span>
                             </div>

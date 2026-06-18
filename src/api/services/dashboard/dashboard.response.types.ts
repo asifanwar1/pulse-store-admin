@@ -22,21 +22,24 @@ export interface RevenueOverviewResponse {
 export interface OrdersByCategoryItem {
     category: string;
     orders: number;
+    color: string;
 }
 
 export interface OrdersByCategoryResponse {
     year?: number;
-    categories: OrdersByCategoryItem[];
+    data: OrdersByCategoryItem[];
 }
 
 export interface DistributionItem {
-    label: string;
-    value: number;
+    category: string;
+    revenue: number;
+    color: string;
+    percentage?: string;
 }
 
 export interface SalesDistributionResponse {
     year?: number;
-    distribution: DistributionItem[];
+    data: DistributionItem[];
 }
 
 export interface CustomerGrowthPoint {
@@ -50,8 +53,9 @@ export interface CustomerGrowthResponse {
 }
 
 export interface WeeklySalesPoint {
-    date: string; // ISO date
-    sales: number;
+    day: string; // ISO date
+    order: number;
+    revenue: string;
 }
 
 export interface WeeklySalesResponse {
@@ -62,25 +66,48 @@ export interface WeeklySalesResponse {
 }
 
 export interface TopProductItem {
-    id: string;
+    category: string;
+    change_percentage: string;
     name: string;
-    sold: number;
-    revenue?: number;
-    [k: string]: any;
+    product_id: number;
+    rank?: number;
+    revenue: string;
+    sales: number;
+    sku?: string;
+    stock: number;
 }
 
 export interface TopProductsResponse {
-    products: TopProductItem[];
+    data: TopProductItem[];
+    count: number;
 }
 
 export interface LowStockProduct {
-    id: string;
+    category: string;
     name: string;
+    product_id: number;
+    reorderThreshold: number;
+    severity: string;
+    sku: string;
     stock: number;
-    reorderThreshold?: number;
+    stockPercentage: string;
 }
 
 export interface LowStockAlertsResponse {
-    products: LowStockProduct[];
-    totalLowStock?: number;
+    data: LowStockProduct[];
+    count?: number;
 }
+
+export type TDashboardAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
+export type TDashboardAnalyticsResponse = {
+    totalRevenue: TDashboardAnalyticsMetric;
+    totalOrders: TDashboardAnalyticsMetric;
+    totalCustomers: TDashboardAnalyticsMetric;
+    totalProducts: TDashboardAnalyticsMetric;
+    avgOrderValue: TDashboardAnalyticsMetric;
+    conversionRate: TDashboardAnalyticsMetric;
+};

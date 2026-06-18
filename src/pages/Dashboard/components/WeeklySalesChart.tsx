@@ -8,7 +8,7 @@ import {
     CartesianGrid,
 } from "recharts";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
-import type { WeeklySalesChartItem } from "../Dashboard.Container";
+import type { WeeklySalesPoint } from "@/api/services/dashboard/dashboard.response.types";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -32,7 +32,7 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
 }
 
 interface WeeklySalesChartProps {
-    data: WeeklySalesChartItem[];
+    data: WeeklySalesPoint[];
 }
 
 export default function WeeklySalesChart({ data }: WeeklySalesChartProps) {

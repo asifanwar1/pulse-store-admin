@@ -9,7 +9,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
-import type { OrdersByCategoryChartItem } from "../Dashboard.Container";
+import type { OrdersByCategoryItem } from "@/api/services/dashboard/dashboard.response.types";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -38,7 +38,7 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
 }
 
 interface OrdersByCategoryChartProps {
-    data: OrdersByCategoryChartItem[];
+    data: OrdersByCategoryItem[];
 }
 
 export default function OrdersByCategoryChart({
