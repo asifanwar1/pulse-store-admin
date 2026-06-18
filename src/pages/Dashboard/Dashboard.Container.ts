@@ -128,11 +128,17 @@ export const useDashboard = () => {
             color: CHART_COLORS[index % CHART_COLORS.length],
         })) ?? [];
 
+    // const salesDistributionChartData =
+    //     salesDistribution?.data?.map((item, index) => ({
+    //         category: item.category,
+    //         revenue: item.revenue,
+    //         percentage: item.percentage,
+    //         color: CHART_COLORS[index % CHART_COLORS.length],
+    //     })) ?? [];
     const salesDistributionChartData =
         salesDistribution?.data?.map((item, index) => ({
-            category: item.category,
-            revenue: item.revenue,
-            percentage: item.percentage,
+            label: item.category,
+            value: Number(item.percentage),
             color: CHART_COLORS[index % CHART_COLORS.length],
         })) ?? [];
 

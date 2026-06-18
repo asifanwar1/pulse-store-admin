@@ -7,7 +7,6 @@ import {
     Legend,
 } from "recharts";
 import ChartCard from "../../../components/custom/CustomCards/ChartCard";
-import type { DistributionItem } from "@/api/services/dashboard/dashboard.response.types";
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -58,8 +57,13 @@ function renderLegend(props: {
     );
 }
 
+interface SalesDistributionChartItem {
+    label: string;
+    value: number;
+    color: string;
+}
 interface SalesDistributionChartProps {
-    data: DistributionItem[];
+    data: SalesDistributionChartItem[];
 }
 
 export default function SalesDistributionChart({
@@ -81,6 +85,7 @@ export default function SalesDistributionChart({
                         outerRadius={100}
                         paddingAngle={3}
                         dataKey="value"
+                        nameKey="label"
                         strokeWidth={0}
                     >
                         {data.map((entry, index) => (
