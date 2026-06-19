@@ -70,7 +70,7 @@ export default function WeeklySalesChart({ data }: WeeklySalesChartProps) {
                         cursor={{ fill: "#d1ddd6", radius: 6 }}
                     />
                     <Bar
-                        dataKey="sales"
+                        dataKey="revenue"
                         radius={[6, 6, 0, 0]}
                         fill="#2A5C42"
                         opacity={0.85}
