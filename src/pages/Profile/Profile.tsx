@@ -37,7 +37,8 @@ const Profile = () => {
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div>
-                    <CustomAvatarar src={(src = {})} />
+                    <CustomAvatarar src={(src = {},)} />
+                    <div></div>
                 </div>
             </div>
         </div>
