@@ -39,6 +39,7 @@ const Profile = () => {
                 <div>
                     <CustomAvatarar src={(src = {},)} />
                     <div></div>
+                    <div></div>
                 </div>
             </div>
         </div>
