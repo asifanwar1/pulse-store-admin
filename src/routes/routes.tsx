@@ -40,6 +40,7 @@ import ManageOrder from "@/pages/OrderManagement/ManageOrder/ManageOrder";
 import CategoriesManagement from "@/pages/CategoriesManagement/CategoriesManagement";
 import RevenueManagement from "@/pages/RevenueManagement/RevenueManagment";
 import RevenueDetails from "@/pages/RevenueManagement/RevenueDetails/RevenueDetails.";
+import Profile from "@/pages/Profile/Profile";
 
 export const routes: RouteObject[] = [
     {
@@ -92,6 +93,7 @@ export const routes: RouteObject[] = [
             { path: APP_ROUTES.CATEGORIES, element: <CategoriesManagement /> },
             { path: APP_ROUTES.REVENUE, element: <RevenueManagement /> },
             { path: APP_ROUTES.REVENUE_DETAILS, element: <RevenueDetails /> },
+            { path: APP_ROUTES.ACCOUNT, element: <Profile /> },
             // {
             //     path: APP_ROUTES.CHATS,
             //     element: <Chats />,
