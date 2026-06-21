@@ -39,9 +39,9 @@ const Profile = () => {
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div>
                     <CustomAvatar
-                        initials={getInitialsFromName(profile.fullName)}
+                        initials={getInitialsFromName(profile?.fullName!)}
                     />
-                    <div></div>
+                    <div>{profile.fullName}</div>
                     <div></div>
                 </div>
             </div>

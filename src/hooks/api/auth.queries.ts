@@ -16,7 +16,7 @@ import type { UserModel } from "@/api/models/user.model";
 export const useGetMe = () => {
     const setAuth = useStore((state) => state.setAuth);
 
-    const handleGetMe = async () => {
+    const handleGetMe = async (): Promise<UserModel | undefined> => {
         const currentState = useStore.getState();
         if (!currentState.isAuthenticated || !currentState.token) return;
 
@@ -29,7 +29,7 @@ export const useGetMe = () => {
         }
     };
 
-    return useQuery({
+    return useQuery<UserModel | undefined>({
         queryKey: [AUTH_QUERY_KEYS.GET_ME],
         queryFn: handleGetMe,
         enabled: true,
