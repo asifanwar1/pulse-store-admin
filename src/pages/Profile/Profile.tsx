@@ -42,7 +42,7 @@ const Profile = () => {
                         initials={getInitialsFromName(profile?.fullName!)}
                     />
                     <div>{profile.fullName}</div>
-                    <div></div>
+                    <div>{profile.email}</div>
                 </div>
             </div>
         </div>
