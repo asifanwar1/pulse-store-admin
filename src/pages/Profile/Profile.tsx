@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import ProfileSkeleton from "./Profile.Skeleton";
 import { CustomAvatar } from "@/components/custom/CustomAvatar";
+import { getInitialsFromName } from "@/utils/common.utils";
 
 const Profile = () => {
     const { profile, isProfileLoading, handleNavigateBack } = useProfile();
@@ -37,7 +38,9 @@ const Profile = () => {
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
                 <div>
-                    <CustomAvatarar src={(src = {},)} />
+                    <CustomAvatar
+                        initials={getInitialsFromName(profile.fullName)}
+                    />
                     <div></div>
                     <div></div>
                 </div>
