@@ -1,14 +1,6 @@
 import React from "react";
 import { useProfile } from "./Profile.Container";
-import {
-    ArrowLeft,
-    Mail,
-    MapPin,
-    PencilLineIcon,
-    PenSquare,
-    Phone,
-    User,
-} from "lucide-react";
+import { ArrowLeft, Mail, MapPin, PenSquare, Phone, User } from "lucide-react";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import ProfileSkeleton from "./Profile.Skeleton";
 import { CustomAvatar } from "@/components/custom/CustomAvatar";
@@ -21,16 +13,24 @@ import {
     RESET_PASSWORD_FORM_INITIAL_VALUES,
 } from "../Authentication";
 import { RESET_PASSWORD_FORM_SCHEMA } from "../Authentication/forms/validationSchemas";
+import ProfileFormModal from "./ProfileFormModal";
 
 const Profile: React.FC = () => {
     const {
+        INITIAL_PROFILE_DATA,
         profile,
         address,
         formRef,
         isProfileLoading,
         isPending,
+        profileFormRef,
+        profileModalOpen,
+        isProfileSubmitting,
         onSubmit,
         handleNavigateBack,
+        handleProfileSubmit,
+        handleProfileModalOpen,
+        handleProfileModalClose,
     } = useProfile();
 
     if (isProfileLoading) {
@@ -70,7 +70,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div className="absolute top-4 right-4">
                     <Button
-                        onClick={handleNavigateBack}
+                        onClick={handleProfileModalOpen}
                         variant="default"
                         size="sm"
                     >
@@ -97,7 +97,7 @@ const Profile: React.FC = () => {
                     <StatChipCard
                         icon={<Phone className="w-4 h-4" />}
                         label="Phone Number"
-                        value={profile.phone!}
+                        value={profile.phoneNumber!}
                     />
                 </div>
             </div>
@@ -119,6 +119,15 @@ const Profile: React.FC = () => {
                     </div>
                 </FormBuilder>
             </div>
+
+            <ProfileFormModal
+                open={profileModalOpen}
+                isSubmitting={isProfileSubmitting}
+                initialValues={INITIAL_PROFILE_DATA}
+                formRef={profileFormRef}
+                onClose={handleProfileModalClose}
+                onSubmit={handleProfileSubmit}
+            />
         </div>
     );
 };

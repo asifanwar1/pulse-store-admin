@@ -9,7 +9,7 @@ export type UserModel = BaseModel & {
     firstName?: string;
     lastName?: string;
     fullName?: string;
-    phone?: string;
+    phoneNumber?: string;
     type?: UserType;
     status?: UserStatusType;
     profilePictureId?: number;

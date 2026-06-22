@@ -27,7 +27,7 @@ export const GetCurrentUser = async (token?: string) => {
 
 export const UpdateMe = async (body: TUpdateMeBody) => {
     return request<TUpdateMeResponse, TUpdateMeBody>({
-        method: HTTP_METHODS.PUT,
+        method: HTTP_METHODS.PATCH,
         url: "/users/me",
         body,
     });
