@@ -42,6 +42,7 @@ export const formatAddress = (address: {
     zipCode?: string;
     country?: string;
 }): string => {
+    if (!address) return "";
     const { street_address, city, state, zipCode, country } = address;
     const addressParts = [street_address, city, state, zipCode, country].filter(
         (v): v is string => !!v,
