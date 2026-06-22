@@ -6,7 +6,7 @@ import ProfileSkeleton from "./Profile.Skeleton";
 import { CustomAvatar } from "@/components/custom/CustomAvatar";
 import { getInitialsFromName } from "@/utils/common.utils";
 
-const Profile = () => {
+const Profile: React.FC = () => {
     const { profile, isProfileLoading, handleNavigateBack } = useProfile();
 
     if (isProfileLoading) {
@@ -21,7 +21,7 @@ const Profile = () => {
                 </p>
                 <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
-                    Back to Dashboard
+                    Back
                 </Button>
             </div>
         );
@@ -32,17 +32,20 @@ const Profile = () => {
             <div className="flex">
                 <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
-                    Back to Revenues
+                    Back
                 </Button>
             </div>
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">
-                <div>
+                <div className="flex flex-wrap items-center gap-4">
                     <CustomAvatar
-                        initials={getInitialsFromName(profile?.fullName!)}
+                        initials={getInitialsFromName(profile.fullName!)}
+                        textClass="!w-10 !h-10"
                     />
-                    <div>{profile.fullName}</div>
-                    <div>{profile.email}</div>
+                    <div className="flex flex-col gap-4">
+                        <div>{profile.fullName}</div>
+                        <div>{profile.email}</div>
+                    </div>
                 </div>
             </div>
         </div>
