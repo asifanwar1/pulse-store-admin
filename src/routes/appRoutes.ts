@@ -17,7 +17,6 @@ export enum APP_ROUTES {
     ACCOUNT_PROFILE = "/account/profile",
     ACCOUNT_CHANGE_PASSWORD = "/account/change-password",
 
-    //Chat Management
     CHATS = "/chats",
 
     CUSTOMERS = "/customers",
@@ -42,4 +41,6 @@ export enum APP_ROUTES {
 
     REVENUE = "/revenue",
     REVENUE_DETAILS = "/revenue/:id",
+
+    NOTIFICATIONS = "/notifications",
 }
