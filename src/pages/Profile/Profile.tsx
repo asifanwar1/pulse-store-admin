@@ -1,13 +1,15 @@
 import React from "react";
 import { useProfile } from "./Profile.Container";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MapPin } from "lucide-react";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import ProfileSkeleton from "./Profile.Skeleton";
 import { CustomAvatar } from "@/components/custom/CustomAvatar";
 import { getInitialsFromName } from "@/utils/common.utils";
+import { StatChipCard } from "@/components/custom/CustomCards";
 
 const Profile: React.FC = () => {
-    const { profile, isProfileLoading, handleNavigateBack } = useProfile();
+    const { profile, address, isProfileLoading, handleNavigateBack } =
+        useProfile();
 
     if (isProfileLoading) {
         return <ProfileSkeleton />;
@@ -40,13 +42,47 @@ const Profile: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-4">
                     <CustomAvatar
                         initials={getInitialsFromName(profile.fullName!)}
-                        textClass="!w-10 !h-10"
+                        className="!w-20 !h-20 "
+                        textClass="text-pulse-green"
                     />
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col text-pulse-green">
                         <div>{profile.fullName}</div>
                         <div>{profile.email}</div>
                     </div>
                 </div>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <StatChipCard
+                    icon={<MapPin className="w-4 h-4" />}
+                    label="Address"
+                    value={address}
+                />
+                <StatChipCard
+                    icon={<DollarSign className="w-4 h-4" />}
+                    label="Total Amount"
+                    value={formatNumberCurrency(
+                        revenue.completed_order.total_amount,
+                    )}
+                />
+                <StatChipCard
+                    icon={<DollarSign className="w-4 h-4" />}
+                    label="Revenue Amount"
+                    value={formatNumberCurrency(revenue.revenue_amount)}
+                />
+                <StatChipCard
+                    icon={<DollarSign className="w-4 h-4" />}
+                    label="Profit"
+                    value={formatNumberCurrency(revenue.profit)}
+                />
+                <StatChipCard
+                    icon={<CreditCard className="w-4 h-4" />}
+                    label="Payment Method"
+                    value={PaymentMethodsWithHelpers.getDisplayTextKey(
+                        revenue.completed_order
+                            .payment_method as PaymentMethodsType,
+                    )}
+                />
             </div>
         </div>
     );

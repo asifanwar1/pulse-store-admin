@@ -36,14 +36,14 @@ export const safeStringConversion = (value: unknown): string => {
 };
 
 export const formatAddress = (address: {
-    street?: string;
+    street_address?: string;
     city?: string;
     state?: string;
-    postalCode?: string;
+    zipCode?: string;
     country?: string;
 }): string => {
-    const { street, city, state, postalCode, country } = address;
-    const addressParts = [street, city, state, postalCode, country].filter(
+    const { street_address, city, state, zipCode, country } = address;
+    const addressParts = [street_address, city, state, zipCode, country].filter(
         (v): v is string => !!v,
     );
     return addressParts.join(", ");

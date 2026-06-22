@@ -1,5 +1,6 @@
 import { useGetUserById } from "@/hooks/api/user.queries";
 import { useStore } from "@/store";
+import { formatAddress } from "@/utils/stringUtils";
 import { useNavigate } from "react-router-dom";
 
 export const useProfile = () => {
@@ -13,5 +14,7 @@ export const useProfile = () => {
 
     const handleNavigateBack = () => navigate(-1);
 
-    return { profile, isProfileLoading, handleNavigateBack };
+    const address = formatAddress(profile?.address!);
+
+    return { profile, address, isProfileLoading, handleNavigateBack };
 };
