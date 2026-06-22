@@ -35,5 +35,6 @@ export const defaultRouteNames: Record<string, string> = {
     // Chat Management
     [APP_ROUTES.CHATS]: "Chat",
 
+    // Notifications Management
     [APP_ROUTES.NOTIFICATIONS]: "Notifications",
 };
