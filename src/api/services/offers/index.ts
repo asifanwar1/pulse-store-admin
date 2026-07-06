@@ -5,7 +5,7 @@ import type {
     TCreateOfferBody,
     TGetOffersParams,
     TUpdateOfferBody,
-} from "./offers.request";
+} from "./offers.request.types";
 import type {
     TCreateOfferResponse,
     TDeleteOfferResponse,
@@ -43,10 +43,7 @@ export const GetOffer = async ({ id }: TApiArgs) => {
     });
 };
 
-export const UpdateOffer = async ({
-    id,
-    body,
-}: TApiArgs<TUpdateOfferBody>) => {
+export const UpdateOffer = async ({ id, body }: TApiArgs<TUpdateOfferBody>) => {
     return request<TUpdateOfferResponse, TUpdateOfferBody>({
         method: HTTP_METHODS.PATCH,
         url: `/offers/${id}`,

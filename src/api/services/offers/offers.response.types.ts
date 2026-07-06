@@ -1,4 +1,4 @@
-import type { TOfferScope, TOfferStatus } from "./offers.request";
+import type { TOfferScope, TOfferStatus } from "./offers.request.types";
 
 export type TOfferResponse = {
     id: number;
