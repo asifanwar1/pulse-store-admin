@@ -13,7 +13,7 @@ import type {
     TGetOfferResponse,
     TGetOffersResponse,
     TUpdateOfferResponse,
-} from "./offers.response";
+} from "./offers.response.types";
 import { OFFER_QUERY_KEYS } from "./queryKeys";
 
 export const GetOffers = async (params?: WithSignal<TGetOffersParams>) => {

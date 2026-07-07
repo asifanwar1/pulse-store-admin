@@ -39,6 +39,10 @@ export enum APP_ROUTES {
 
     CATEGORIES = "/categories",
 
+    OFFERS = "/offers",
+    OFFERS_ADD = "/offers/add",
+    OFFERS_UPDATE = "/offers/update/:id",
+
     REVENUE = "/revenue",
     REVENUE_DETAILS = "/revenue/:id",
 

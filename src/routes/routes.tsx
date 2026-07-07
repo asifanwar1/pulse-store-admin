@@ -38,6 +38,8 @@ import ManageProduct from "@/pages/ProductManagement/ManageProduct/ManageProduct
 import OrderDetails from "@/pages/OrderManagement/OrderDetails/OrderDetails";
 import ManageOrder from "@/pages/OrderManagement/ManageOrder/ManageOrder";
 import CategoriesManagement from "@/pages/CategoriesManagement/CategoriesManagement";
+import OffersManagement from "@/pages/OffersManagement/OffersManagement";
+import ManageOffer from "@/pages/OffersManagement/ManageOffer/ManageOffer";
 import RevenueManagement from "@/pages/RevenueManagement/RevenueManagment";
 import RevenueDetails from "@/pages/RevenueManagement/RevenueDetails/RevenueDetails.";
 import Profile from "@/pages/Profile/Profile";
@@ -93,6 +95,15 @@ export const routes: RouteObject[] = [
                 element: <ManageProduct mode="update" />,
             },
             { path: APP_ROUTES.CATEGORIES, element: <CategoriesManagement /> },
+            { path: APP_ROUTES.OFFERS, element: <OffersManagement /> },
+            {
+                path: APP_ROUTES.OFFERS_ADD,
+                element: <ManageOffer mode="add" />,
+            },
+            {
+                path: APP_ROUTES.OFFERS_UPDATE,
+                element: <ManageOffer mode="update" />,
+            },
             { path: APP_ROUTES.REVENUE, element: <RevenueManagement /> },
             { path: APP_ROUTES.REVENUE_DETAILS, element: <RevenueDetails /> },
             { path: APP_ROUTES.ACCOUNT, element: <Profile /> },

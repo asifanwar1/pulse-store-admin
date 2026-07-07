@@ -1,13 +1,7 @@
 import type { BaseQueryType } from "@/api/models";
 
-export type TOfferScope = "GLOBAL" | "CATEGORY" | "PRODUCT" | "USER" | string;
-export type TOfferStatus =
-    | "DRAFT"
-    | "ACTIVE"
-    | "PAUSED"
-    | "EXPIRED"
-    | "INACTIVE"
-    | string;
+export type TOfferScope = "ALL_CATEGORIES" | "SPECIFIC_CATEGORIES";
+export type TOfferStatus = "UPCOMING" | "ACTIVE" | "EXPIRED" | "DISABLED";
 
 export type TGetOffersParams = BaseQueryType & {
     search?: string;
@@ -17,18 +11,16 @@ export type TGetOffersParams = BaseQueryType & {
 };
 
 export type TCreateOfferBody = {
-    title?: string;
-    name?: string;
+    name: string;
     description?: string | null;
-    code?: string | null;
-    discount_type?: string | null;
-    discount_value?: number | null;
-    scope?: TOfferScope | null;
-    is_active?: boolean | null;
-    status?: TOfferStatus | null;
-    starts_at?: string | null;
-    ends_at?: string | null;
-    [key: string]: unknown;
+    discount_percentage: number;
+    scope: TOfferScope;
+    start_date: string;
+    end_date: string;
+    is_active?: boolean;
+    category_ids?: number[];
+    included_product_ids?: number[];
+    excluded_product_ids?: number[];
 };
 
 export type TUpdateOfferBody = Partial<TCreateOfferBody>;

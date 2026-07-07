@@ -26,6 +26,11 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.PRODUCTS_ADD]: "Add New Product",
     [APP_ROUTES.PRODUCTS_UPDATE]: "Update Product",
 
+    // Offers Management
+    [APP_ROUTES.OFFERS]: "Offers Management",
+    [APP_ROUTES.OFFERS_ADD]: "Add New Offer",
+    [APP_ROUTES.OFFERS_UPDATE]: "Update Offer",
+
     // Order Management
     [APP_ROUTES.ORDERS]: "Order Management",
     [APP_ROUTES.ORDERS_DETAILS]: "Order Details",

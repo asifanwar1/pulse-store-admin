@@ -1,21 +1,30 @@
 import type { TOfferScope, TOfferStatus } from "./offers.request.types";
 
+export type TOfferCategorySummary = {
+    id: number;
+    name: string;
+};
+
+export type TOfferProductSummary = {
+    id: number;
+    name: string;
+};
+
 export type TOfferResponse = {
     id: number;
-    title?: string | null;
-    name?: string | null;
+    name: string;
     description?: string | null;
-    code?: string | null;
-    discount_type?: string | null;
-    discount_value?: number | null;
-    scope?: TOfferScope | null;
-    is_active?: boolean | null;
-    status?: TOfferStatus | null;
-    starts_at?: string | null;
-    ends_at?: string | null;
-    created_at?: string;
-    updated_at?: string;
-    [key: string]: unknown;
+    discount_percentage: string;
+    scope: TOfferScope;
+    start_date: string;
+    end_date: string;
+    is_active: boolean;
+    status: TOfferStatus;
+    categories: TOfferCategorySummary[];
+    included_products: TOfferProductSummary[];
+    excluded_products: TOfferProductSummary[];
+    created_at: string;
+    updated_at?: string | null;
 };
 
 export type TGetOffersResponse = {
@@ -27,11 +36,18 @@ export type TCreateOfferResponse = TOfferResponse;
 export type TGetOfferResponse = TOfferResponse;
 export type TUpdateOfferResponse = TOfferResponse;
 
-export type TDeleteOfferResponse = {
-    data: boolean;
+export type TDeleteOfferResponse = void;
+
+export type TActiveOfferResponse = {
+    id: number;
+    name: string;
+    description?: string | null;
+    discount_percentage: string;
+    scope: TOfferScope;
+    end_date: string;
 };
 
 export type TGetActiveOffersResponse = {
-    data: TOfferResponse[];
-    count?: number;
+    data: TActiveOfferResponse[];
+    count: number;
 };
