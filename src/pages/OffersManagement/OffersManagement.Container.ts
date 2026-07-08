@@ -32,9 +32,7 @@ export const useOffersManagement = () => {
     const [selectedOffer, setSelectedOffer] = useState<TOfferResponse | null>(
         null,
     );
-    const [togglingOfferId, setTogglingOfferId] = useState<number | null>(
-        null,
-    );
+    const [togglingOfferId, setTogglingOfferId] = useState<number | null>(null);
 
     const {
         data: offers,
@@ -123,11 +121,8 @@ export const useOffersManagement = () => {
                 : null,
             options: OFFER_SCOPE_OPTIONS,
             onChange: (value) =>
-                setScope(
-                    value && !Array.isArray(value) ? value.value : null,
-                ),
+                setScope(value && !Array.isArray(value) ? value.value : null),
             clearable: true,
-            containerClass: "w-[220px]",
         },
         {
             type: "select",
@@ -138,11 +133,8 @@ export const useOffersManagement = () => {
                 : null,
             options: OFFER_STATUS_OPTIONS,
             onChange: (value) =>
-                setStatus(
-                    value && !Array.isArray(value) ? value.value : null,
-                ),
+                setStatus(value && !Array.isArray(value) ? value.value : null),
             clearable: true,
-            containerClass: "w-[160px]",
         },
     ];
 

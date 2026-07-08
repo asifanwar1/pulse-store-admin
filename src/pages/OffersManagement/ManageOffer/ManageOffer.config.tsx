@@ -2,9 +2,13 @@ import { Select } from "@/components/custom/Select";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
 import { DatePicker } from "@/components/custom/DatePicker";
 import { type FieldType } from "@/components/custom/Form";
-import { OfferScope, OFFER_SCOPE_OPTIONS } from "@/constants/offer-scope.constants";
+import {
+    OfferScope,
+    OFFER_SCOPE_OPTIONS,
+} from "@/constants/offer-scope.constants";
 import type { ManageOfferFormValues } from "./ManageOffer.schema";
 import type { TManageOfferFormConfigProps } from "../OffersManagement.types";
+import CustomToggle from "@/components/custom/CustomToggle/CustomToggle";
 
 const isSpecificScope = (scope: unknown) => {
     const resolved =
@@ -13,47 +17,6 @@ const isSpecificScope = (scope: unknown) => {
             : ((scope as { value?: string } | null | undefined)?.value ?? "");
     return resolved === OfferScope.SPECIFIC_CATEGORIES;
 };
-
-type ActiveToggleProps = {
-    value?: boolean;
-    onChange: (value: boolean) => void;
-    label?: string;
-    disabled?: boolean;
-};
-
-const ActiveToggle: React.FC<ActiveToggleProps> = ({
-    value,
-    onChange,
-    label,
-    disabled,
-}) => (
-    <div>
-        {label && (
-            <p className="mb-2 text-sm font-500 text-pulse-green">{label}</p>
-        )}
-        <div className="flex items-center gap-3">
-            <button
-                type="button"
-                role="switch"
-                aria-checked={!!value}
-                disabled={disabled}
-                onClick={() => onChange(!value)}
-                className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-                    value ? "bg-pulse-green" : "bg-pulse-cream-dark"
-                } disabled:opacity-50`}
-            >
-                <span
-                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
-                        value ? "translate-x-5" : "translate-x-0.5"
-                    }`}
-                />
-            </button>
-            <span className="text-sm text-pulse-green-dark">
-                {value ? "Offer is active" : "Offer is inactive"}
-            </span>
-        </div>
-    </div>
-);
 
 export const getManageOfferFormConfig = ({
     categoryOptions,
@@ -192,8 +155,13 @@ export const getManageOfferFormConfig = ({
     {
         name: "isActive",
         label: "Status",
-        component: ActiveToggle,
-        className: "col-span-12",
-        labelClass: "font-normal",
+        component: CustomToggle,
+        componentProps: {
+            isLabel: true,
+            onLabel: "Active",
+            offLabel: "Inactive",
+            offLabelClass: "mr-[0rem]",
+            onCircleClass: "ml-[-1rem]",
+        },
     },
 ];

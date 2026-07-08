@@ -46,8 +46,8 @@ const ManageOffer: React.FC<ManageOfferFormProps> = ({ mode }) => {
                             : "Update Offer"}
                     </h3>
                     <p className="text-xs text-pulse-green mt-0.5">
-                        Fill in the details below to create a promotional
-                        offer for your catalogue
+                        Fill in the details below to create a promotional offer
+                        for your catalogue
                     </p>
                 </div>
 
@@ -60,7 +60,7 @@ const ManageOffer: React.FC<ManageOfferFormProps> = ({ mode }) => {
                     className="grid grid-cols-12 gap-4"
                     noValidate
                 >
-                    <div className="col-span-12 flex flex-wrap justify-end gap-3 pt-2 border-t border-pulse-cream-dark">
+                    <div className="col-span-12 flex flex-wrap justify-end gap-3 pt-2 ">
                         <Button
                             type="button"
                             variant="ghost"

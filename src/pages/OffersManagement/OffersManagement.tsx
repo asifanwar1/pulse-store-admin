@@ -97,8 +97,8 @@ const OffersManagement = () => {
                                 </EmptyMedia>
                                 <EmptyTitle>No offers yet</EmptyTitle>
                                 <EmptyDescription>
-                                    Create your first promotional offer to
-                                    start discounting products for customers.
+                                    Create a promotional offer to start
+                                    discounting products for customers.
                                 </EmptyDescription>
                             </EmptyHeader>
                             <EmptyContent>
@@ -106,7 +106,7 @@ const OffersManagement = () => {
                                     onClick={navigateToAddOffer}
                                     startIcon={<Plus className="h-4 w-4" />}
                                 >
-                                    Create First Offer
+                                    Create An Offer
                                 </Button>
                             </EmptyContent>
                         </Empty>
