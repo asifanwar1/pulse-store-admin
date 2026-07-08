@@ -32,7 +32,7 @@ export const ManageOfferSchema = z
         excludedProductIds: z.array(optionSchema).optional().default([]),
         startDate: z.date({ error: "Start date is required" }),
         endDate: z.date({ error: "End date is required" }),
-        isActive: z.boolean().default(true),
+        isActive: z.enum(["active", "inactive"]).default("active"),
     })
     .superRefine((data, ctx) => {
         if (data.endDate <= data.startDate) {
@@ -83,5 +83,5 @@ export const INITIAL_OFFER_VALUES: ManageOfferFormValues = {
     excludedProductIds: [],
     startDate: undefined as unknown as Date,
     endDate: undefined as unknown as Date,
-    isActive: true,
+    isActive: "active",
 };

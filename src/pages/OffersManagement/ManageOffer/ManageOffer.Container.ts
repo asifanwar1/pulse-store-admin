@@ -52,7 +52,7 @@ const buildOfferPayload = (
         scope: values.scope as TCreateOfferBody["scope"],
         start_date: startOfDayISOString(values.startDate),
         end_date: endOfDayISOString(values.endDate),
-        is_active: values.isActive,
+        is_active: values.isActive === "active",
         category_ids: isSpecificScope
             ? values.categoryIds.map((option) => Number(option.value))
             : [],
@@ -185,7 +185,9 @@ export const useManageOffer = ({ mode = ACTION_MODES.ADD }: formModesType) => {
                   ),
                   startDate: new Date(offer.start_date),
                   endDate: new Date(offer.end_date),
-                  isActive: offer.is_active,
+                  isActive: offer.is_active
+                      ? ("active" as const)
+                      : ("inactive" as const),
               }
             : INITIAL_OFFER_VALUES;
 
