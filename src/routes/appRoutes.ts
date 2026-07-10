@@ -46,5 +46,7 @@ export enum APP_ROUTES {
     REVENUE = "/revenue",
     REVENUE_DETAILS = "/revenue/:id",
 
+    REVIEWS = "/reviews",
+
     NOTIFICATIONS = "/notifications",
 }

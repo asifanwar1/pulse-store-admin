@@ -37,6 +37,9 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.ORDERS_CREATE]: "Create Order",
     [APP_ROUTES.ORDERS_UPDATE]: "Update Order",
 
+    // Reviews Management
+    [APP_ROUTES.REVIEWS]: "Reviews Management",
+
     // Chat Management
     [APP_ROUTES.CHATS]: "Chat",
 

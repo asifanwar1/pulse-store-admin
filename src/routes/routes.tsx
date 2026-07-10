@@ -45,6 +45,7 @@ import RevenueDetails from "@/pages/RevenueManagement/RevenueDetails/RevenueDeta
 import Profile from "@/pages/Profile/Profile";
 import Chats from "@/pages/Chats/Chats";
 import Notifications from "@/pages/Notifications/Notifications";
+import ReviewsManagement from "@/pages/ReviewsManagement/ReviewsManagement";
 
 export const routes: RouteObject[] = [
     {
@@ -106,6 +107,7 @@ export const routes: RouteObject[] = [
             },
             { path: APP_ROUTES.REVENUE, element: <RevenueManagement /> },
             { path: APP_ROUTES.REVENUE_DETAILS, element: <RevenueDetails /> },
+            { path: APP_ROUTES.REVIEWS, element: <ReviewsManagement /> },
             { path: APP_ROUTES.ACCOUNT, element: <Profile /> },
             { path: APP_ROUTES.CHATS, element: <Chats /> },
             { path: APP_ROUTES.NOTIFICATIONS, element: <Notifications /> },
