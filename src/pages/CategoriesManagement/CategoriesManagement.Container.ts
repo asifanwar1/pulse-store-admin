@@ -7,9 +7,14 @@ import {
     useGetCategories,
     useUpdateCategory,
 } from "@/hooks/api/categories.queries";
+import { useMediaUpload } from "@/hooks/api/media.queries";
 import { showToast } from "@/lib/toast";
-import type { TCategoryResponse } from "@/api/services/categories/categories.response";
+import type {
+    TCategoryImage,
+    TCategoryResponse,
+} from "@/api/services/categories/categories.response";
 import type { TCategoryFormValues } from "./CategoriesManagement.Modals";
+import type { FileUploaderValue } from "@/components/custom/Inputs/FileUploader";
 import Config from "@/Config";
 
 type TCategoryFormErrors = Partial<Record<keyof TCategoryFormValues, string>>;
@@ -17,7 +22,11 @@ type TCategoryFormErrors = Partial<Record<keyof TCategoryFormValues, string>>;
 const INITIAL_FORM_VALUES: TCategoryFormValues = {
     name: "",
     description: "",
+    image: [],
 };
+
+const isFile = (item: FileUploaderValue): item is File =>
+    item instanceof File;
 
 export const getCategoryInitials = (name: string) => {
     return name
@@ -61,8 +70,9 @@ export const useCategoriesManagement = () => {
         useUpdateCategory();
     const { mutateAsync: deleteCategory, isPending: isDeleting } =
         useDeleteCategory();
+    const { handleSingleFileUpload, isMediaLoading } = useMediaUpload();
 
-    const isFormSubmitting = isCreating || isUpdating;
+    const isFormSubmitting = isCreating || isUpdating || isMediaLoading;
 
     const resetForm = () => {
         setFormValues(INITIAL_FORM_VALUES);
@@ -96,6 +106,15 @@ export const useCategoriesManagement = () => {
         setFormValues({
             name: category.name,
             description: category.description || "",
+            image: category.image
+                ? [
+                      {
+                          id: category.image.id,
+                          url: category.image.url,
+                          file_name: category.image.file_name ?? undefined,
+                      },
+                  ]
+                : [],
         });
         setFormErrors({});
         setIsFormModalOpen(true);
@@ -106,9 +125,9 @@ export const useCategoriesManagement = () => {
         setIsDeleteModalOpen(true);
     };
 
-    const handleFormChange = (
-        field: keyof TCategoryFormValues,
-        value: string,
+    const handleFormChange = <K extends keyof TCategoryFormValues>(
+        field: K,
+        value: TCategoryFormValues[K],
     ) => {
         setFormValues((prev) => ({
             ...prev,
@@ -148,12 +167,35 @@ export const useCategoriesManagement = () => {
             return;
         }
 
-        const payload = {
-            name: formValues.name.trim(),
-            description: formValues.description.trim() || null,
-        };
-
         try {
+            const imageItem = formValues.image[0];
+            let image: TCategoryImage | null = null;
+
+            if (imageItem) {
+                if (isFile(imageItem)) {
+                    const uploaded = await handleSingleFileUpload(imageItem, {
+                        folder: "categories",
+                    });
+                    image = {
+                        id: uploaded.id,
+                        url: uploaded.url,
+                        file_name: uploaded.file_name,
+                    };
+                } else {
+                    image = {
+                        id: imageItem.id,
+                        url: imageItem.url,
+                        file_name: imageItem.file_name ?? null,
+                    };
+                }
+            }
+
+            const payload = {
+                name: formValues.name.trim(),
+                description: formValues.description.trim() || null,
+                image,
+            };
+
             if (formMode === "add") {
                 await createCategory(payload);
                 showToast.success("Category created successfully");

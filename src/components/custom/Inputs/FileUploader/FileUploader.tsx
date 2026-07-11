@@ -404,17 +404,10 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                             <button
                                 type="button"
                                 onClick={openBrowser}
-                                className="flex flex-col items-center justify-center rounded-[8px] border-2 border-dashed border-[#e2e8f0] text-pulse-green hover:border-[#2A5C42] hover:bg-[#2A5C42]/5 transition-all cursor-pointer gap-1 text-xs px-2"
-                                style={{
-                                    width: PREVIEW_SIZE_MAP[previewSize]
-                                        .split(" ")[0]
-                                        .replace("w-", "")
-                                        .concat("px"),
-                                    height: PREVIEW_SIZE_MAP[previewSize]
-                                        .split(" ")[1]
-                                        .replace("h-", "")
-                                        .concat("px"),
-                                }}
+                                className={cn(
+                                    "flex flex-col items-center justify-center rounded-[8px] border-2 border-dashed border-[#e2e8f0] text-pulse-green hover:border-[#2A5C42] hover:bg-[#2A5C42]/5 transition-all cursor-pointer gap-1 text-xs px-2",
+                                    PREVIEW_SIZE_MAP[previewSize],
+                                )}
                             >
                                 <Upload className="w-4 h-4" />
                                 <span>Replace</span>

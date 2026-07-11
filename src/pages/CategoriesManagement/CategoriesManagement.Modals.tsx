@@ -4,11 +4,14 @@ import { CustomModal } from "@/components/custom/CustomModal";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { Input } from "@/components/custom/Input";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
+import FileUploader from "@/components/custom/Inputs/FileUploader";
+import type { FileUploaderValue } from "@/components/custom/Inputs/FileUploader";
 import { Trash2 } from "lucide-react";
 
 export type TCategoryFormValues = {
     name: string;
     description: string;
+    image: FileUploaderValue[];
 };
 
 type TCategoryFormErrors = Partial<Record<keyof TCategoryFormValues, string>>;
@@ -20,7 +23,10 @@ type TCategoryFormModalProps = {
     errors: TCategoryFormErrors;
     isSubmitting: boolean;
     onClose: () => void;
-    onChange: (field: keyof TCategoryFormValues, value: string) => void;
+    onChange: <K extends keyof TCategoryFormValues>(
+        field: K,
+        value: TCategoryFormValues[K],
+    ) => void;
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
@@ -107,6 +113,19 @@ export const CategoryFormModal = ({
                     showCharacterCount
                     containerClasses="mt-1"
                     textareaClasses="min-h-[120px]"
+                />
+                <FileUploader
+                    name="image"
+                    label="Category Image"
+                    value={values.image}
+                    onChange={(files) => onChange("image", files)}
+                    multiple={false}
+                    accept="image/*"
+                    maxSize={5 * 1024 * 1024}
+                    previewSize="md"
+                    placeholder="Drag & drop an image here, or click to browse"
+                    error={errors.image}
+                    labelClass="font-normal mt-1"
                 />
             </form>
         </CustomModal>

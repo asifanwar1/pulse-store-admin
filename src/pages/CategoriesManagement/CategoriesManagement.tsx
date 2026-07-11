@@ -62,8 +62,16 @@ const CategoriesManagement = () => {
                 <div className="relative flex h-full flex-col gap-4">
                     <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sm font-semibold text-pulse-green-dark shadow-sm">
-                                {getCategoryInitials(category.name) || "C"}
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white text-sm font-semibold text-pulse-green-dark shadow-sm">
+                                {category.image ? (
+                                    <img
+                                        src={category.image.url}
+                                        alt={category.name}
+                                        className="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    getCategoryInitials(category.name) || "C"
+                                )}
                             </div>
                             <div className="min-w-0">
                                 <h3 className="truncate text-lg font-semibold text-pulse-green-dark">

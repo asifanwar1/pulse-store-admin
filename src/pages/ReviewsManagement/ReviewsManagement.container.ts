@@ -21,8 +21,8 @@ const RATING_FILTER_OPTIONS = [
 ];
 
 const VISIBILITY_FILTER_OPTIONS = [
-    { value: "visible", label: "Visible" },
-    { value: "hidden", label: "Hidden" },
+    { value: "false", label: "Visible" },
+    { value: "true", label: "Hidden" },
 ];
 
 export const useReviewsManagement = () => {
@@ -34,7 +34,7 @@ export const useReviewsManagement = () => {
 
     const [productId, setProductId] = useState<number | null>(null);
     const [rating, setRating] = useState<number | null>(null);
-    const [visibility, setVisibility] = useState<string | null>(null);
+    const [isHidden, setIsHidden] = useState<boolean | null>(null);
     const [togglingReviewId, setTogglingReviewId] = useState<number | null>(
         null,
     );
@@ -50,12 +50,7 @@ export const useReviewsManagement = () => {
         limit: pageSize,
         product_id: productId ?? undefined,
         rating: rating ?? undefined,
-        is_hidden:
-            visibility === "hidden"
-                ? true
-                : visibility === "visible"
-                  ? false
-                  : undefined,
+        is_hidden: isHidden ?? undefined,
     });
 
     const {
@@ -145,15 +140,18 @@ export const useReviewsManagement = () => {
             type: "select",
             key: "visibility",
             placeholder: "All Statuses",
-            value: visibility
-                ? VISIBILITY_FILTER_OPTIONS.find(
-                      (opt) => opt.value === visibility,
-                  ) ?? null
-                : null,
+            value:
+                isHidden === null
+                    ? null
+                    : VISIBILITY_FILTER_OPTIONS.find(
+                          (opt) => opt.value === String(isHidden),
+                      ) ?? null,
             options: VISIBILITY_FILTER_OPTIONS,
             onChange: (value) =>
-                setVisibility(
-                    value && !Array.isArray(value) ? value.value : null,
+                setIsHidden(
+                    value && !Array.isArray(value)
+                        ? value.value === "true"
+                        : null,
                 ),
             clearable: true,
         },
