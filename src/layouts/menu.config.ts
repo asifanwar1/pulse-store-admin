@@ -10,6 +10,7 @@ import {
     CircleDollarSign,
     BadgePercent,
     MessageSquareText,
+    Image,
 } from "lucide-react";
 
 export type SidebarContainerType = {
@@ -72,5 +73,11 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: MessageSquareText,
         activeIcon: MessageSquareText,
         path: [APP_ROUTES.REVIEWS],
+    },
+    {
+        label: "Banner Management",
+        inactiveIcon: Image,
+        activeIcon: Image,
+        path: [APP_ROUTES.BANNERS],
     },
 ];
