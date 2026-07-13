@@ -247,6 +247,17 @@ export const useBannerDesign = (initialDesign?: BannerDesign) => {
         [setDesign],
     );
 
+    const setCanvasSize = useCallback(
+        (width: number, height: number) => {
+            setDesign((prev) => ({
+                ...prev,
+                canvasWidth: width,
+                canvasHeight: height,
+            }));
+        },
+        [setDesign],
+    );
+
     const getPendingImageFiles = useCallback(
         () => new Map(pendingImageFilesRef.current),
         [],
@@ -274,6 +285,7 @@ export const useBannerDesign = (initialDesign?: BannerDesign) => {
         moveElement,
         setBackgroundColor,
         setBackgroundImageFile,
+        setCanvasSize,
         getPendingImageFiles,
         getPendingBackgroundFile,
         resetDesign,

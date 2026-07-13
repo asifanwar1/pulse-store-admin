@@ -49,6 +49,16 @@ export type BannerDesign = {
 export const DEFAULT_CANVAS_WIDTH = 1200;
 export const DEFAULT_CANVAS_HEIGHT = 400;
 
+// Quick-select sizes for the canvas-size control. These are conventions, not
+// enforced server-side — the public API never returns canvas dimensions, so
+// the storefront/mobile app size each placement's container to match these
+// same presets. Picking a different size still works (images render via
+// object-cover/contentFit=cover) but may crop unexpectedly on the storefront.
+export const CANVAS_SIZE_PRESETS = [
+    { label: "Hero", width: 1200, height: 400 },
+    { label: "Strap", width: 1200, height: 180 },
+] as const;
+
 export const createEmptyDesign = (): BannerDesign => ({
     canvasWidth: DEFAULT_CANVAS_WIDTH,
     canvasHeight: DEFAULT_CANVAS_HEIGHT,

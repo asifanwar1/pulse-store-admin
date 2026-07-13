@@ -32,6 +32,7 @@ const BannerEditor = forwardRef<BannerEditorHandle, BannerEditorProps>(
             moveElement,
             setBackgroundColor,
             setBackgroundImageFile,
+            setCanvasSize,
             getPendingImageFiles,
             getPendingBackgroundFile,
             resetDesign,
@@ -96,6 +97,8 @@ const BannerEditor = forwardRef<BannerEditorHandle, BannerEditorProps>(
             >
                 <Toolbar
                     selectedElement={selectedElement}
+                    canvasWidth={design.canvasWidth}
+                    canvasHeight={design.canvasHeight}
                     backgroundColor={design.backgroundColor}
                     hasBackgroundImage={!!design.backgroundImage}
                     canUndo={canUndo}
@@ -112,6 +115,7 @@ const BannerEditor = forwardRef<BannerEditorHandle, BannerEditorProps>(
                     }
                     onSetBackgroundColor={setBackgroundColor}
                     onSetBackgroundImage={setBackgroundImageFile}
+                    onSetCanvasSize={setCanvasSize}
                     onUndo={undo}
                     onRedo={redo}
                 />

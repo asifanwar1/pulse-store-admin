@@ -16,7 +16,11 @@ import {
 
 import Button from "@/components/custom/CustomButton/CustomButton";
 import { cn } from "@/lib/utils";
-import type { BannerElement, ShapeType } from "./BannerEditor.types";
+import {
+    CANVAS_SIZE_PRESETS,
+    type BannerElement,
+    type ShapeType,
+} from "./BannerEditor.types";
 
 const FONT_FAMILIES = [
     "sans-serif",
@@ -29,6 +33,8 @@ const FONT_FAMILIES = [
 
 type ToolbarProps = {
     selectedElement: BannerElement | null;
+    canvasWidth: number;
+    canvasHeight: number;
     backgroundColor: string;
     hasBackgroundImage: boolean;
     canUndo: boolean;
@@ -41,6 +47,7 @@ type ToolbarProps = {
     onMoveSelected: (direction: "forward" | "backward") => void;
     onSetBackgroundColor: (color: string) => void;
     onSetBackgroundImage: (file: File | null) => void;
+    onSetCanvasSize: (width: number, height: number) => void;
     onUndo: () => void;
     onRedo: () => void;
 };
@@ -68,6 +75,8 @@ const ToolbarButton: React.FC<{
 
 const Toolbar: React.FC<ToolbarProps> = ({
     selectedElement,
+    canvasWidth,
+    canvasHeight,
     backgroundColor,
     hasBackgroundImage,
     canUndo,
@@ -80,6 +89,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
     onMoveSelected,
     onSetBackgroundColor,
     onSetBackgroundImage,
+    onSetCanvasSize,
     onUndo,
     onRedo,
 }) => {
@@ -176,6 +186,66 @@ const Toolbar: React.FC<ToolbarProps> = ({
                         e.target.value = "";
                     }}
                 />
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 border-t border-pulse-cream-dark pt-3">
+                <span className="text-xs font-medium text-pulse-green">
+                    Canvas size
+                </span>
+                {CANVAS_SIZE_PRESETS.map((preset) => (
+                    <Button
+                        key={preset.label}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                            onSetCanvasSize(preset.width, preset.height)
+                        }
+                        className={cn(
+                            "h-8 bg-white text-xs",
+                            canvasWidth === preset.width &&
+                                canvasHeight === preset.height &&
+                                "border-pulse-green-dark text-pulse-green-dark",
+                        )}
+                    >
+                        {preset.label} ({preset.width}×{preset.height})
+                    </Button>
+                ))}
+                <input
+                    type="number"
+                    min={50}
+                    max={2000}
+                    value={canvasWidth}
+                    onChange={(e) =>
+                        onSetCanvasSize(
+                            Number(e.target.value) || canvasWidth,
+                            canvasHeight,
+                        )
+                    }
+                    className="h-8 w-20 rounded-md border border-pulse-cream-dark bg-white px-2 text-sm text-pulse-green-dark"
+                    title="Canvas width (px)"
+                    aria-label="Canvas width"
+                />
+                <span className="text-xs text-pulse-green/60">×</span>
+                <input
+                    type="number"
+                    min={50}
+                    max={2000}
+                    value={canvasHeight}
+                    onChange={(e) =>
+                        onSetCanvasSize(
+                            canvasWidth,
+                            Number(e.target.value) || canvasHeight,
+                        )
+                    }
+                    className="h-8 w-20 rounded-md border border-pulse-cream-dark bg-white px-2 text-sm text-pulse-green-dark"
+                    title="Canvas height (px)"
+                    aria-label="Canvas height"
+                />
+                <span className="text-xs text-pulse-green/60">
+                    Match the size your storefront placement expects — see the
+                    banner integration docs.
+                </span>
             </div>
 
             {selectedElement && (
