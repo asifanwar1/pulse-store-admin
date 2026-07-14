@@ -9,6 +9,14 @@ import {
 
 const MAX_HISTORY = 30;
 const MAX_IMAGE_PREVIEW_WIDTH = 400;
+// Konva re-rasterizes whatever resolution it's given on every drag/redraw, so
+// handing it an unresized multi-thousand-pixel upload makes the canvas hang
+// (and can crash the tab) while dragging or scrolling. 2400px comfortably
+// covers a full-bleed image at the largest size we actually export (a
+// 1200-wide canvas preset at pixelRatio 2 — see export.ts) with no visible
+// quality loss, while cutting typical raw photo/stock-graphic uploads down
+// from 10s of megapixels to a few.
+const MAX_EDITOR_IMAGE_DIMENSION = 2400;
 
 let idCounter = 0;
 const nextId = (prefix: string) => `${prefix}-${Date.now()}-${idCounter++}`;
@@ -27,14 +35,76 @@ const SHAPE_DEFAULTS: Record<ShapeType, { width: number; height: number }> = {
     circle: { width: 120, height: 120 },
 };
 
-const loadImageSize = (src: string) =>
-    new Promise<{ width: number; height: number }>((resolve) => {
+const loadImageElement = (src: string) =>
+    new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
-        img.onload = () =>
-            resolve({ width: img.naturalWidth, height: img.naturalHeight });
-        img.onerror = () => resolve({ width: 200, height: 200 });
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("Failed to load image"));
         img.src = src;
     });
+
+type PreparedImage = {
+    file: File;
+    src: string;
+    width: number;
+    height: number;
+};
+
+// Loads the file, and if it exceeds MAX_EDITOR_IMAGE_DIMENSION, downsamples it
+// via an offscreen canvas so the resulting file/object-URL is what actually
+// gets fed into Konva (and later uploaded) — never the raw original.
+const prepareImageFile = async (file: File): Promise<PreparedImage> => {
+    const originalSrc = URL.createObjectURL(file);
+
+    let img: HTMLImageElement;
+    try {
+        img = await loadImageElement(originalSrc);
+    } catch {
+        return { file, src: originalSrc, width: 200, height: 200 };
+    }
+
+    const { naturalWidth, naturalHeight } = img;
+    const longestEdge = Math.max(naturalWidth, naturalHeight);
+
+    if (longestEdge <= MAX_EDITOR_IMAGE_DIMENSION) {
+        return { file, src: originalSrc, width: naturalWidth, height: naturalHeight };
+    }
+
+    const scale = MAX_EDITOR_IMAGE_DIMENSION / longestEdge;
+    const width = Math.max(1, Math.round(naturalWidth * scale));
+    const height = Math.max(1, Math.round(naturalHeight * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+
+    const blob = ctx
+        ? await new Promise<Blob | null>((resolve) => {
+              ctx.drawImage(img, 0, 0, width, height);
+              canvas.toBlob(resolve, "image/png");
+          })
+        : null;
+
+    URL.revokeObjectURL(originalSrc);
+
+    if (!blob) {
+        return {
+            file,
+            src: URL.createObjectURL(file),
+            width: naturalWidth,
+            height: naturalHeight,
+        };
+    }
+
+    const resizedFile = new File([blob], file.name, { type: "image/png" });
+    return {
+        file: resizedFile,
+        src: URL.createObjectURL(resizedFile),
+        width,
+        height,
+    };
+};
 
 export const useBannerDesign = (initialDesign?: BannerDesign) => {
     const [design, setDesignState] = useState<BannerDesign>(
@@ -117,10 +187,13 @@ export const useBannerDesign = (initialDesign?: BannerDesign) => {
 
     const addImage = useCallback(
         async (file: File) => {
-            const src = URL.createObjectURL(file);
+            const {
+                file: preparedFile,
+                src,
+                width: naturalWidth,
+                height: naturalHeight,
+            } = await prepareImageFile(file);
             objectUrlsRef.current.add(src);
-            const { width: naturalWidth, height: naturalHeight } =
-                await loadImageSize(src);
             const ratio =
                 naturalWidth > MAX_IMAGE_PREVIEW_WIDTH
                     ? MAX_IMAGE_PREVIEW_WIDTH / naturalWidth
@@ -128,7 +201,7 @@ export const useBannerDesign = (initialDesign?: BannerDesign) => {
             const width = Math.max(1, Math.round(naturalWidth * ratio));
             const height = Math.max(1, Math.round(naturalHeight * ratio));
             const id = nextId("image");
-            pendingImageFilesRef.current.set(id, file);
+            pendingImageFilesRef.current.set(id, preparedFile);
 
             setDesign((prev) => ({
                 ...prev,
@@ -233,15 +306,15 @@ export const useBannerDesign = (initialDesign?: BannerDesign) => {
     );
 
     const setBackgroundImageFile = useCallback(
-        (file: File | null) => {
+        async (file: File | null) => {
             if (!file) {
                 pendingBackgroundFileRef.current = null;
                 setDesign((prev) => ({ ...prev, backgroundImage: null }));
                 return;
             }
-            const src = URL.createObjectURL(file);
+            const { file: preparedFile, src } = await prepareImageFile(file);
             objectUrlsRef.current.add(src);
-            pendingBackgroundFileRef.current = file;
+            pendingBackgroundFileRef.current = preparedFile;
             setDesign((prev) => ({ ...prev, backgroundImage: src }));
         },
         [setDesign],
