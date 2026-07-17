@@ -2,16 +2,19 @@ import { request } from "@/api/client/request";
 import type { TApiArgs, TQueryParams, WithSignal } from "@/api/types/common";
 import { HTTP_METHODS } from "@/constants";
 import type {
+    TAddShipmentTrackingBody,
     TCreateShipmentBody,
     TGetShipmentsParams,
     TUpdateShipmentBody,
     TUpdateShipmentStatusBody,
 } from "./shipment.request.types";
 import type {
+    TAddShipmentTrackingResponse,
     TCreateShipmentResponse,
     TGetShipmentResponse,
     TGetShipmentsAnalyticsResponse,
     TGetShipmentsResponse,
+    TShipmentTrackingByNumberResponse,
     TUpdateShipmentResponse,
     TUpdateShipmentStatusResponse,
 } from "./shipment.response";
@@ -65,6 +68,24 @@ export const UpdateShipmentStatus = async ({
         method: HTTP_METHODS.PATCH,
         url: `/shipments/${id}/status`,
         body,
+    });
+};
+
+export const AddShipmentTracking = async ({
+    id,
+    body,
+}: TApiArgs<TAddShipmentTrackingBody>) => {
+    return request<TAddShipmentTrackingResponse, TAddShipmentTrackingBody>({
+        method: HTTP_METHODS.POST,
+        url: `/shipments/${id}/tracking`,
+        body,
+    });
+};
+
+export const GetShipmentTrackingByNumber = async (trackingId: string) => {
+    return request<TShipmentTrackingByNumberResponse, undefined>({
+        method: HTTP_METHODS.GET,
+        url: `/shipments/track/${trackingId}`,
     });
 };
 

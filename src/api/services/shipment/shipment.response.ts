@@ -19,6 +19,14 @@ export type TShipmentItemResponse = {
     weight: number;
 };
 
+export type TShipmentTrackingEvent = {
+    id: number;
+    status: TShipmentStatus | string | null;
+    description: string | null;
+    location: string | null;
+    created_at: string;
+};
+
 export type TShipmentResponse = {
     id: number;
     order_id: number;
@@ -55,6 +63,8 @@ export type TShipmentResponse = {
         unit_price: string;
         total_amount: string;
     }>;
+    // Present on shipment detail/create/update/status-update responses, absent on list responses.
+    tracking?: TShipmentTrackingEvent[];
 };
 
 export type TShipmentListResponse = {
@@ -80,3 +90,15 @@ export type TCreateShipmentResponse = TShipmentResponse;
 export type TGetShipmentResponse = TShipmentResponse;
 export type TUpdateShipmentResponse = TShipmentResponse;
 export type TUpdateShipmentStatusResponse = TShipmentResponse;
+export type TAddShipmentTrackingResponse = TShipmentResponse;
+
+export type TShipmentTrackingByNumberResponse = {
+    tracking_id: string;
+    status: TShipmentStatus | string;
+    courier: string;
+    shipment_method: string;
+    estimated_delivery_date: string | null;
+    shipped_at: string | null;
+    delivered_at: string | null;
+    tracking: TShipmentTrackingEvent[];
+};

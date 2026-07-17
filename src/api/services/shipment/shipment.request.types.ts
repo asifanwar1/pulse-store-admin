@@ -58,3 +58,9 @@ export type TUpdateShipmentBody = {
 export type TUpdateShipmentStatusBody = {
     status: TShipmentStatus | string;
 };
+
+export type TAddShipmentTrackingBody = {
+    description: string;
+    location?: string;
+    status?: TShipmentStatus | string;
+};

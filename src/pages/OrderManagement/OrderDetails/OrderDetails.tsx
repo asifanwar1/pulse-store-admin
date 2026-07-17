@@ -36,6 +36,7 @@ import { cn } from "@/lib/utils";
 import type { TOrderStatus } from "@/api/services/orders/orders.request.types";
 import { Select } from "@/components/custom/Select";
 import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
+import Timeline from "@/components/custom/Timeline/Timeline";
 
 export default function OrderDetails() {
     const {
@@ -193,6 +194,29 @@ export default function OrderDetails() {
                         columnVisibility: false,
                         globalSearch: false,
                     }}
+                />
+            </ChartCard>
+
+            {/* Order tracking timeline */}
+            <ChartCard
+                title="Order Tracking"
+                subtitle="Status history for this order"
+                className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card py-1"
+                bodyClassName="px-5 py-4"
+            >
+                <Timeline
+                    items={order.tracking ?? []}
+                    getStatusLabel={(status) =>
+                        OrderStatusWithHelpers.getDisplayTextKey(
+                            status as OrderStatusType,
+                        )
+                    }
+                    getStatusClass={(status) =>
+                        OrderStatusWithHelpers.getLabelClass(
+                            status as OrderStatusType,
+                        )
+                    }
+                    emptyMessage="No status history yet."
                 />
             </ChartCard>
 

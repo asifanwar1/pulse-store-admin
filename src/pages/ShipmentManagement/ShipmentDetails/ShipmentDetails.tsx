@@ -8,11 +8,13 @@ import {
     StickyNote,
     DollarSign,
     OctagonAlert,
+    Plus,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import StatChipCard from "@/components/custom/CustomCards/StatChipCard";
+import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import { Select } from "@/components/custom/Select";
 import {
     SHIPMENT_STATUS_OPTIONS,
@@ -28,6 +30,8 @@ import {
 import { getFormattedDate } from "@/utils/dateTime.utils";
 import ProductOrderCard from "@/components/custom/CustomCards/ProductOrderCard";
 import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
+import Timeline from "@/components/custom/Timeline/Timeline";
+import AddTrackingModal from "./AddTrackingModal";
 
 const BoxURL =
     "https://dftybolqcutmxzqcsogd.supabase.co/storage/v1/object/public/pulsestore/products/beige-box.jpg";
@@ -45,6 +49,12 @@ const ShipmentDetails = () => {
         handleShipmentStatusModalClose,
         handleStatusChange,
         handleNavigateToProduct,
+        trackingFormRef,
+        trackingModalOpen,
+        isAddingTracking,
+        handleTrackingModalOpen,
+        handleTrackingModalClose,
+        handleAddTracking,
     } = useShimentDetails();
 
     if (isShipmentDataLoading) {
@@ -67,10 +77,14 @@ const ShipmentDetails = () => {
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
-            <div className="flex">
+            <div className="flex items-center justify-between">
                 <Button onClick={handleNavigateBack} variant="ghost" size="sm">
                     <ArrowLeft className="w-4 h-4" />
                     Back to Shipments
+                </Button>
+                <Button size="sm" onClick={handleTrackingModalOpen}>
+                    <Plus className="w-4 h-4" />
+                    Add Tracking Update
                 </Button>
             </div>
 
@@ -209,6 +223,29 @@ const ShipmentDetails = () => {
                 )}
             </div>
 
+            {/* Shipment tracking timeline */}
+            <ChartCard
+                title="Shipment Tracking"
+                subtitle="Checkpoint history for this shipment"
+                className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card py-1"
+                bodyClassName="px-5 py-4"
+            >
+                <Timeline
+                    items={shipment.tracking ?? []}
+                    getStatusLabel={(status) =>
+                        ShipmentStatusWithHelpers.getDisplayTextKey(
+                            status as ShipmentStatusType,
+                        )
+                    }
+                    getStatusClass={(status) =>
+                        ShipmentStatusWithHelpers.getLabelClass(
+                            status as ShipmentStatusType,
+                        )
+                    }
+                    emptyMessage="No tracking updates yet."
+                />
+            </ChartCard>
+
             {shipment.ordered_items &&
                 shipment.ordered_items?.length > NO_VALUE && (
                     <div className="flex flex-col gap-0.5">
@@ -249,6 +286,14 @@ const ShipmentDetails = () => {
                     isLoading={isUpdatingShipmentStatus}
                 />
             )}
+
+            <AddTrackingModal
+                open={trackingModalOpen}
+                isSubmitting={isAddingTracking}
+                formRef={trackingFormRef}
+                onClose={handleTrackingModalClose}
+                onSubmit={handleAddTracking}
+            />
         </div>
     );
 };

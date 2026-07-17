@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
+    useAddShipmentTracking,
     useGetShipment,
     useUpdateShipmentStatus,
 } from "@/hooks/api/shipment.queries";
@@ -13,6 +14,8 @@ import {
     SHIPMENT_STATUS_OPTIONS,
     type ShipmentStatusType,
 } from "@/constants/shipment-status.constants";
+import type { FormBuilderRef } from "@/components/custom/Form";
+import type { AddTrackingFormValues } from "./AddTracking.schema";
 
 const NO_VALUE = 0;
 
@@ -34,8 +37,16 @@ export const useShimentDetails = () => {
         isPending: isUpdatingShipmentStatus,
     } = useUpdateShipmentStatus();
 
+    const trackingFormRef = useRef<FormBuilderRef<AddTrackingFormValues>>(
+        null,
+    );
+    const [trackingModalOpen, setTrackingModalOpen] =
+        useState<boolean>(false);
+    const { mutateAsync: addShipmentTracking, isPending: isAddingTracking } =
+        useAddShipmentTracking();
+
     useEffect(() => {
-        if (shipment?.status && !selectedStatusOption) {
+        if (shipment?.status) {
             const shipmentStatusOption = getOptionObject(
                 SHIPMENT_STATUS_OPTIONS,
                 shipment.status,
@@ -85,6 +96,31 @@ export const useShimentDetails = () => {
         }
     };
 
+    const handleTrackingModalOpen = () => setTrackingModalOpen(true);
+    const handleTrackingModalClose = () => setTrackingModalOpen(false);
+
+    const handleAddTracking = async (values: AddTrackingFormValues) => {
+        try {
+            await addShipmentTracking(
+                {
+                    id: Number(id),
+                    body: {
+                        description: values.description,
+                        ...(values.location && { location: values.location }),
+                        ...(values.status && { status: values.status }),
+                    },
+                },
+                {
+                    onSuccess: () => {
+                        handleTrackingModalClose();
+                    },
+                },
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return {
         NO_VALUE,
         shipment,
@@ -98,5 +134,11 @@ export const useShimentDetails = () => {
         handleNavigateBack,
         handleStatusChange,
         handleNavigateToProduct,
+        trackingFormRef,
+        trackingModalOpen,
+        isAddingTracking,
+        handleTrackingModalOpen,
+        handleTrackingModalClose,
+        handleAddTracking,
     };
 };

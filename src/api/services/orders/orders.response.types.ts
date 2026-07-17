@@ -20,6 +20,13 @@ export type TOrderItemResponse = {
     total_amount: number;
 };
 
+export type TOrderTrackingEntry = {
+    id: number;
+    status: TOrderStatus | string;
+    note: string | null;
+    created_at: string;
+};
+
 export type TOrderResponse = {
     id: number | string;
     payment_method: TPaymentMethod | string;
@@ -46,6 +53,8 @@ export type TOrderResponse = {
     shipped_at?: string;
     created_at?: string;
     updatedAt?: string;
+    // Present on order detail/create/status-update responses, absent on list responses.
+    tracking?: TOrderTrackingEntry[];
 };
 
 export type TGetOrdersResponse = {

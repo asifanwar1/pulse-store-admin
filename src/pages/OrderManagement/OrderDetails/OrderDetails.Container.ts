@@ -24,7 +24,7 @@ export const useOrderDetails = () => {
         useUpdateOrderStatus();
 
     useEffect(() => {
-        if (order?.status && !selectedStatusOption) {
+        if (order?.status) {
             const orderStatusOption = getOptionObject(
                 ORDER_STATUS_OPTIONS,
                 order.status,

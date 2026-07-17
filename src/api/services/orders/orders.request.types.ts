@@ -3,6 +3,7 @@ export type TOrderSortDirection = "ASC" | "DESC";
 export type TOrderStatus =
     | "PENDING"
     | "PROCESSING"
+    | "SHIPPING"
     | "SHIPPED"
     | "DELIVERED"
     | "CANCELLED";

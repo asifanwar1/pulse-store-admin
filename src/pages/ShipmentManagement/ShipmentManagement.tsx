@@ -5,6 +5,7 @@ import { formatStatValue } from "@/utils/common.utils";
 import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 import { useShipmentManagement } from "./ShipmentManagement.Container";
 import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
+import TrackShipment from "./TrackShipment/TrackShipment";
 
 const ShipmentManagement = () => {
     const { shipments, shipmentAnalyticsData, isShipmentsDataLoading } =
@@ -15,6 +16,8 @@ const ShipmentManagement = () => {
     }
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
+            <TrackShipment />
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {SHIPMENT_STAT_CONFIG.map(
                     ({

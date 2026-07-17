@@ -1,13 +1,17 @@
 import {
+    AddShipmentTracking,
     CreateShipment,
     GetShipment,
     GetShipments,
     GetShipmentsAnalytics,
+    GetShipmentTrackingByNumber,
+    ORDER_QUERY_KEYS,
     SHIPMENT_QUERY_KEYS,
     UpdateShipment,
     UpdateShipmentStatus,
 } from "@/api";
 import type {
+    TAddShipmentTrackingBody,
     TCreateShipmentBody,
     TGetShipmentsParams,
     TUpdateShipmentBody,
@@ -20,6 +24,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDataTableQuery } from "../useDataTableQuery";
 import Config from "@/Config";
 import { usePaginatedQuery } from "../usePaginatedQuery";
+import { showToast } from "@/lib/toast";
 
 export const useGetShipments = (
     props: TGetShipmentsParams,
@@ -136,6 +141,49 @@ export const useUpdateShipmentStatus = () => {
                 [SHIPMENT_QUERY_KEYS.SHIPMENTS],
                 [SHIPMENT_QUERY_KEYS.SHIPMENT],
             ]);
+        },
+    });
+};
+
+export const useAddShipmentTracking = () => {
+    return useMutation({
+        mutationFn: ({
+            id,
+            body,
+        }: {
+            id: number;
+            body: TAddShipmentTrackingBody;
+        }) => AddShipmentTracking({ id, body }),
+        onSuccess: async () => {
+            await invalidateMultiple(queryClient, [
+                [SHIPMENT_QUERY_KEYS.SHIPMENTS],
+                [SHIPMENT_QUERY_KEYS.SHIPMENT],
+                [ORDER_QUERY_KEYS.ORDERS],
+                [ORDER_QUERY_KEYS.ORDER],
+            ]);
+            showToast.success("Tracking update added successfully");
+        },
+    });
+};
+
+export const useTrackShipmentByNumber = () => {
+    return useMutation({
+        mutationFn: async (trackingId: string) => {
+            const [trackingDetails, matchingShipments] = await Promise.all([
+                GetShipmentTrackingByNumber(trackingId),
+                GetShipments({ search: trackingId, limit: 5 }),
+            ]);
+
+            const matchedShipment = matchingShipments.data.find(
+                (shipment) =>
+                    shipment.tracking_id.toLowerCase() ===
+                    trackingId.trim().toLowerCase(),
+            );
+
+            return {
+                trackingDetails,
+                shipmentId: matchedShipment?.id,
+            };
         },
     });
 };

@@ -8,6 +8,32 @@ import {
     UNAUTHORIZED_ERROR_MESSAGE,
 } from "@/constants/Validation-messages.constants";
 
+type TBackendErrorData = {
+    Message?: string;
+    detail?: string | Array<{ msg?: string }>;
+    error?: Record<string, string>;
+};
+
+const extractErrorMessage = (
+    data: TBackendErrorData | undefined,
+    fallbackMessage: string,
+): string => {
+    if (!data) return fallbackMessage;
+
+    if (typeof data.detail === "string" && data.detail) {
+        return data.detail;
+    }
+
+    if (Array.isArray(data.detail)) {
+        const messages = data.detail
+            .map((item) => item?.msg)
+            .filter((msg): msg is string => Boolean(msg));
+        if (messages.length) return messages.join(", ");
+    }
+
+    return data.Message || fallbackMessage;
+};
+
 const networkRequestErrorHandler = (
     error: unknown,
     fallbackMessage = GENERIC_ERROR_MESSAGE,
@@ -19,12 +45,14 @@ const networkRequestErrorHandler = (
         const axiosError = error as {
             response?: {
                 status: number;
-                data: { Message?: string; error?: Record<string, string> };
+                data?: TBackendErrorData;
             };
-            Message: string;
         };
         status = axiosError.response?.status;
-        errorMessage = axiosError.response?.data?.Message || fallbackMessage;
+        errorMessage = extractErrorMessage(
+            axiosError.response?.data,
+            fallbackMessage,
+        );
 
         if (status === HTTP_STATUS.UNAUTHORIZED) {
             store.clearAuth();
