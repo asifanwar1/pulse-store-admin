@@ -43,11 +43,13 @@ import ManageOffer from "@/pages/OffersManagement/ManageOffer/ManageOffer";
 import RevenueManagement from "@/pages/RevenueManagement/RevenueManagment";
 import RevenueDetails from "@/pages/RevenueManagement/RevenueDetails/RevenueDetails.";
 import Profile from "@/pages/Profile/Profile";
-import Chats from "@/pages/Chats/Chats";
 import Notifications from "@/pages/Notifications/Notifications";
 import ReviewsManagement from "@/pages/ReviewsManagement/ReviewsManagement";
 import BannersManagement from "@/pages/BannersManagement/BannersManagement";
 import ManageBanner from "@/pages/BannersManagement/ManageBanner/ManageBanner";
+import AiAgentsManagement from "@/pages/AiAgentsManagement/AiAgentsManagement";
+import SupportTickets from "@/pages/SupportTickets/SupportTickets";
+import AiAgentChat from "@/pages/AiAgentChat/AiAgentChat";
 
 export const routes: RouteObject[] = [
     {
@@ -119,8 +121,13 @@ export const routes: RouteObject[] = [
                 path: APP_ROUTES.BANNERS_UPDATE,
                 element: <ManageBanner mode="update" />,
             },
+            { path: APP_ROUTES.AI_AGENTS, element: <AiAgentsManagement /> },
+            {
+                path: APP_ROUTES.AI_AGENT_TICKETS,
+                element: <SupportTickets />,
+            },
             { path: APP_ROUTES.ACCOUNT, element: <Profile /> },
-            { path: APP_ROUTES.CHATS, element: <Chats /> },
+            { path: APP_ROUTES.CHATS, element: <AiAgentChat /> },
             { path: APP_ROUTES.NOTIFICATIONS, element: <Notifications /> },
             // {
             //     path: APP_ROUTES.CHATS,

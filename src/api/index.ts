@@ -9,3 +9,4 @@ export * from "./services/categories";
 export * from "./services/offers";
 export * from "./services/reviews";
 export * from "./services/banners";
+export * from "./services/aiAgents";

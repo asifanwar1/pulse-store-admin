@@ -52,5 +52,8 @@ export enum APP_ROUTES {
     BANNERS_ADD = "/banners/add",
     BANNERS_UPDATE = "/banners/update/:id",
 
+    AI_AGENTS = "/ai-agents",
+    AI_AGENT_TICKETS = "/ai-agents/tickets",
+
     NOTIFICATIONS = "/notifications",
 }

@@ -11,6 +11,8 @@ import {
     BadgePercent,
     MessageSquareText,
     Image,
+    Bot,
+    Headset,
 } from "lucide-react";
 
 export type SidebarContainerType = {
@@ -79,5 +81,17 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: Image,
         activeIcon: Image,
         path: [APP_ROUTES.BANNERS],
+    },
+    {
+        label: "AI Agents",
+        inactiveIcon: Bot,
+        activeIcon: Bot,
+        path: [APP_ROUTES.AI_AGENTS],
+    },
+    {
+        label: "Support Tickets",
+        inactiveIcon: Headset,
+        activeIcon: Headset,
+        path: [APP_ROUTES.AI_AGENT_TICKETS],
     },
 ];

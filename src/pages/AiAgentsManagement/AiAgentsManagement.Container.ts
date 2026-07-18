@@ -1,0 +1,120 @@
+import { useState, type FormEvent } from "react";
+
+import {
+    useGetAgentConfigs,
+    useUpdateAgentConfig,
+    useUpdateAgentStatus,
+} from "@/hooks/api/aiAgents.queries";
+import type { TAgentConfigResponse } from "@/api/services/aiAgents/aiAgents.response.types";
+import { showToast } from "@/lib/toast";
+
+export type TAgentEditFormValues = {
+    model_name: string;
+    system_prompt_override: string;
+};
+
+const INITIAL_FORM_VALUES: TAgentEditFormValues = {
+    model_name: "",
+    system_prompt_override: "",
+};
+
+export const useAiAgentsManagement = () => {
+    const { data, isPending: isAgentsLoading } = useGetAgentConfigs();
+    const agents = data?.data ?? [];
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedAgent, setSelectedAgent] =
+        useState<TAgentConfigResponse | null>(null);
+    const [formValues, setFormValues] =
+        useState<TAgentEditFormValues>(INITIAL_FORM_VALUES);
+    const [togglingAgentKey, setTogglingAgentKey] = useState<string | null>(
+        null,
+    );
+
+    const { mutateAsync: updateAgentConfig, isPending: isSaving } =
+        useUpdateAgentConfig();
+    const { mutateAsync: updateAgentStatus, isPending: isUpdatingStatus } =
+        useUpdateAgentStatus();
+
+    const openEditModal = (agent: TAgentConfigResponse) => {
+        setSelectedAgent(agent);
+        setFormValues({
+            model_name: agent.model_name ?? "",
+            system_prompt_override: agent.system_prompt_override ?? "",
+        });
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        if (isSaving) return;
+        setIsEditModalOpen(false);
+        setSelectedAgent(null);
+        setFormValues(INITIAL_FORM_VALUES);
+    };
+
+    const handleFormChange = <K extends keyof TAgentEditFormValues>(
+        field: K,
+        value: TAgentEditFormValues[K],
+    ) => {
+        setFormValues((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (!selectedAgent) return;
+
+        try {
+            await updateAgentConfig({
+                agentKey: selectedAgent.agent_key,
+                body: {
+                    model_name: formValues.model_name.trim() || null,
+                    system_prompt_override:
+                        formValues.system_prompt_override.trim() || null,
+                },
+            });
+            showToast.success("Agent settings updated successfully");
+            setIsEditModalOpen(false);
+            setSelectedAgent(null);
+            setFormValues(INITIAL_FORM_VALUES);
+        } catch (error) {
+            console.error("Failed to update agent settings:", error);
+            showToast.error("Failed to update agent settings");
+        }
+    };
+
+    const handleToggleActive = async (agent: TAgentConfigResponse) => {
+        setTogglingAgentKey(agent.agent_key);
+        try {
+            await updateAgentStatus({
+                agentKey: agent.agent_key,
+                body: { is_enabled: !agent.is_enabled },
+            });
+            showToast.success(
+                agent.is_enabled
+                    ? `${agent.display_name} disabled`
+                    : `${agent.display_name} enabled`,
+            );
+        } catch (error) {
+            console.error("Failed to update agent status:", error);
+            showToast.error("Failed to update agent status");
+        } finally {
+            setTogglingAgentKey(null);
+        }
+    };
+
+    return {
+        agents,
+        isAgentsLoading,
+        isEditModalOpen,
+        selectedAgent,
+        formValues,
+        isSaving,
+        togglingAgentKey,
+        isUpdatingStatus,
+        openEditModal,
+        closeEditModal,
+        handleFormChange,
+        handleFormSubmit,
+        handleToggleActive,
+    };
+};

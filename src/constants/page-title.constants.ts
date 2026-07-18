@@ -41,7 +41,11 @@ export const defaultRouteNames: Record<string, string> = {
     [APP_ROUTES.REVIEWS]: "Reviews Management",
 
     // Chat Management
-    [APP_ROUTES.CHATS]: "Chat",
+    [APP_ROUTES.CHATS]: "AI Chat Assistant",
+
+    // AI Agents
+    [APP_ROUTES.AI_AGENTS]: "AI Agents",
+    [APP_ROUTES.AI_AGENT_TICKETS]: "Support Tickets",
 
     // Notifications Management
     [APP_ROUTES.NOTIFICATIONS]: "Notifications",
