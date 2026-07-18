@@ -37,11 +37,8 @@ export const useShimentDetails = () => {
         isPending: isUpdatingShipmentStatus,
     } = useUpdateShipmentStatus();
 
-    const trackingFormRef = useRef<FormBuilderRef<AddTrackingFormValues>>(
-        null,
-    );
-    const [trackingModalOpen, setTrackingModalOpen] =
-        useState<boolean>(false);
+    const trackingFormRef = useRef<FormBuilderRef<AddTrackingFormValues>>(null);
+    const [trackingModalOpen, setTrackingModalOpen] = useState<boolean>(false);
     const { mutateAsync: addShipmentTracking, isPending: isAddingTracking } =
         useAddShipmentTracking();
 
@@ -129,14 +126,14 @@ export const useShimentDetails = () => {
         statusModalOpen,
         selectedStatusOption,
         isUpdatingShipmentStatus,
+        trackingFormRef,
+        trackingModalOpen,
+        isAddingTracking,
         handleShipmentStatusModalOpen,
         handleShipmentStatusModalClose,
         handleNavigateBack,
         handleStatusChange,
         handleNavigateToProduct,
-        trackingFormRef,
-        trackingModalOpen,
-        isAddingTracking,
         handleTrackingModalOpen,
         handleTrackingModalClose,
         handleAddTracking,
