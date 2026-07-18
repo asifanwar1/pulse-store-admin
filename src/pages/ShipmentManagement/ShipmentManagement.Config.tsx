@@ -7,6 +7,7 @@ import {
 } from "@/constants/shipment-status.constants";
 import type { TShipmentResponse } from "@/api/services/shipment/shipment.response";
 import { getInitialsFromName } from "@/utils/common.utils";
+import { getFormattedDate } from "@/utils/dateTime.utils";
 
 export const SHIPMENT_STAT_CONFIG = [
     {
@@ -144,7 +145,7 @@ export const shipmentManagementTableColumns: TDataColumnDef<TShipmentResponse>[]
                 label: "Est. Delivery",
                 cellRenderer: (value) => (
                     <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                        {value as string}
+                        {getFormattedDate(value as string)}
                     </span>
                 ),
             },
