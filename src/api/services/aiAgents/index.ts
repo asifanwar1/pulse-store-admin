@@ -10,6 +10,7 @@ import type {
 } from "./aiAgents.request.types";
 import type {
     TGetAgentConfigsResponse,
+    TGetAvailableModelsResponse,
     TGetSupportTicketsResponse,
     TUpdateAgentConfigResponse,
     TUpdateAgentStatusResponse,
@@ -21,6 +22,13 @@ export const GetAgentConfigs = async () => {
     return request<TGetAgentConfigsResponse, undefined>({
         method: HTTP_METHODS.GET,
         url: "/ai-agents/",
+    });
+};
+
+export const GetAvailableModels = async () => {
+    return request<TGetAvailableModelsResponse, undefined>({
+        method: HTTP_METHODS.GET,
+        url: "/ai-agents/available-models",
     });
 };
 
@@ -96,7 +104,9 @@ export type {
 } from "./aiAgents.request.types";
 export type {
     TAgentConfigResponse,
+    TAvailableModel,
     TGetAgentConfigsResponse,
+    TGetAvailableModelsResponse,
     TGetSupportTicketsResponse,
     TSupportTicketResponse,
     TUpdateAgentConfigResponse,

@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     AI_AGENT_QUERY_KEYS,
     GetAgentConfigs,
+    GetAvailableModels,
     GetSupportTickets,
     UpdateAgentConfig,
     UpdateAgentStatus,
@@ -27,6 +28,16 @@ export const useGetAgentConfigs = () => {
     return useQuery({
         queryKey: [AI_AGENT_QUERY_KEYS.AGENTS],
         queryFn: () => GetAgentConfigs(),
+        enabled: isAuthenticated,
+    });
+};
+
+export const useGetAvailableModels = () => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+
+    return useQuery({
+        queryKey: [AI_AGENT_QUERY_KEYS.AVAILABLE_MODELS],
+        queryFn: () => GetAvailableModels(),
         enabled: isAuthenticated,
     });
 };

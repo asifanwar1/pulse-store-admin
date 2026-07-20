@@ -2,14 +2,24 @@ import type { ChangeEvent, FormEvent } from "react";
 
 import { CustomModal } from "@/components/custom/CustomModal";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
-import { Input } from "@/components/custom/Input";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import type { TAvailableModel } from "@/api/services/aiAgents/aiAgents.response.types";
 import type { TAgentEditFormValues } from "./AiAgentsManagement.Container";
+
+const PROVIDER_DEFAULT_VALUE = "__provider_default__";
 
 type TEditAgentModalProps = {
     open: boolean;
     agentName?: string;
     values: TAgentEditFormValues;
+    availableModels: TAvailableModel[];
     isSubmitting: boolean;
     onClose: () => void;
     onChange: <K extends keyof TAgentEditFormValues>(
@@ -23,6 +33,7 @@ export const EditAgentModal = ({
     open,
     agentName,
     values,
+    availableModels,
     isSubmitting,
     onClose,
     onChange,
@@ -65,18 +76,49 @@ export const EditAgentModal = ({
                 onSubmit={onSubmit}
                 className="flex flex-col gap-1"
             >
-                <Input
-                    label="Model"
-                    value={values.model_name}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        onChange("model_name", event.target.value)
+                <label
+                    className="text-sm font-normal"
+                    htmlFor="agent-model-select"
+                >
+                    Model
+                </label>
+                <Select
+                    value={values.model_name || PROVIDER_DEFAULT_VALUE}
+                    onValueChange={(value) =>
+                        onChange(
+                            "model_name",
+                            value === PROVIDER_DEFAULT_VALUE ? "" : value,
+                        )
                     }
-                    placeholder="e.g. openai:gpt-4o-mini (blank = provider default)"
-                    labelClass="font-normal"
-                />
+                >
+                    <SelectTrigger id="agent-model-select" className="w-full">
+                        <SelectValue placeholder="Provider default" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={PROVIDER_DEFAULT_VALUE}>
+                            Use provider default
+                        </SelectItem>
+                        {availableModels.map((model) => (
+                            <SelectItem
+                                key={model.model}
+                                value={model.model}
+                                disabled={!model.available}
+                            >
+                                {model.label}
+                                {!model.available
+                                    ? " (needs API key)"
+                                    : ""} — {model.note}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <p className="mb-2 text-xs text-muted-foreground">
+                    Grayed-out models need an API key added on the backend
+                    before they can be used.
+                </p>
                 <TextareaInput
                     name="system_prompt_override"
-                    label="System Prompt Override"
+                    label="System Prompt"
                     value={values.system_prompt_override}
                     onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
                         onChange("system_prompt_override", event.target.value)
@@ -87,6 +129,11 @@ export const EditAgentModal = ({
                     containerClasses="mt-1"
                     textareaClasses="min-h-[180px]"
                 />
+                <p className="text-xs text-muted-foreground">
+                    Pre-filled with this agent's current instructions. Edit and
+                    save to customize them, or clear the box to reset to the
+                    built-in default.
+                </p>
             </form>
         </CustomModal>
     );

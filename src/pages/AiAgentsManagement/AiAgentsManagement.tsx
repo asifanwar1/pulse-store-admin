@@ -18,6 +18,7 @@ const AiAgentsManagement = () => {
     const {
         agents,
         isAgentsLoading,
+        availableModels,
         isEditModalOpen,
         selectedAgent,
         formValues,
@@ -75,6 +76,7 @@ const AiAgentsManagement = () => {
                 open={isEditModalOpen}
                 agentName={selectedAgent?.display_name}
                 values={formValues}
+                availableModels={availableModels}
                 isSubmitting={isSaving}
                 onClose={closeEditModal}
                 onChange={handleFormChange}

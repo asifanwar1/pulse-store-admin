@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 
 import {
     useGetAgentConfigs,
+    useGetAvailableModels,
     useUpdateAgentConfig,
     useUpdateAgentStatus,
 } from "@/hooks/api/aiAgents.queries";
@@ -22,6 +23,9 @@ export const useAiAgentsManagement = () => {
     const { data, isPending: isAgentsLoading } = useGetAgentConfigs();
     const agents = data?.data ?? [];
 
+    const { data: availableModelsData } = useGetAvailableModels();
+    const availableModels = availableModelsData?.data ?? [];
+
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedAgent, setSelectedAgent] =
         useState<TAgentConfigResponse | null>(null);
@@ -40,7 +44,12 @@ export const useAiAgentsManagement = () => {
         setSelectedAgent(agent);
         setFormValues({
             model_name: agent.model_name ?? "",
-            system_prompt_override: agent.system_prompt_override ?? "",
+            // Show the agent's built-in prompt when there's no override yet, so the
+            // admin sees what's actually running instead of a blank box.
+            system_prompt_override:
+                agent.system_prompt_override ??
+                agent.default_system_prompt ??
+                "",
         });
         setIsEditModalOpen(true);
     };
@@ -63,13 +72,21 @@ export const useAiAgentsManagement = () => {
         event.preventDefault();
         if (!selectedAgent) return;
 
+        const trimmedPrompt = formValues.system_prompt_override.trim();
+        const defaultPrompt = (
+            selectedAgent.default_system_prompt ?? ""
+        ).trim();
+        const promptOverride =
+            trimmedPrompt && trimmedPrompt !== defaultPrompt
+                ? trimmedPrompt
+                : null;
+
         try {
             await updateAgentConfig({
                 agentKey: selectedAgent.agent_key,
                 body: {
                     model_name: formValues.model_name.trim() || null,
-                    system_prompt_override:
-                        formValues.system_prompt_override.trim() || null,
+                    system_prompt_override: promptOverride,
                 },
             });
             showToast.success("Agent settings updated successfully");
@@ -105,6 +122,7 @@ export const useAiAgentsManagement = () => {
     return {
         agents,
         isAgentsLoading,
+        availableModels,
         isEditModalOpen,
         selectedAgent,
         formValues,

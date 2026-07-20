@@ -7,6 +7,7 @@ export type TAgentConfigResponse = {
     is_enabled: boolean;
     model_name?: string | null;
     system_prompt_override?: string | null;
+    default_system_prompt?: string | null;
     updated_by?: number | null;
     created_at: string;
     updated_at?: string | null;
@@ -19,6 +20,18 @@ export type TGetAgentConfigsResponse = {
 
 export type TUpdateAgentConfigResponse = TAgentConfigResponse;
 export type TUpdateAgentStatusResponse = TAgentConfigResponse;
+
+export type TAvailableModel = {
+    model: string;
+    provider: string;
+    label: string;
+    note: string;
+    available: boolean;
+};
+
+export type TGetAvailableModelsResponse = {
+    data: TAvailableModel[];
+};
 
 export type TSupportTicketResponse = {
     id: number;
