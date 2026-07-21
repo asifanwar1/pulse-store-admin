@@ -1,42 +1,21 @@
-import type { ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent } from "react";
 
 import { CustomModal } from "@/components/custom/CustomModal";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import TextareaInput from "@/components/custom/Inputs/TextareaInput/TextareaInput";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import type { TAvailableModel } from "@/api/services/aiAgents/aiAgents.response.types";
-import type { TAgentEditFormValues } from "./AiAgentsManagement.Container";
-
-const PROVIDER_DEFAULT_VALUE = "__provider_default__";
-
-type TEditAgentModalProps = {
-    open: boolean;
-    agentName?: string;
-    values: TAgentEditFormValues;
-    availableModels: TAvailableModel[];
-    isSubmitting: boolean;
-    onClose: () => void;
-    onChange: <K extends keyof TAgentEditFormValues>(
-        field: K,
-        value: TAgentEditFormValues[K],
-    ) => void;
-    onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-};
+import { Select } from "@/components/custom/Select";
+import type { TEditAgentModalProps } from "./AiAgentsManagement.types";
 
 export const EditAgentModal = ({
     open,
     agentName,
     values,
-    availableModels,
     isSubmitting,
+    modelOptions,
+    selectedModel,
     onClose,
     onChange,
+    onModelChange,
     onSubmit,
 }: TEditAgentModalProps) => {
     const footer = (
@@ -68,7 +47,10 @@ export const EditAgentModal = ({
             showCloseButton
             closeOnOverlayClick={!isSubmitting}
             closeOnEscape={!isSubmitting}
-            contentClassName="px-8 py-2"
+            className="flex max-h-[90vh] flex-col overflow-hidden"
+            cardClassName="min-h-0 flex-1"
+            headerClassName="shrink-0"
+            contentClassName="px-8 py-2 min-h-0 flex-1 overflow-y-auto"
             titleClassName="text-pulse-green-dark"
         >
             <form
@@ -76,42 +58,15 @@ export const EditAgentModal = ({
                 onSubmit={onSubmit}
                 className="flex flex-col gap-1"
             >
-                <label
-                    className="text-sm font-normal"
-                    htmlFor="agent-model-select"
-                >
-                    Model
-                </label>
+                <label className="text-sm font-normal">Model</label>
                 <Select
-                    value={values.model_name || PROVIDER_DEFAULT_VALUE}
-                    onValueChange={(value) =>
-                        onChange(
-                            "model_name",
-                            value === PROVIDER_DEFAULT_VALUE ? "" : value,
-                        )
-                    }
-                >
-                    <SelectTrigger id="agent-model-select" className="w-full">
-                        <SelectValue placeholder="Provider default" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value={PROVIDER_DEFAULT_VALUE}>
-                            Use provider default
-                        </SelectItem>
-                        {availableModels.map((model) => (
-                            <SelectItem
-                                key={model.model}
-                                value={model.model}
-                                disabled={!model.available}
-                            >
-                                {model.label}
-                                {!model.available
-                                    ? " (needs API key)"
-                                    : ""} — {model.note}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                    options={modelOptions}
+                    value={selectedModel}
+                    onChange={onModelChange}
+                    clearable={false}
+                    placeholder="Use provider default"
+                    selectBoxContainerClass="!my-1"
+                />
                 <p className="mb-2 text-xs text-muted-foreground">
                     Grayed-out models need an API key added on the backend
                     before they can be used.

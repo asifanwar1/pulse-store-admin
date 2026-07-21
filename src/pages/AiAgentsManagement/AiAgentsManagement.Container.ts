@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 
 import {
     useGetAgentConfigs,
@@ -8,11 +8,10 @@ import {
 } from "@/hooks/api/aiAgents.queries";
 import type { TAgentConfigResponse } from "@/api/services/aiAgents/aiAgents.response.types";
 import { showToast } from "@/lib/toast";
+import type { SelectOption } from "@/components/custom/Select";
+import type { TAgentEditFormValues } from "./AiAgentsManagement.types";
 
-export type TAgentEditFormValues = {
-    model_name: string;
-    system_prompt_override: string;
-};
+const PROVIDER_DEFAULT_VALUE = "__provider_default__";
 
 const INITIAL_FORM_VALUES: TAgentEditFormValues = {
     model_name: "",
@@ -68,7 +67,16 @@ export const useAiAgentsManagement = () => {
         setFormValues((prev) => ({ ...prev, [field]: value }));
     };
 
-    const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleModelChange = (
+        value: SelectOption | SelectOption[] | null,
+    ) => {
+        const selected = Array.isArray(value) ? value[0] : value;
+        const isProviderDefault =
+            !selected || selected.value === PROVIDER_DEFAULT_VALUE;
+        handleFormChange("model_name", isProviderDefault ? "" : selected.value);
+    };
+
+    const handleFormSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!selectedAgent) return;
 
@@ -119,6 +127,26 @@ export const useAiAgentsManagement = () => {
         }
     };
 
+    const modelOptions: SelectOption[] = [
+        {
+            value: PROVIDER_DEFAULT_VALUE,
+            label: "Use provider default",
+        },
+        ...availableModels.map((model) => ({
+            value: model.model,
+            label: `${model.label}${!model.available ? " (needs API key)" : ""}`,
+            subtitle: model.note,
+            disabled: !model.available,
+        })),
+    ];
+
+    const selectedModel =
+        modelOptions.find(
+            (option) =>
+                option.value ===
+                (formValues.model_name || PROVIDER_DEFAULT_VALUE),
+        ) ?? null;
+
     return {
         agents,
         isAgentsLoading,
@@ -129,9 +157,12 @@ export const useAiAgentsManagement = () => {
         isSaving,
         togglingAgentKey,
         isUpdatingStatus,
+        modelOptions,
+        selectedModel,
         openEditModal,
         closeEditModal,
         handleFormChange,
+        handleModelChange,
         handleFormSubmit,
         handleToggleActive,
     };

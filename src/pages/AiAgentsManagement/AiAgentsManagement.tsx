@@ -25,9 +25,12 @@ const AiAgentsManagement = () => {
         isSaving,
         togglingAgentKey,
         isUpdatingStatus,
+        modelOptions,
+        selectedModel,
         openEditModal,
         closeEditModal,
         handleFormChange,
+        handleModelChange,
         handleFormSubmit,
         handleToggleActive,
     } = useAiAgentsManagement();
@@ -63,8 +66,8 @@ const AiAgentsManagement = () => {
                                 </EmptyMedia>
                                 <EmptyTitle>No AI agents configured</EmptyTitle>
                                 <EmptyDescription>
-                                    Agents register themselves automatically
-                                    the first time this list loads.
+                                    Agents register themselves automatically the
+                                    first time this list loads.
                                 </EmptyDescription>
                             </EmptyHeader>
                         </Empty>
@@ -78,8 +81,11 @@ const AiAgentsManagement = () => {
                 values={formValues}
                 availableModels={availableModels}
                 isSubmitting={isSaving}
+                modelOptions={modelOptions}
+                selectedModel={selectedModel}
                 onClose={closeEditModal}
                 onChange={handleFormChange}
+                onModelChange={handleModelChange}
                 onSubmit={handleFormSubmit}
             />
         </>
