@@ -1,4 +1,5 @@
 import { StatCard } from "@/components/custom/CustomCards";
+import FilterBar from "@/components/custom/FilterBar";
 import { SHIPMENT_STAT_CONFIG } from "./ShipmentManagement.Config";
 import ShipmentTable from "./ShipmentTable";
 import { formatStatValue } from "@/utils/common.utils";
@@ -16,7 +17,7 @@ const ShipmentManagement = () => {
         page,
         pageSize,
         pageCount,
-        setSearch,
+        filterItems,
         onPaginationChange,
     } = useShipmentManagement();
 
@@ -56,13 +57,13 @@ const ShipmentManagement = () => {
                     },
                 )}
             </div>
+            <FilterBar items={filterItems} splitLayout />
             <ShipmentTable
                 shipmentListData={shipments ?? []}
                 totalCount={shipmentsTotalCount}
                 page={page}
                 pageSize={pageSize}
                 pageCount={pageCount}
-                onSearch={setSearch}
                 onPaginationChange={onPaginationChange}
             />
         </div>

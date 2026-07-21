@@ -1,4 +1,5 @@
 import { StatCard } from "@/components/custom/CustomCards";
+import FilterBar from "@/components/custom/FilterBar";
 import { ORDER_STAT_CONFIG } from "./OrderManagement.Config";
 import OrderTable from "./OrderTable";
 import { formatStatValue } from "@/utils/common.utils";
@@ -15,7 +16,7 @@ const OrderManagement = () => {
         page,
         pageSize,
         pageCount,
-        setSearch,
+        filterItems,
         onPaginationChange,
     } = useOrderManagement();
 
@@ -54,13 +55,13 @@ const OrderManagement = () => {
                     },
                 )}
             </div>
+            <FilterBar items={filterItems} splitLayout />
             <OrderTable
                 ordersLIstData={orders ?? []}
                 totalCount={ordersTotalCount}
                 page={page}
                 pageSize={pageSize}
                 pageCount={pageCount}
-                onSearch={setSearch}
                 onPaginationChange={onPaginationChange}
             />
         </div>

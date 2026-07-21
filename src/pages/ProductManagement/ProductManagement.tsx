@@ -1,4 +1,5 @@
 import { StatCard } from "@/components/custom/CustomCards";
+import FilterBar from "@/components/custom/FilterBar";
 import { PRODUCT_STAT_CONFIG } from "./ProductManagement.Config";
 import ProductTable from "./ProductTable";
 import { formatStatValue } from "@/utils/common.utils";
@@ -15,7 +16,7 @@ const ProductManagement = () => {
         page,
         pageSize,
         pageCount,
-        setSearch,
+        filterItems,
         onPaginationChange,
     } = useProductManagement();
 
@@ -54,13 +55,13 @@ const ProductManagement = () => {
                     },
                 )}
             </div>
+            <FilterBar items={filterItems} splitLayout />
             <ProductTable
                 productsListData={products ?? []}
                 totalCount={productsTotalCount}
                 page={page}
                 pageSize={pageSize}
                 pageCount={pageCount}
-                onSearch={setSearch}
                 onPaginationChange={onPaginationChange}
             />
         </div>

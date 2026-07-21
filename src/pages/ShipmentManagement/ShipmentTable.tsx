@@ -12,7 +12,6 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({
     pageCount,
     page,
     pageSize,
-    onSearch,
     onPaginationChange,
 }) => {
     const navigate = useNavigate();
@@ -33,14 +32,13 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({
                 initialState={{
                     pagination: { pageIndex: page - 1, pageSize },
                 }}
-                searchPlaceholder="Search shipments..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: true,
+                    globalSearch: false,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -50,7 +48,6 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({
                                 id: row.original.id,
                             }),
                         ),
-                    onGlobalSearch: onSearch,
                     onPaginationChange,
                 }}
             />

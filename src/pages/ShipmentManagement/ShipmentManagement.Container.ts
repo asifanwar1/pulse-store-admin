@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Config from "@/Config";
 import {
     useGetShipmentAnalytics,
@@ -5,6 +6,8 @@ import {
 } from "@/hooks/api/shipment.queries";
 import { useQueryState } from "nuqs";
 import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
+import { SHIPMENT_STATUS_OPTIONS } from "@/constants/shipment-status.constants";
+import type { FilterItem } from "@/components/custom/FilterBar";
 
 export const useShipmentManagement = () => {
     const [search, setSearchRaw] = useQueryState("search", {
@@ -15,6 +18,7 @@ export const useShipmentManagement = () => {
         parse: Number,
         serialize: String,
     });
+    const [status, setStatusRaw] = useState<string | null>(null);
 
     const {
         data: shipments,
@@ -25,6 +29,7 @@ export const useShipmentManagement = () => {
     } = useGetShipments({
         search,
         limit: pageSize,
+        status: status as never,
     });
 
     const {
@@ -42,6 +47,30 @@ export const useShipmentManagement = () => {
         totalCount: shipmentsTotalCount,
     });
 
+    const setSearch = withPageReset(setSearchRaw, setPage);
+    const setStatus = withPageReset(setStatusRaw, setPage);
+
+    const filterItems: FilterItem[] = [
+        {
+            type: "search",
+            key: "search",
+            placeholder: "Search shipments...",
+            onSearch: setSearch,
+        },
+        {
+            type: "select",
+            key: "status",
+            placeholder: "All Statuses",
+            value: status
+                ? SHIPMENT_STATUS_OPTIONS.find((opt) => opt.value === status)
+                : null,
+            options: SHIPMENT_STATUS_OPTIONS,
+            onChange: (value) =>
+                setStatus(value && !Array.isArray(value) ? value.value : null),
+            clearable: true,
+        },
+    ];
+
     return {
         shipments,
         shipmentsTotalCount,
@@ -51,8 +80,9 @@ export const useShipmentManagement = () => {
         search,
         pageSize,
         pageCount,
+        filterItems,
         setPage,
-        setSearch: withPageReset(setSearchRaw, setPage),
+        setSearch,
         setPageSize,
         onPaginationChange,
     };

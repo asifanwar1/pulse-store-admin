@@ -32,10 +32,17 @@ export const useGetProducts = (
         search = "",
         status,
         category,
+        category_id,
     } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
-        queryKey: [PRODUCT_QUERY_KEYS.PRODUCTS, search, status, category],
+        queryKey: [
+            PRODUCT_QUERY_KEYS.PRODUCTS,
+            search,
+            status,
+            category,
+            category_id,
+        ],
         limit,
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
@@ -45,6 +52,7 @@ export const useGetProducts = (
                 ...(search && { search }),
                 ...(status && { status }),
                 ...(category && { category }),
+                ...(category_id && { category_id }),
             }),
         }),
     });

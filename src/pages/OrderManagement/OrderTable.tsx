@@ -14,7 +14,6 @@ const OrderTable: React.FC<OrderTableProps> = ({
     pageCount,
     page,
     pageSize,
-    onSearch,
     onPaginationChange,
 }) => {
     const navigate = useNavigate();
@@ -44,14 +43,13 @@ const OrderTable: React.FC<OrderTableProps> = ({
                 initialState={{
                     pagination: { pageIndex: page - 1, pageSize },
                 }}
-                searchPlaceholder="Search orders..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: true,
+                    globalSearch: false,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -61,7 +59,6 @@ const OrderTable: React.FC<OrderTableProps> = ({
                                 id: row.original.id,
                             }),
                         ),
-                    onGlobalSearch: onSearch,
                     onPaginationChange,
                 }}
             />
