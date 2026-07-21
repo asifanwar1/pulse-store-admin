@@ -8,8 +8,17 @@ import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 import TrackShipment from "./TrackShipment/TrackShipment";
 
 const ShipmentManagement = () => {
-    const { shipments, shipmentAnalyticsData, isShipmentsDataLoading } =
-        useShipmentManagement();
+    const {
+        shipments,
+        shipmentAnalyticsData,
+        isShipmentsDataLoading,
+        shipmentsTotalCount,
+        page,
+        pageSize,
+        pageCount,
+        setSearch,
+        onPaginationChange,
+    } = useShipmentManagement();
 
     if (isShipmentsDataLoading) {
         return <CommonSkeleton />;
@@ -47,7 +56,15 @@ const ShipmentManagement = () => {
                     },
                 )}
             </div>
-            <ShipmentTable shipmentListData={shipments ?? []} />
+            <ShipmentTable
+                shipmentListData={shipments ?? []}
+                totalCount={shipmentsTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onSearch={setSearch}
+                onPaginationChange={onPaginationChange}
+            />
         </div>
     );
 };

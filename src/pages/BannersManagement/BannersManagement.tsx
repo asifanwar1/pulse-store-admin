@@ -76,7 +76,6 @@ const BannersManagement = () => {
                                 total={bannersTotalCount}
                                 onPageChange={setPage}
                                 onPageSizeChange={setPageSize}
-                                hidePageButtons={true}
                             />
                         </div>
                     </div>

@@ -5,10 +5,13 @@ import {
     useGetProductAnalytics,
     useGetProducts,
 } from "@/hooks/api/products.queries";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 export const useProductManagement = () => {
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
@@ -22,7 +25,6 @@ export const useProductManagement = () => {
         setPage,
     } = useGetProducts({
         search,
-        page: 1,
         limit: pageSize,
     });
 
@@ -34,6 +36,13 @@ export const useProductManagement = () => {
     const isProductsLoading =
         isProductsAnalyticsLoading || isProductsDataLoading;
 
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: productsTotalCount,
+    });
+
     return {
         products,
         productsTotalCount,
@@ -42,8 +51,10 @@ export const useProductManagement = () => {
         page,
         search,
         pageSize,
+        pageCount,
         setPage,
-        setSearch,
+        setSearch: withPageReset(setSearchRaw, setPage),
         setPageSize,
+        onPaginationChange,
     };
 };

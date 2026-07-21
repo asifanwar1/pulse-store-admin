@@ -31,27 +31,10 @@ export const useGetShipments = (
     enabled?: boolean,
 ) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
-    const {
-        limit = Config.LIMIT,
-        search = "",
-        page = 1,
-        status,
-        order_id,
-        column,
-        direction,
-    } = props;
+    const { limit = Config.LIMIT, search = "", status, order_id } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
-        queryKey: [
-            SHIPMENT_QUERY_KEYS.SHIPMENTS,
-            search,
-            status,
-            order_id,
-            column,
-            direction,
-            String(page),
-            String(limit),
-        ],
+        queryKey: [SHIPMENT_QUERY_KEYS.SHIPMENTS, search, status, order_id],
         limit,
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
@@ -61,10 +44,6 @@ export const useGetShipments = (
                 ...(search && { search }),
                 ...(status && { status }),
                 ...(order_id && { order_id }),
-                ...(column && { column }),
-                ...(direction && { direction }),
-                ...(page && { page }),
-                ...(limit && { limit }),
             }),
         }),
     });

@@ -16,6 +16,7 @@ import type {
 import type { TCategoryFormValues } from "./CategoriesManagement.Modals";
 import type { FileUploaderValue } from "@/components/custom/Inputs/FileUploader";
 import Config from "@/Config";
+import { withPageReset } from "@/hooks/useTablePagination";
 
 type TCategoryFormErrors = Partial<Record<keyof TCategoryFormValues, string>>;
 
@@ -46,12 +47,14 @@ export const useCategoriesManagement = () => {
     const [formValues, setFormValues] =
         useState<TCategoryFormValues>(INITIAL_FORM_VALUES);
     const [formErrors, setFormErrors] = useState<TCategoryFormErrors>({});
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
     });
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
 
     const {
         data: categories,
@@ -61,7 +64,6 @@ export const useCategoriesManagement = () => {
         setPage,
     } = useGetCategories({
         search,
-        page: 1,
         limit: pageSize,
     });
     const { mutateAsync: createCategory, isPending: isCreating } =
@@ -228,6 +230,9 @@ export const useCategoriesManagement = () => {
             showToast.error("Failed to delete category");
         }
     };
+
+    const setSearch = withPageReset(setSearchRaw, setPage);
+    const setPageSize = withPageReset(setPageSizeRaw, setPage);
 
     const filterItems = [
         {

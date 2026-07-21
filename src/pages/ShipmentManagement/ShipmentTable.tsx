@@ -6,7 +6,15 @@ import { getRouteWithId } from "@/utils/common.utils";
 import { shipmentManagementTableColumns } from "./ShipmentManagement.Config";
 import type { ShipmentTableProps } from "./ShipmentManagement.types";
 
-const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipmentListData }) => {
+const ShipmentTable: React.FC<ShipmentTableProps> = ({
+    shipmentListData,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onSearch,
+    onPaginationChange,
+}) => {
     const navigate = useNavigate();
 
     return (
@@ -20,13 +28,19 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipmentListData }) => {
                 id="shipments-list"
                 data={shipmentListData}
                 columns={shipmentManagementTableColumns}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
+                searchPlaceholder="Search shipments..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: false,
+                    globalSearch: true,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -36,6 +50,8 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipmentListData }) => {
                                 id: row.original.id,
                             }),
                         ),
+                    onGlobalSearch: onSearch,
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

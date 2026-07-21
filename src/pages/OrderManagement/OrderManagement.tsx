@@ -7,8 +7,17 @@ import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const OrderManagement = () => {
-    const { orders, ordersAnalyticsData, isOrdersLoading } =
-        useOrderManagement();
+    const {
+        orders,
+        ordersAnalyticsData,
+        isOrdersLoading,
+        ordersTotalCount,
+        page,
+        pageSize,
+        pageCount,
+        setSearch,
+        onPaginationChange,
+    } = useOrderManagement();
 
     if (isOrdersLoading) {
         return <CommonSkeleton />;
@@ -45,7 +54,15 @@ const OrderManagement = () => {
                     },
                 )}
             </div>
-            <OrderTable ordersLIstData={orders ?? []} />
+            <OrderTable
+                ordersLIstData={orders ?? []}
+                totalCount={ordersTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onSearch={setSearch}
+                onPaginationChange={onPaginationChange}
+            />
         </div>
     );
 };

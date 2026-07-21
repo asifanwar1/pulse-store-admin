@@ -7,8 +7,17 @@ import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const ProductManagement = () => {
-    const { products, productsAnalyticsData, isProductsLoading } =
-        useProductManagement();
+    const {
+        products,
+        productsAnalyticsData,
+        isProductsLoading,
+        productsTotalCount,
+        page,
+        pageSize,
+        pageCount,
+        setSearch,
+        onPaginationChange,
+    } = useProductManagement();
 
     if (isProductsLoading) {
         return <CommonSkeleton />;
@@ -45,7 +54,15 @@ const ProductManagement = () => {
                     },
                 )}
             </div>
-            <ProductTable productsListData={products ?? []} />
+            <ProductTable
+                productsListData={products ?? []}
+                totalCount={productsTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onSearch={setSearch}
+                onPaginationChange={onPaginationChange}
+            />
         </div>
     );
 };

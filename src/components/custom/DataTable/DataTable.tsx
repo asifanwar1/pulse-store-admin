@@ -17,6 +17,7 @@ import DataTableError from "./TableComponents/DataTableError";
 import DataTableContent from "./TableComponents/DataTableContent";
 import DataTableSkeleton from "./TableComponents/DataTableSkeleton";
 import DataTablePagination from "./TableComponents/DataTablePagination";
+import DataTableSearch from "./TableComponents/DataTableSearch";
 
 const INITIAL_PAGE_STATE = 0;
 const DataTable = <TData extends RowData>({
@@ -29,6 +30,7 @@ const DataTable = <TData extends RowData>({
     totalCount,
     isLoading = false,
     error = null,
+    searchPlaceholder,
 }: IDataTableProps<TData>) => {
     const [internalRowSelection, setInternalRowSelection] = useState(
         initialState.rowSelection ?? {},
@@ -211,6 +213,15 @@ const DataTable = <TData extends RowData>({
     return (
         <>
             <div className="flex w-full flex-col gap-2">
+                {Boolean(features?.globalSearch) && (
+                    <DataTableSearch
+                        onSearch={(value) =>
+                            callbacks.onGlobalSearch?.(value)
+                        }
+                        placeholder={searchPlaceholder}
+                    />
+                )}
+
                 <DataTableContent<TData>
                     table={table}
                     selectedRows={table.getFilteredSelectedRowModel().rows}

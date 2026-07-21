@@ -6,6 +6,15 @@ export type ManageOrderFormProps = {
 
 export type OrderTableProps = {
     ordersLIstData: TOrderResponse[];
+    totalCount?: number;
+    pageCount: number;
+    page: number;
+    pageSize: number;
+    onSearch: (value: string) => void;
+    onPaginationChange: (pagination: {
+        pageIndex: number;
+        pageSize: number;
+    }) => void;
 };
 
 export type TManageOrderFormConfigProps = {

@@ -18,9 +18,6 @@ export const useGetRevenues = (
     const {
         limit = Config.LIMIT,
         search = "",
-        page = 1,
-        column,
-        direction,
         user_id,
         order_id,
         shipment_id,
@@ -34,8 +31,6 @@ export const useGetRevenues = (
         queryKey: [
             REVENUE_QUERY_KEYS.REVENUES,
             search,
-            column,
-            direction,
             user_id,
             order_id,
             shipment_id,
@@ -43,8 +38,6 @@ export const useGetRevenues = (
             shipment_status,
             date_from,
             date_to,
-            String(page),
-            String(limit),
         ],
         limit,
         enabled: enabled !== false && isAuthenticated,
@@ -53,8 +46,6 @@ export const useGetRevenues = (
             data: await GetRevenues({
                 ...params,
                 ...(search && { search }),
-                ...(column && { column }),
-                ...(direction && { direction }),
                 ...(user_id && { user_id }),
                 ...(order_id && { order_id }),
                 ...(shipment_id && { shipment_id }),
@@ -62,8 +53,6 @@ export const useGetRevenues = (
                 ...(shipment_status && { shipment_status }),
                 ...(date_from && { date_from }),
                 ...(date_to && { date_to }),
-                ...(page && { page }),
-                ...(limit && { limit }),
             }),
         }),
     });

@@ -6,7 +6,12 @@ import type { ReviewsTableProps } from "./ReviewsManagement.types";
 const ReviewsTable: React.FC<ReviewsTableProps> = ({
     reviewsListData,
     togglingReviewId,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
     onToggleVisibility,
+    onPaginationChange,
 }) => {
     return (
         <ChartCard
@@ -22,6 +27,11 @@ const ReviewsTable: React.FC<ReviewsTableProps> = ({
                     togglingReviewId,
                     onToggleVisibility,
                 })}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
                 features={{
                     rowSelection: false,
                     pagination: true,
@@ -29,6 +39,9 @@ const ReviewsTable: React.FC<ReviewsTableProps> = ({
                     filtering: false,
                     columnVisibility: false,
                     globalSearch: false,
+                }}
+                callbacks={{
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

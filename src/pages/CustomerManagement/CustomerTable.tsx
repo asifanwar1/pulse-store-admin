@@ -6,7 +6,15 @@ import { getRouteWithId } from "@/utils/common.utils";
 import { customerManagementTablecolumns } from "./CustomerManagement.Config";
 import type { UsersTableProps } from "./CustomerManagement.types";
 
-const CustomerTable: React.FC<UsersTableProps> = ({ usersListData }) => {
+const CustomerTable: React.FC<UsersTableProps> = ({
+    usersListData,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onSearch,
+    onPaginationChange,
+}) => {
     const navigate = useNavigate();
 
     return (
@@ -20,13 +28,19 @@ const CustomerTable: React.FC<UsersTableProps> = ({ usersListData }) => {
                 id="customers-list"
                 data={usersListData}
                 columns={customerManagementTablecolumns}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
+                searchPlaceholder="Search customers..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: false,
+                    globalSearch: true,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -36,6 +50,8 @@ const CustomerTable: React.FC<UsersTableProps> = ({ usersListData }) => {
                                 id: row.original.id,
                             }),
                         ),
+                    onGlobalSearch: onSearch,
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

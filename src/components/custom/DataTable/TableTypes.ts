@@ -24,6 +24,7 @@ export interface IDataTableConfig<TData extends RowData> {
   styling?: IDataTableStyling;
   callbacks?: IDataTableCallbacks<TData>;
   initialState?: IDataTableInitialState<TData>;
+  searchPlaceholder?: string;
 }
 
 // COLUMN TYPES

@@ -25,24 +25,13 @@ export const useGetOffers = (props: TGetOffersParams, enabled?: boolean) => {
     const {
         limit = Config.LIMIT,
         search = "",
-        page = 1,
         scope,
         is_active,
         status,
-        column,
     } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
-        queryKey: [
-            OFFER_QUERY_KEYS.OFFERS,
-            search,
-            scope,
-            is_active,
-            status,
-            column,
-            String(page),
-            String(limit),
-        ],
+        queryKey: [OFFER_QUERY_KEYS.OFFERS, search, scope, is_active, status],
         limit,
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
@@ -53,9 +42,6 @@ export const useGetOffers = (props: TGetOffersParams, enabled?: boolean) => {
                 ...(scope && { scope }),
                 ...(is_active !== undefined && { is_active }),
                 ...(status && { status }),
-                ...(column && { column }),
-                ...(page && { page }),
-                ...(limit && { limit }),
             }),
         }),
     });

@@ -7,6 +7,11 @@ const SupportTicketsTable: React.FC<SupportTicketsTableProps> = ({
     ticketsListData,
     togglingTicketId,
     onToggleResolved,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onPaginationChange,
 }) => {
     return (
         <ChartCard
@@ -22,6 +27,11 @@ const SupportTicketsTable: React.FC<SupportTicketsTableProps> = ({
                     togglingTicketId,
                     onToggleResolved,
                 })}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
                 features={{
                     rowSelection: false,
                     pagination: true,
@@ -29,6 +39,9 @@ const SupportTicketsTable: React.FC<SupportTicketsTableProps> = ({
                     filtering: false,
                     columnVisibility: false,
                     globalSearch: false,
+                }}
+                callbacks={{
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

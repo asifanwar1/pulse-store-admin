@@ -7,8 +7,17 @@ import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 
 const CustomerManagement = () => {
-    const { users, usersAnalyticsData, isUserDataLoading } =
-        useCustomerManagement();
+    const {
+        users,
+        usersAnalyticsData,
+        isUserDataLoading,
+        usersTotalCount,
+        page,
+        pageSize,
+        pageCount,
+        setSearch,
+        onPaginationChange,
+    } = useCustomerManagement();
 
     if (isUserDataLoading) {
         return <CommonSkeleton />;
@@ -46,7 +55,15 @@ const CustomerManagement = () => {
                 )}
             </div>
 
-            <CustomerTable usersListData={users ?? []} />
+            <CustomerTable
+                usersListData={users ?? []}
+                totalCount={usersTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onSearch={setSearch}
+                onPaginationChange={onPaginationChange}
+            />
         </div>
     );
 };

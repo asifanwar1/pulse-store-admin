@@ -10,10 +10,15 @@ import { mapAnalyticsMetricToStat } from "@/utils/analytics.utils";
 const SupportTickets = () => {
     const {
         tickets,
+        ticketsTotalCount,
         ticketsAnalyticsData,
         isTicketsLoading,
         togglingTicketId,
+        page,
+        pageSize,
+        pageCount,
         filterItems,
+        onPaginationChange,
         handleToggleResolved,
     } = useSupportTickets();
 
@@ -61,6 +66,11 @@ const SupportTickets = () => {
                 ticketsListData={tickets ?? []}
                 togglingTicketId={togglingTicketId}
                 onToggleResolved={handleToggleResolved}
+                totalCount={ticketsTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onPaginationChange={onPaginationChange}
             />
         </div>
     );

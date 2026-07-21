@@ -11,6 +11,7 @@ import { useGetProductsPaginated } from "@/hooks/api/products.queries";
 import type { TReviewResponse } from "@/api/services/reviews/reviews.response.types";
 import type { FilterItem } from "@/components/custom/FilterBar";
 import { showToast } from "@/lib/toast";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 const RATING_FILTER_OPTIONS = [
     { value: "5", label: "5 Stars" },
@@ -26,15 +27,15 @@ const VISIBILITY_FILTER_OPTIONS = [
 ];
 
 export const useReviewsManagement = () => {
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
     });
 
-    const [productId, setProductId] = useState<number | null>(null);
-    const [rating, setRating] = useState<number | null>(null);
-    const [isHidden, setIsHidden] = useState<boolean | null>(null);
+    const [productId, setProductIdRaw] = useState<number | null>(null);
+    const [rating, setRatingRaw] = useState<number | null>(null);
+    const [isHidden, setIsHiddenRaw] = useState<boolean | null>(null);
     const [togglingReviewId, setTogglingReviewId] = useState<number | null>(
         null,
     );
@@ -46,7 +47,6 @@ export const useReviewsManagement = () => {
         page,
         setPage,
     } = useGetReviews({
-        page: 1,
         limit: pageSize,
         product_id: productId ?? undefined,
         rating: rating ?? undefined,
@@ -74,6 +74,17 @@ export const useReviewsManagement = () => {
         useUpdateReviewVisibility();
 
     const isReviewsLoading = isReviewsDataLoading || isReviewsAnalyticsLoading;
+
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: reviewsTotalCount,
+    });
+
+    const setProductId = withPageReset(setProductIdRaw, setPage);
+    const setRating = withPageReset(setRatingRaw, setPage);
+    const setIsHidden = withPageReset(setIsHiddenRaw, setPage);
 
     const handleToggleVisibility = async (review: TReviewResponse) => {
         setTogglingReviewId(review.id);
@@ -165,9 +176,11 @@ export const useReviewsManagement = () => {
         togglingReviewId,
         page,
         pageSize,
+        pageCount,
         filterItems,
         setPage,
         setPageSize,
+        onPaginationChange,
         handleToggleVisibility,
     };
 };

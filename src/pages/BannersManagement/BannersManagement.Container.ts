@@ -14,6 +14,7 @@ import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import { showToast } from "@/lib/toast";
 import type { FilterItem } from "@/components/custom/FilterBar";
+import { withPageReset } from "@/hooks/useTablePagination";
 
 const BANNER_STATUS_OPTIONS = [
     { value: "ACTIVE", label: "Active" },
@@ -23,13 +24,13 @@ const BANNER_STATUS_OPTIONS = [
 export const useBannersManagement = () => {
     const navigate = useNavigate();
 
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
     });
-    const [placement, setPlacement] = useState<string | null>(null);
-    const [status, setStatus] = useState<string | null>(null);
+    const [placement, setPlacementRaw] = useState<string | null>(null);
+    const [status, setStatusRaw] = useState<string | null>(null);
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedBanner, setSelectedBanner] =
@@ -45,7 +46,6 @@ export const useBannersManagement = () => {
         page,
         setPage,
     } = useGetBanners({
-        page: 1,
         limit: pageSize,
         placement: placement as never,
         is_active: status === null ? null : status === "ACTIVE",
@@ -107,6 +107,10 @@ export const useBannersManagement = () => {
             setTogglingBannerId(null);
         }
     };
+
+    const setPageSize = withPageReset(setPageSizeRaw, setPage);
+    const setPlacement = withPageReset(setPlacementRaw, setPage);
+    const setStatus = withPageReset(setStatusRaw, setPage);
 
     const filterItems: FilterItem[] = [
         {

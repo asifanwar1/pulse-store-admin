@@ -18,8 +18,7 @@ import { useDataTableQuery } from "../useDataTableQuery";
 
 export const useGetReviews = (props: TGetReviewsParams, enabled?: boolean) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
-    const { limit = Config.LIMIT, page = 1, product_id, rating, is_hidden } =
-        props;
+    const { limit = Config.LIMIT, product_id, rating, is_hidden } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
         queryKey: [
@@ -27,8 +26,6 @@ export const useGetReviews = (props: TGetReviewsParams, enabled?: boolean) => {
             String(product_id),
             String(rating),
             String(is_hidden),
-            String(page),
-            String(limit),
         ],
         limit,
         enabled: enabled !== false && isAuthenticated,
@@ -39,8 +36,6 @@ export const useGetReviews = (props: TGetReviewsParams, enabled?: boolean) => {
                 ...(product_id !== undefined && { product_id }),
                 ...(rating !== undefined && { rating }),
                 ...(is_hidden !== undefined && { is_hidden }),
-                ...(page && { page }),
-                ...(limit && { limit }),
             }),
         }),
     });

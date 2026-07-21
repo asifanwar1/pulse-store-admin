@@ -4,10 +4,13 @@ import {
     useGetShipments,
 } from "@/hooks/api/shipment.queries";
 import { useQueryState } from "nuqs";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 export const useShipmentManagement = () => {
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
@@ -21,7 +24,6 @@ export const useShipmentManagement = () => {
         setPage,
     } = useGetShipments({
         search,
-        page: 1,
         limit: pageSize,
     });
 
@@ -33,14 +35,25 @@ export const useShipmentManagement = () => {
     const isShipmentsDataLoading =
         isShipmentAnalyticsLoading || isShipmentLoading;
 
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: shipmentsTotalCount,
+    });
+
     return {
         shipments,
         shipmentsTotalCount,
         isShipmentsDataLoading,
         shipmentAnalyticsData,
         page,
+        search,
+        pageSize,
+        pageCount,
         setPage,
-        setSearch,
+        setSearch: withPageReset(setSearchRaw, setPage),
         setPageSize,
+        onPaginationChange,
     };
 };

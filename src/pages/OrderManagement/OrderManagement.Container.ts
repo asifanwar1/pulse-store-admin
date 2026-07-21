@@ -5,10 +5,13 @@ import {
     useGetOrders,
     useGetOrdersAnalytics,
 } from "@/hooks/api/orders.queries";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 export const useOrderManagement = () => {
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
@@ -22,7 +25,6 @@ export const useOrderManagement = () => {
         setPage,
     } = useGetOrders({
         search,
-        page: 1,
         limit: pageSize,
     });
 
@@ -30,6 +32,13 @@ export const useOrderManagement = () => {
         useGetOrdersAnalytics();
 
     const isOrdersLoading = isOrdersAnalyticsLoading || isOrdersDataLoading;
+
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: ordersTotalCount,
+    });
 
     return {
         orders,
@@ -39,8 +48,10 @@ export const useOrderManagement = () => {
         page,
         search,
         pageSize,
+        pageCount,
         setPage,
-        setSearch,
+        setSearch: withPageReset(setSearchRaw, setPage),
         setPageSize,
+        onPaginationChange,
     };
 };

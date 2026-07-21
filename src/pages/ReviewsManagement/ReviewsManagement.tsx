@@ -10,10 +10,15 @@ import CommonSkeleton from "@/components/custom/CommonSkeleton/CommonSkeleton";
 const ReviewsManagement = () => {
     const {
         reviews,
+        reviewsTotalCount,
         reviewsAnalyticsData,
         isReviewsLoading,
         togglingReviewId,
+        page,
+        pageSize,
+        pageCount,
         filterItems,
+        onPaginationChange,
         handleToggleVisibility,
     } = useReviewsManagement();
 
@@ -58,8 +63,13 @@ const ReviewsManagement = () => {
 
             <ReviewsTable
                 reviewsListData={reviews ?? []}
+                totalCount={reviewsTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
                 togglingReviewId={togglingReviewId}
                 onToggleVisibility={handleToggleVisibility}
+                onPaginationChange={onPaginationChange}
             />
         </div>
     );

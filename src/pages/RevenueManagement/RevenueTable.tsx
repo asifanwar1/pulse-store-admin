@@ -6,7 +6,15 @@ import { getRouteWithId } from "@/utils/common.utils";
 import type { RevenueTableProps } from "./RevenueManagement.types";
 import { revenueManagementTableColumns } from "./RevenueManagement.Config";
 
-const RevenueTable: React.FC<RevenueTableProps> = ({ revenueListData }) => {
+const RevenueTable: React.FC<RevenueTableProps> = ({
+    revenueListData,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onSearch,
+    onPaginationChange,
+}) => {
     const navigate = useNavigate();
 
     return (
@@ -20,13 +28,19 @@ const RevenueTable: React.FC<RevenueTableProps> = ({ revenueListData }) => {
                 id="revenue-list"
                 data={revenueListData}
                 columns={revenueManagementTableColumns}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
+                searchPlaceholder="Search revenue..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: false,
+                    globalSearch: true,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -36,6 +50,8 @@ const RevenueTable: React.FC<RevenueTableProps> = ({ revenueListData }) => {
                                 id: row.original.id,
                             }),
                         ),
+                    onGlobalSearch: onSearch,
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

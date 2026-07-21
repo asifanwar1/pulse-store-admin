@@ -15,18 +15,21 @@ import { APP_ROUTES } from "@/routes/appRoutes";
 import { getRouteWithId } from "@/utils/common.utils";
 import { showToast } from "@/lib/toast";
 import type { FilterItem } from "@/components/custom/FilterBar";
+import { withPageReset } from "@/hooks/useTablePagination";
 
 export const useOffersManagement = () => {
     const navigate = useNavigate();
 
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
     });
-    const [scope, setScope] = useState<string | null>(null);
-    const [status, setStatus] = useState<string | null>(null);
+    const [scope, setScopeRaw] = useState<string | null>(null);
+    const [status, setStatusRaw] = useState<string | null>(null);
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedOffer, setSelectedOffer] = useState<TOfferResponse | null>(
@@ -42,7 +45,6 @@ export const useOffersManagement = () => {
         setPage,
     } = useGetOffers({
         search,
-        page: 1,
         limit: pageSize,
         scope: scope as never,
         status: status as never,
@@ -104,6 +106,11 @@ export const useOffersManagement = () => {
             setTogglingOfferId(null);
         }
     };
+
+    const setSearch = withPageReset(setSearchRaw, setPage);
+    const setPageSize = withPageReset(setPageSizeRaw, setPage);
+    const setScope = withPageReset(setScopeRaw, setPage);
+    const setStatus = withPageReset(setStatusRaw, setPage);
 
     const filterItems: FilterItem[] = [
         {

@@ -8,7 +8,15 @@ import Button from "@/components/custom/CustomButton/CustomButton";
 import { orderManagementTableColumns } from "./OrderManagement.Config";
 import type { OrderTableProps } from "./OrderManagement.types";
 
-const OrderTable: React.FC<OrderTableProps> = ({ ordersLIstData }) => {
+const OrderTable: React.FC<OrderTableProps> = ({
+    ordersLIstData,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onSearch,
+    onPaginationChange,
+}) => {
     const navigate = useNavigate();
 
     return (
@@ -31,13 +39,19 @@ const OrderTable: React.FC<OrderTableProps> = ({ ordersLIstData }) => {
                 id="orders-list"
                 data={ordersLIstData}
                 columns={orderManagementTableColumns}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
+                searchPlaceholder="Search orders..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: false,
+                    globalSearch: true,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -47,6 +61,8 @@ const OrderTable: React.FC<OrderTableProps> = ({ ordersLIstData }) => {
                                 id: row.original.id,
                             }),
                         ),
+                    onGlobalSearch: onSearch,
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

@@ -7,8 +7,17 @@ import { REVENUE_STAT_CONFIG } from "./RevenueManagement.Config";
 import { useRevenueManagement } from "./RevenueManagement.Container";
 
 const RevenueManagement = () => {
-    const { revenue, revenueAnalyticsData, isRevenueLoading } =
-        useRevenueManagement();
+    const {
+        revenue,
+        revenueAnalyticsData,
+        isRevenueLoading,
+        revenueTotalCount,
+        page,
+        pageSize,
+        pageCount,
+        setSearch,
+        onPaginationChange,
+    } = useRevenueManagement();
 
     if (isRevenueLoading) {
         return <CommonSkeleton />;
@@ -44,7 +53,15 @@ const RevenueManagement = () => {
                     },
                 )}
             </div>
-            <RevenueTable revenueListData={revenue ?? []} />
+            <RevenueTable
+                revenueListData={revenue ?? []}
+                totalCount={revenueTotalCount}
+                page={page}
+                pageSize={pageSize}
+                pageCount={pageCount}
+                onSearch={setSearch}
+                onPaginationChange={onPaginationChange}
+            />
         </div>
     );
 };

@@ -10,6 +10,7 @@ import {
 import type { TSupportTicketResponse } from "@/api/services/aiAgents/aiAgents.response.types";
 import type { FilterItem } from "@/components/custom/FilterBar";
 import { showToast } from "@/lib/toast";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 const STATUS_FILTER_OPTIONS = [
     { value: "false", label: "Open" },
@@ -17,13 +18,13 @@ const STATUS_FILTER_OPTIONS = [
 ];
 
 export const useSupportTickets = () => {
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
     });
 
-    const [isResolved, setIsResolved] = useState<boolean | null>(null);
+    const [isResolved, setIsResolvedRaw] = useState<boolean | null>(null);
     const [togglingTicketId, setTogglingTicketId] = useState<number | null>(
         null,
     );
@@ -35,7 +36,6 @@ export const useSupportTickets = () => {
         page,
         setPage,
     } = useGetSupportTickets({
-        page: 1,
         limit: pageSize,
         is_resolved: isResolved ?? undefined,
     });
@@ -47,6 +47,15 @@ export const useSupportTickets = () => {
 
     const isTicketsLoading =
         isTicketsDataLoading || isTicketsAnalyticsLoading;
+
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: ticketsTotalCount,
+    });
+
+    const setIsResolved = withPageReset(setIsResolvedRaw, setPage);
 
     const { mutateAsync: updateTicketStatus } = useUpdateTicketStatus();
 
@@ -100,9 +109,11 @@ export const useSupportTickets = () => {
         togglingTicketId,
         page,
         pageSize,
+        pageCount,
         filterItems,
         setPage,
         setPageSize,
+        onPaginationChange,
         handleToggleResolved,
     };
 };

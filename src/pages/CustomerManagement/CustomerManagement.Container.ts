@@ -3,10 +3,13 @@ import { useQueryState } from "nuqs";
 import Config from "@/Config";
 
 import { useGetUsers, useGetUsersAnalytics } from "@/hooks/api/user.queries";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 export const useCustomerManagement = () => {
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
@@ -20,9 +23,7 @@ export const useCustomerManagement = () => {
         setPage,
     } = useGetUsers({
         search,
-        page: 1,
         limit: pageSize,
-        column: "created_at",
         user_type: "CUSTOMER",
     });
 
@@ -30,6 +31,13 @@ export const useCustomerManagement = () => {
         useGetUsersAnalytics();
 
     const isUserDataLoading = isUsersAnalyticsLoading || isUsersDataLoading;
+
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: usersTotalCount,
+    });
 
     return {
         users,
@@ -39,8 +47,10 @@ export const useCustomerManagement = () => {
         page,
         search,
         pageSize,
+        pageCount,
         setPage,
-        setSearch,
+        setSearch: withPageReset(setSearchRaw, setPage),
         setPageSize,
+        onPaginationChange,
     };
 };

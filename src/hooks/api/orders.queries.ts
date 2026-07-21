@@ -21,25 +21,10 @@ import { showToast } from "@/lib/toast";
 
 export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
-    const {
-        limit = Config.LIMIT,
-        search = "",
-        page = 1,
-        status,
-        column,
-        user_id,
-    } = props;
+    const { limit = Config.LIMIT, search = "", status, user_id } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
-        queryKey: [
-            ORDER_QUERY_KEYS.ORDERS,
-            search,
-            status,
-            column,
-            user_id,
-            String(page),
-            String(limit),
-        ],
+        queryKey: [ORDER_QUERY_KEYS.ORDERS, search, status, user_id],
         limit,
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
@@ -48,9 +33,6 @@ export const useGetOrders = (props: TGetOrdersParams, enabled?: boolean) => {
                 ...params,
                 ...(search && { search }),
                 ...(status && { status }),
-                ...(column && { column }),
-                ...(page && { page }),
-                ...(limit && { limit }),
                 ...(user_id && { user_id }),
             }),
         }),

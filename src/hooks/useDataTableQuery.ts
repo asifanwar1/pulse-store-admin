@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { useQueryState } from "nuqs";
 import type { BaseQueryType } from "../api/models";
@@ -59,6 +59,7 @@ const useDataTableQuery = <T>({
         enabled: enabled,
         staleTime: staleTime,
         gcTime: gcTime,
+        placeholderData: keepPreviousData,
         queryFn: async ({ signal }) => {
             const { data } = await queryFn(
                 {

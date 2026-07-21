@@ -82,7 +82,6 @@ const OffersManagement = () => {
                                 total={offersTotalCount}
                                 onPageChange={setPage}
                                 onPageSizeChange={setPageSize}
-                                hidePageButtons={true}
                             />
                         </div>
                     </div>

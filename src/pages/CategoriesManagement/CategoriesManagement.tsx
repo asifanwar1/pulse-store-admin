@@ -155,7 +155,6 @@ const CategoriesManagement = () => {
                                 total={categoriesTotalCount}
                                 onPageChange={setPage}
                                 onPageSizeChange={setPageSize}
-                                hidePageButtons={true}
                             />
                         </div>
                     </div>

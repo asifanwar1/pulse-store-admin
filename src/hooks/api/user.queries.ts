@@ -23,25 +23,10 @@ import { usePaginatedQuery } from "../usePaginatedQuery";
 
 export const useGetUsers = (props: TGetUsersParams, enabled?: boolean) => {
     const isAuthenticated = useStore((state) => state.isAuthenticated);
-    const {
-        limit = Config.LIMIT,
-        search = "",
-        page = 1,
-        status,
-        column,
-        user_type,
-    } = props;
+    const { limit = Config.LIMIT, search = "", status, user_type } = props;
 
     const { data, count, ...rest } = useDataTableQuery({
-        queryKey: [
-            USER_QUERY_KEYS.USERS,
-            search,
-            status,
-            column,
-            user_type,
-            String(page),
-            String(limit),
-        ],
+        queryKey: [USER_QUERY_KEYS.USERS, search, status, user_type],
         limit,
         enabled: enabled !== false && isAuthenticated,
         queryFn: async (params) => ({
@@ -50,9 +35,6 @@ export const useGetUsers = (props: TGetUsersParams, enabled?: boolean) => {
                 ...params,
                 ...(search && { search }),
                 ...(status && { status }),
-                ...(column && { column }),
-                ...(page && { page }),
-                ...(limit && { limit }),
                 ...(user_type && { user_type }),
             }),
         }),

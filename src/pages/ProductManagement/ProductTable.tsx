@@ -8,7 +8,15 @@ import Button from "@/components/custom/CustomButton/CustomButton";
 import { productManagementTableColumns } from "./ProductManagement.Config";
 import type { ProductTableProps } from "./ProductManagement.types";
 
-const ProductTable: React.FC<ProductTableProps> = ({ productsListData }) => {
+const ProductTable: React.FC<ProductTableProps> = ({
+    productsListData,
+    totalCount,
+    pageCount,
+    page,
+    pageSize,
+    onSearch,
+    onPaginationChange,
+}) => {
     const navigate = useNavigate();
 
     return (
@@ -31,13 +39,19 @@ const ProductTable: React.FC<ProductTableProps> = ({ productsListData }) => {
                 id="products-list"
                 data={productsListData}
                 columns={productManagementTableColumns}
+                pageCount={pageCount}
+                totalCount={totalCount}
+                initialState={{
+                    pagination: { pageIndex: page - 1, pageSize },
+                }}
+                searchPlaceholder="Search products..."
                 features={{
                     rowSelection: false,
                     pagination: true,
                     sorting: true,
                     filtering: false,
                     columnVisibility: false,
-                    globalSearch: false,
+                    globalSearch: true,
                 }}
                 callbacks={{
                     onRowClick: (row) =>
@@ -47,6 +61,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ productsListData }) => {
                                 id: row.original.id,
                             }),
                         ),
+                    onGlobalSearch: onSearch,
+                    onPaginationChange,
                 }}
             />
         </ChartCard>

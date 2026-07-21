@@ -5,10 +5,13 @@ import {
     useGetRevenueAnalytics,
     useGetRevenues,
 } from "@/hooks/api/revenue.queries";
+import { useTablePagination, withPageReset } from "@/hooks/useTablePagination";
 
 export const useRevenueManagement = () => {
-    const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-    const [pageSize, setPageSize] = useQueryState("pageSize", {
+    const [search, setSearchRaw] = useQueryState("search", {
+        defaultValue: "",
+    });
+    const [pageSize, setPageSizeRaw] = useQueryState("pageSize", {
         defaultValue: Config.LIMIT,
         parse: Number,
         serialize: String,
@@ -22,7 +25,6 @@ export const useRevenueManagement = () => {
         setPage,
     } = useGetRevenues({
         search,
-        page: 1,
         limit: pageSize,
     });
 
@@ -31,14 +33,24 @@ export const useRevenueManagement = () => {
 
     const isRevenueLoading = isRevenueAnalyticsLoading || isRevenueDataLoading;
 
+    const { pageCount, setPageSize, onPaginationChange } = useTablePagination({
+        pageSize,
+        setPage,
+        setPageSize: setPageSizeRaw,
+        totalCount: revenueTotalCount,
+    });
+
     return {
         isRevenueLoading,
         page,
+        pageSize,
+        pageCount,
         revenue,
         revenueTotalCount,
         revenueAnalyticsData,
         setPage,
-        setSearch,
+        setSearch: withPageReset(setSearchRaw, setPage),
         setPageSize,
+        onPaginationChange,
     };
 };
