@@ -108,6 +108,7 @@ export type { TAgentChatEvent } from "./streamChat";
 export type {
     TAgentKey,
     TChatBody,
+    TChatMedia,
     TGetSupportTicketsParams,
     TUpdateAgentConfigBody,
     TUpdateAgentStatusBody,

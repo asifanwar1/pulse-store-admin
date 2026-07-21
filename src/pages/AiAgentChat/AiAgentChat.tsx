@@ -1,8 +1,8 @@
-import { useEffect, useRef, type KeyboardEvent } from "react";
 import { Send } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
+import FileUploader from "@/components/custom/Inputs/FileUploader/FileUploader";
 import { cn } from "@/lib/utils";
 import { AI_AGENT_META } from "@/constants/ai-agent.constants";
 import { useAiAgentChat } from "./AiAgentChat.Container";
@@ -13,29 +13,19 @@ const AiAgentChat = () => {
         agentConfigs,
         isAgentsLoading,
         activeAgentKey,
-        setActiveAgentKey,
         activeAgentConfig,
         activeConversation,
-        isSendingActiveTab,
+        activeMeta,
+        isDisabled,
+        supportsImages,
+        isBusy,
+        messagesEndRef,
+        setActiveAgentKey,
         setDraft,
+        setAttachments,
         handleSendMessage,
+        handleKeyDown,
     } = useAiAgentChat();
-
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-    const activeMeta = AI_AGENT_META[activeAgentKey];
-    const isDisabled =
-        !isAgentsLoading && activeAgentConfig?.is_enabled === false;
-
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [activeConversation.messages.length, activeAgentKey]);
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            handleSendMessage();
-        }
-    };
 
     return (
         <div className="flex min-h-0 flex-col gap-4 p-4 sm:p-6">
@@ -112,6 +102,22 @@ const AiAgentChat = () => {
                                             "border border-red-200 bg-red-50 text-red-600",
                                     )}
                                 >
+                                    {message.media &&
+                                        message.media.length > 0 && (
+                                            <div className="mb-2 flex flex-wrap gap-2">
+                                                {message.media.map((item) => (
+                                                    <img
+                                                        key={item.id}
+                                                        src={item.url}
+                                                        alt={
+                                                            item.file_name ??
+                                                            "Attached image"
+                                                        }
+                                                        className="h-16 w-16 rounded-lg object-cover"
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
                                     {message.text ||
                                         (message.role === "assistant" && (
                                             <span className="inline-flex items-center gap-1 text-pulse-green/50">
@@ -134,7 +140,21 @@ const AiAgentChat = () => {
                             is currently disabled by an admin.
                         </p>
                     )}
-                    <div className="flex items-end gap-3">
+                    {supportsImages && (
+                        <FileUploader
+                            value={activeConversation.attachments}
+                            onChange={(files) =>
+                                setAttachments(activeAgentKey, files)
+                            }
+                            disabled={isDisabled || isAgentsLoading || isBusy}
+                            accept="image/*"
+                            maxFiles={6}
+                            previewSize="sm"
+                            placeholder="Attach product images"
+                            containerClass="mb-2"
+                        />
+                    )}
+                    <div className="flex flex-wrap items-center gap-3">
                         <textarea
                             value={activeConversation.draft}
                             onChange={(event) =>
@@ -155,11 +175,13 @@ const AiAgentChat = () => {
                             disabled={
                                 isDisabled ||
                                 isAgentsLoading ||
-                                !activeConversation.draft.trim() ||
-                                isSendingActiveTab
+                                (!activeConversation.draft.trim() &&
+                                    !activeConversation.attachments.length) ||
+                                isBusy
                             }
-                            isLoading={isSendingActiveTab}
+                            isLoading={isBusy}
                             startIcon={<Send className="h-4 w-4" />}
+                            className="py-6.5 rounded-md"
                         >
                             Send
                         </CustomButton>

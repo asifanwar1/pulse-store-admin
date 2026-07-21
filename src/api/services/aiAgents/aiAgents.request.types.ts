@@ -19,7 +19,14 @@ export type TUpdateTicketStatusBody = {
     is_resolved: boolean;
 };
 
+export type TChatMedia = {
+    id: string;
+    url: string;
+    file_name?: string | null;
+};
+
 export type TChatBody = {
     message: string;
     conversation_id?: number;
+    media?: TChatMedia[];
 };

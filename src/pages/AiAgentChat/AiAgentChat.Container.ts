@@ -1,16 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { streamAgentChat } from "@/api";
 import { useGetAgentConfigs } from "@/hooks/api/aiAgents.queries";
-import { AI_AGENT_KEYS } from "@/constants/ai-agent.constants";
+import { useMediaUpload } from "@/hooks/api/media.queries";
+import { AI_AGENT_KEYS, AI_AGENT_META } from "@/constants/ai-agent.constants";
 import type { TAgentKey } from "@/api/services/aiAgents/aiAgents.request.types";
 import { showToast } from "@/lib/toast";
 import type { TAgentConversations } from "./AiAgentChat.types";
 
 const createEmptyConversations = (): TAgentConversations => ({
-    product_listing: { messages: [], draft: "" },
-    order_tracking: { messages: [], draft: "" },
-    customer_query: { messages: [], draft: "" },
+    product_listing: { messages: [], draft: "", attachments: [] },
+    order_tracking: { messages: [], draft: "", attachments: [] },
+    customer_query: { messages: [], draft: "", attachments: [] },
 });
 
 export const useAiAgentChat = () => {
@@ -26,7 +27,9 @@ export const useAiAgentChat = () => {
     const [sendingAgentKey, setSendingAgentKey] = useState<TAgentKey | null>(
         null,
     );
+    const { handleMultipleFileUpload, isMediaLoading } = useMediaUpload();
     const messageIdRef = useRef(0);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const nextMessageId = () => {
         messageIdRef.current += 1;
@@ -38,6 +41,15 @@ export const useAiAgentChat = () => {
     );
     const activeConversation = conversations[activeAgentKey];
     const isSendingActiveTab = sendingAgentKey === activeAgentKey;
+    const activeMeta = AI_AGENT_META[activeAgentKey];
+    const isDisabled =
+        !isAgentsLoading && activeAgentConfig?.is_enabled === false;
+    const supportsImages = activeAgentKey === "product_listing";
+    const isBusy = isSendingActiveTab || isMediaLoading;
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [activeConversation.messages.length, activeAgentKey]);
 
     const updateConversation = (
         agentKey: TAgentKey,
@@ -58,24 +70,48 @@ export const useAiAgentChat = () => {
         }));
     };
 
+    const setAttachments = (
+        agentKey: TAgentKey,
+        attachments: TAgentConversations[TAgentKey]["attachments"],
+    ) => {
+        updateConversation(agentKey, (conversation) => ({
+            ...conversation,
+            attachments,
+        }));
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            handleSendMessage();
+        }
+    };
+
     const handleSendMessage = async () => {
         const agentKey = activeAgentKey;
         const trimmed = conversations[agentKey].draft.trim();
-        if (!trimmed || sendingAgentKey === agentKey) return;
+        const attachments = conversations[agentKey].attachments.filter(
+            (item): item is File => item instanceof File,
+        );
+        if ((!trimmed && !attachments.length) || sendingAgentKey === agentKey)
+            return;
 
         const conversationId = conversations[agentKey].conversationId;
+        const userMessageId = nextMessageId();
         const assistantMessageId = nextMessageId();
+        const displayText = trimmed || "Here are the product images.";
+        setSendingAgentKey(agentKey);
 
         updateConversation(agentKey, (conversation) => ({
             ...conversation,
             draft: "",
+            attachments: [],
             messages: [
                 ...conversation.messages,
-                { id: nextMessageId(), role: "user", text: trimmed },
+                { id: userMessageId, role: "user", text: displayText },
                 { id: assistantMessageId, role: "assistant", text: "" },
             ],
         }));
-        setSendingAgentKey(agentKey);
 
         const appendDelta = (text: string) => {
             updateConversation(agentKey, (conversation) => ({
@@ -89,9 +125,36 @@ export const useAiAgentChat = () => {
         };
 
         try {
+            const uploadedMedia = attachments.length
+                ? await handleMultipleFileUpload(attachments, {
+                      returnFullResponse: true,
+                      folder: "products",
+                  })
+                : [];
+            const media = uploadedMedia.map((item) => ({
+                id: item.id,
+                url: item.url,
+                file_name: item.file_name,
+            }));
+
+            if (media.length) {
+                updateConversation(agentKey, (conversation) => ({
+                    ...conversation,
+                    messages: conversation.messages.map((message) =>
+                        message.id === userMessageId
+                            ? { ...message, media }
+                            : message,
+                    ),
+                }));
+            }
+
             const result = await streamAgentChat({
                 agentKey,
-                body: { message: trimmed, conversation_id: conversationId },
+                body: {
+                    message: displayText,
+                    conversation_id: conversationId,
+                    media: media.length ? media : undefined,
+                },
                 onDelta: appendDelta,
             });
 
@@ -127,11 +190,17 @@ export const useAiAgentChat = () => {
         agentConfigs,
         isAgentsLoading,
         activeAgentKey,
-        setActiveAgentKey,
         activeAgentConfig,
         activeConversation,
-        isSendingActiveTab,
+        activeMeta,
+        isDisabled,
+        supportsImages,
+        isBusy,
+        messagesEndRef,
+        setActiveAgentKey,
         setDraft,
+        setAttachments,
         handleSendMessage,
+        handleKeyDown,
     };
 };
