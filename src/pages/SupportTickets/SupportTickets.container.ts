@@ -4,6 +4,7 @@ import { useQueryState } from "nuqs";
 import Config from "@/Config";
 import {
     useGetSupportTickets,
+    useGetSupportTicketsAnalytics,
     useUpdateTicketStatus,
 } from "@/hooks/api/aiAgents.queries";
 import type { TSupportTicketResponse } from "@/api/services/aiAgents/aiAgents.response.types";
@@ -30,7 +31,7 @@ export const useSupportTickets = () => {
     const {
         data: tickets,
         count: ticketsTotalCount,
-        isPending: isTicketsLoading,
+        isPending: isTicketsDataLoading,
         page,
         setPage,
     } = useGetSupportTickets({
@@ -38,6 +39,14 @@ export const useSupportTickets = () => {
         limit: pageSize,
         is_resolved: isResolved ?? undefined,
     });
+
+    const {
+        data: ticketsAnalyticsData,
+        isPending: isTicketsAnalyticsLoading,
+    } = useGetSupportTicketsAnalytics();
+
+    const isTicketsLoading =
+        isTicketsDataLoading || isTicketsAnalyticsLoading;
 
     const { mutateAsync: updateTicketStatus } = useUpdateTicketStatus();
 
@@ -86,6 +95,7 @@ export const useSupportTickets = () => {
     return {
         tickets: tickets ?? [],
         ticketsTotalCount: ticketsTotalCount ?? 0,
+        ticketsAnalyticsData,
         isTicketsLoading,
         togglingTicketId,
         page,

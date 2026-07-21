@@ -3,18 +3,12 @@ import { Image, Plus } from "lucide-react";
 import Button from "@/components/custom/CustomButton/CustomButton";
 import FilterBar from "@/components/custom/FilterBar";
 import Pagination from "@/components/custom/Pagination";
-import {
-    Empty,
-    EmptyContent,
-    EmptyDescription,
-    EmptyHeader,
-    EmptyMedia,
-    EmptyTitle,
-} from "@/components/ui/empty";
+
 import BannerCard from "./BannerCard";
 import { DeleteBannerModal } from "./BannersManagement.Modals";
 import BannersManagementSkeleton from "./BannersManagementSkeleton";
 import { useBannersManagement } from "./BannersManagement.Container";
+import EmptyState from "@/components/custom/EmptyState/EmptyState";
 
 const MIN_VALUE = 0;
 
@@ -90,26 +84,14 @@ const BannersManagement = () => {
 
                 {!isBannersLoading && bannersTotalCount === MIN_VALUE && (
                     <div className="rounded-2xl border border-dashed border-pulse-cream-dark bg-pulse-cream-dark/20 shadow-dash-card">
-                        <Empty className="border-0">
-                            <EmptyHeader>
-                                <EmptyMedia variant="icon">
-                                    <Image className="h-5 w-5" />
-                                </EmptyMedia>
-                                <EmptyTitle>No banners yet</EmptyTitle>
-                                <EmptyDescription>
-                                    Design a promo banner in the editor to
-                                    start showcasing it on the storefront.
-                                </EmptyDescription>
-                            </EmptyHeader>
-                            <EmptyContent>
-                                <Button
-                                    onClick={navigateToAddBanner}
-                                    startIcon={<Plus className="h-4 w-4" />}
-                                >
-                                    Create A Banner
-                                </Button>
-                            </EmptyContent>
-                        </Empty>
+                        <EmptyState
+                            icon={<Image className="h-5 w-5" />}
+                            title="No banners yet"
+                            description="Design a promo banner in the editor to start showcasing it on the storefront."
+                            actionLabel="Create A Banner"
+                            onAction={navigateToAddBanner}
+                            actionIcon={<Plus className="h-4 w-4" />}
+                        />
                     </div>
                 )}
             </div>

@@ -51,3 +51,15 @@ export type TGetSupportTicketsResponse = {
 };
 
 export type TUpdateTicketStatusResponse = TSupportTicketResponse;
+
+export type TSupportTicketAnalyticsMetric = {
+    value: number;
+    change_percentage: string;
+};
+
+export type TGetSupportTicketAnalyticsResponse = {
+    totalTickets: TSupportTicketAnalyticsMetric;
+    resolvedTickets: TSupportTicketAnalyticsMetric;
+    unresolvedTickets: TSupportTicketAnalyticsMetric;
+    resolutionRate: TSupportTicketAnalyticsMetric;
+};

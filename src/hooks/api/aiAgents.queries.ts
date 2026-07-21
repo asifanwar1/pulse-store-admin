@@ -5,6 +5,7 @@ import {
     GetAgentConfigs,
     GetAvailableModels,
     GetSupportTickets,
+    GetSupportTicketsAnalytics,
     UpdateAgentConfig,
     UpdateAgentStatus,
     UpdateTicketStatus,
@@ -101,6 +102,16 @@ export const useGetSupportTickets = (
     return { data, count, ...rest };
 };
 
+export const useGetSupportTicketsAnalytics = () => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+
+    return useQuery({
+        queryKey: [AI_AGENT_QUERY_KEYS.TICKETS_ANALYTICS],
+        queryFn: () => GetSupportTicketsAnalytics(),
+        enabled: isAuthenticated,
+    });
+};
+
 export const useUpdateTicketStatus = () => {
     return useMutation({
         mutationFn: ({
@@ -113,6 +124,7 @@ export const useUpdateTicketStatus = () => {
         onSuccess: async () => {
             await invalidateMultiple(queryClient, [
                 [AI_AGENT_QUERY_KEYS.TICKETS],
+                [AI_AGENT_QUERY_KEYS.TICKETS_ANALYTICS],
             ]);
         },
     });

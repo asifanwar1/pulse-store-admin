@@ -11,6 +11,7 @@ import type {
 import type {
     TGetAgentConfigsResponse,
     TGetAvailableModelsResponse,
+    TGetSupportTicketAnalyticsResponse,
     TGetSupportTicketsResponse,
     TUpdateAgentConfigResponse,
     TUpdateAgentStatusResponse,
@@ -91,6 +92,16 @@ export const UpdateTicketStatus = async ({
     });
 };
 
+export const GetSupportTicketsAnalytics = async (params?: WithSignal<{}>) => {
+    const { signal } = params || {};
+
+    return request<TGetSupportTicketAnalyticsResponse>({
+        method: HTTP_METHODS.GET,
+        url: "/ai-agents/tickets/analytics",
+        signal,
+    });
+};
+
 export { AI_AGENT_QUERY_KEYS };
 export { streamAgentChat } from "./streamChat";
 export type { TAgentChatEvent } from "./streamChat";
@@ -107,7 +118,9 @@ export type {
     TAvailableModel,
     TGetAgentConfigsResponse,
     TGetAvailableModelsResponse,
+    TGetSupportTicketAnalyticsResponse,
     TGetSupportTicketsResponse,
+    TSupportTicketAnalyticsMetric,
     TSupportTicketResponse,
     TUpdateAgentConfigResponse,
     TUpdateAgentStatusResponse,

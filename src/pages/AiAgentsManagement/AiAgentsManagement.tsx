@@ -1,16 +1,10 @@
 import { Bot } from "lucide-react";
 
-import {
-    Empty,
-    EmptyDescription,
-    EmptyHeader,
-    EmptyMedia,
-    EmptyTitle,
-} from "@/components/ui/empty";
 import AgentCard from "./AgentCard";
 import { EditAgentModal } from "./AiAgentsManagement.Modals";
 import AiAgentsManagementSkeleton from "./AiAgentsManagementSkeleton";
 import { useAiAgentsManagement } from "./AiAgentsManagement.Container";
+import EmptyState from "@/components/custom/EmptyState/EmptyState";
 
 const MIN_VALUE = 0;
 
@@ -59,18 +53,11 @@ const AiAgentsManagement = () => {
 
                 {!isAgentsLoading && agents.length === MIN_VALUE && (
                     <div className="rounded-2xl border border-dashed border-pulse-cream-dark bg-pulse-cream-dark/20 shadow-dash-card">
-                        <Empty className="border-0">
-                            <EmptyHeader>
-                                <EmptyMedia variant="icon">
-                                    <Bot className="h-5 w-5" />
-                                </EmptyMedia>
-                                <EmptyTitle>No AI agents configured</EmptyTitle>
-                                <EmptyDescription>
-                                    Agents register themselves automatically the
-                                    first time this list loads.
-                                </EmptyDescription>
-                            </EmptyHeader>
-                        </Empty>
+                        <EmptyState
+                            icon={<Bot className="h-5 w-5" />}
+                            title="No AI agents configured"
+                            description="Agents register themselves automatically the first time this list loads."
+                        />
                     </div>
                 )}
             </div>

@@ -74,7 +74,7 @@ const AgentCard: React.FC<AgentCardProps> = ({
                         className={cn(
                             "inline-flex items-center rounded-full px-2.5 py-1 font-semibold",
                             agent.is_enabled
-                                ? "bg-pulse-green/10 text-pulse-green-dark"
+                                ? "bg-pulse-green/70 text-white"
                                 : "bg-gray-200 text-gray-500",
                         )}
                     >

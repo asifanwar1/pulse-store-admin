@@ -1,9 +1,54 @@
-import { CheckCircle2, Circle } from "lucide-react";
+import {
+    AlertCircle,
+    CheckCircle2,
+    Circle,
+    Percent,
+    Ticket,
+} from "lucide-react";
 
 import type { TSupportTicketResponse } from "@/api/services/aiAgents/aiAgents.response.types";
 import { type TDataColumnDef } from "@/components/custom/DataTable";
 import { cn } from "@/lib/utils";
 import { getFormattedDate } from "@/utils/dateTime.utils";
+
+export const SUPPORT_TICKET_STAT_CONFIG = [
+    {
+        key: "totalTickets" as const,
+        title: "Total Tickets",
+        icon: <Ticket className="w-5 h-5" />,
+        iconBgClass: "bg-pulse-cream-dark",
+        iconColorClass: "text-pulse-green",
+        subtitle: "All time tickets",
+        suffix: "",
+    },
+    {
+        key: "resolvedTickets" as const,
+        title: "Resolved Tickets",
+        icon: <CheckCircle2 className="w-5 h-5" />,
+        iconBgClass: "bg-pulse-cream-dark",
+        iconColorClass: "text-pulse-green",
+        subtitle: "Closed and handled",
+        suffix: "",
+    },
+    {
+        key: "unresolvedTickets" as const,
+        title: "Unresolved Tickets",
+        icon: <AlertCircle className="w-5 h-5" />,
+        iconBgClass: "bg-pulse-cream-dark",
+        iconColorClass: "text-pulse-green",
+        subtitle: "Still open",
+        suffix: "",
+    },
+    {
+        key: "resolutionRate" as const,
+        title: "Resolution Rate",
+        icon: <Percent className="w-5 h-5" />,
+        iconBgClass: "bg-pulse-cream-dark",
+        iconColorClass: "text-pulse-green",
+        subtitle: "Resolved of all tickets",
+        suffix: "%",
+    },
+] as const;
 
 type SupportTicketsTableColumnsParams = {
     togglingTicketId: number | null;

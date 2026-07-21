@@ -53,7 +53,7 @@ export enum APP_ROUTES {
     BANNERS_UPDATE = "/banners/update/:id",
 
     AI_AGENTS = "/ai-agents",
-    AI_AGENT_TICKETS = "/ai-agents/tickets",
+    AI_AGENT_TICKETS = "/ai-support/tickets",
 
     NOTIFICATIONS = "/notifications",
 }

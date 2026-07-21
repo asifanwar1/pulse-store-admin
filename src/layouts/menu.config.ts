@@ -70,12 +70,7 @@ export const menuItems: Array<SidebarContainerType> = [
         activeIcon: CircleDollarSign,
         path: [APP_ROUTES.REVENUE],
     },
-    {
-        label: "Reviews Management",
-        inactiveIcon: MessageSquareText,
-        activeIcon: MessageSquareText,
-        path: [APP_ROUTES.REVIEWS],
-    },
+
     {
         label: "Banner Management",
         inactiveIcon: Image,
@@ -93,5 +88,11 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: Headset,
         activeIcon: Headset,
         path: [APP_ROUTES.AI_AGENT_TICKETS],
+    },
+    {
+        label: "Reviews Management",
+        inactiveIcon: MessageSquareText,
+        activeIcon: MessageSquareText,
+        path: [APP_ROUTES.REVIEWS],
     },
 ];
