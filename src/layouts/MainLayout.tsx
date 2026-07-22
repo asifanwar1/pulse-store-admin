@@ -13,10 +13,10 @@ import ConfirmationModal from "@/components/custom/Modals/ConfirmationModal";
 import Loading from "@/components/custom/Loading";
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
 
-import { LogOut, Bell, BotMessageSquare } from "lucide-react";
+import { LogOut, BotMessageSquare } from "lucide-react";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-// import NotificationDropdown from "@/components/custom/NotificationDropDown";
+import NotificationDropdown from "@/components/custom/NotificationDropDown";
 import { useLogout, useGetMe } from "@/hooks/api/auth.queries";
 
 const MainLayoutWrapper: React.FC = () => {
@@ -90,15 +90,7 @@ const MainLayoutWrapper: React.FC = () => {
                     >
                         <BotMessageSquare className="text-pulse-green !w-[20px] !h-[20px]" />
                     </CustomButton>
-                    <CustomButton
-                        variant="ghost"
-                        type="button"
-                        className="relative flex items-center cursor-pointer w-14 h-14 bg-pulse-cream-dark rounded-full focus-visible:ring-[0px] !ring=[0px] hover:bg-pulse-green/10"
-                        onClick={() => navigate(APP_ROUTES.NOTIFICATIONS)}
-                    >
-                        <Bell className="text-pulse-green !w-[20px] !h-[20px]" />
-                    </CustomButton>
-                    {/* <NotificationDropdown /> */}
+                    <NotificationDropdown />
                 </Topbar>
                 <main
                     className={cn(

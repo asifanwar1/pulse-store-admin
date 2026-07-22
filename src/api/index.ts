@@ -10,3 +10,4 @@ export * from "./services/offers";
 export * from "./services/reviews";
 export * from "./services/banners";
 export * from "./services/aiAgents";
+export * from "./services/notifications";

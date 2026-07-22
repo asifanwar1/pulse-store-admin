@@ -1,15 +1,15 @@
-enum NotificationStatus {
-    READ = "READ",
-    UNREAD = "UNREAD",
-}
-
 enum NotificationEntityType {
-    NewProject = "NEW_PROJECT_REQUEST_ASSIGN_INSTALLER",
-    InstallationComplete = "INSTALLATION_COMPLETE_SUPER_ADMIN",
-    ExperienceUpdated = "EXPERIENCE_UPDATED",
-    CertificationUpdated = "CERTIFICATION_UPDATED",
-    QuoteAccepted = "QUOTE_ACCEPTED",
-    QuoteRejected = "QUOTE_REJECTED",
+    ORDER = "order",
+    SUPPORT_TICKET = "support_ticket",
 }
 
-export { NotificationStatus, NotificationEntityType };
+enum NotificationType {
+    ORDER_STATUS_CHANGED = "order_status_changed",
+    NEW_ORDER = "new_order",
+    SUPPORT_TICKET_CREATED = "support_ticket_created",
+    SUPPORT_TICKET_RESOLVED = "support_ticket_resolved",
+    WALLET_PAYMENT_SUCCEEDED = "wallet_payment_succeeded",
+    WALLET_PAYMENT_FAILED = "wallet_payment_failed",
+}
+
+export { NotificationEntityType, NotificationType };
