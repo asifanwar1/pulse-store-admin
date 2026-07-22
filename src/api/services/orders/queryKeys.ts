@@ -2,6 +2,7 @@ export const ORDER_QUERY_KEYS = {
     ORDERS: "ORDERS",
     ORDER: "ORDER",
     ORDER_ANALYTICS: "ORDERS_ANALYTICS",
+    ORDER_CONFIG: "ORDER_CONFIG",
 } as const;
 
 export default ORDER_QUERY_KEYS;

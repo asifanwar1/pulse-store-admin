@@ -13,6 +13,7 @@ import {
     Image,
     Bot,
     Headset,
+    Settings,
 } from "lucide-react";
 
 export type SidebarContainerType = {
@@ -94,5 +95,11 @@ export const menuItems: Array<SidebarContainerType> = [
         inactiveIcon: MessageSquareText,
         activeIcon: MessageSquareText,
         path: [APP_ROUTES.REVIEWS],
+    },
+    {
+        label: "Settings",
+        inactiveIcon: Settings,
+        activeIcon: Settings,
+        path: [APP_ROUTES.SETTINGS],
     },
 ];

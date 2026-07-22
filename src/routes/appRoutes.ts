@@ -56,4 +56,6 @@ export enum APP_ROUTES {
     AI_AGENT_TICKETS = "/ai-support/tickets",
 
     NOTIFICATIONS = "/notifications",
+
+    SETTINGS = "/settings",
 }

@@ -49,4 +49,7 @@ export const defaultRouteNames: Record<string, string> = {
 
     // Notifications Management
     [APP_ROUTES.NOTIFICATIONS]: "Notifications",
+
+    // Settings
+    [APP_ROUTES.SETTINGS]: "Settings",
 };

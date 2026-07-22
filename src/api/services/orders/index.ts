@@ -4,13 +4,16 @@ import { HTTP_METHODS } from "@/constants";
 import type {
     TCreateOrderBody,
     TGetOrdersParams,
+    TUpdateOrderConfigBody,
     TUpdateOrderStatusBody,
 } from "./orders.request.types";
 import type {
     TCreateOrderResponse,
+    TGetOrderConfigResponse,
     TGetOrderResponse,
     TGetOrdersAnalyticsResponse,
     TGetOrdersResponse,
+    TUpdateOrderConfigResponse,
     TUpdateOrderStatusResponse,
 } from "./orders.response.types";
 import { ORDER_QUERY_KEYS } from "./queryKeys";
@@ -49,6 +52,24 @@ export const UpdateOrderStatus = async ({
     return request<TUpdateOrderStatusResponse, TUpdateOrderStatusBody>({
         method: HTTP_METHODS.PATCH,
         url: `/orders/${id}/status`,
+        body,
+    });
+};
+
+export const GetOrderConfig = async (params?: WithSignal<{}>) => {
+    const { signal } = params || {};
+
+    return request<TGetOrderConfigResponse, undefined>({
+        method: HTTP_METHODS.GET,
+        url: "/orders/config",
+        signal,
+    });
+};
+
+export const UpdateOrderConfig = async (body: TUpdateOrderConfigBody) => {
+    return request<TUpdateOrderConfigResponse, TUpdateOrderConfigBody>({
+        method: HTTP_METHODS.PATCH,
+        url: "/orders/config",
         body,
     });
 };

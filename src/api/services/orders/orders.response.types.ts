@@ -81,3 +81,11 @@ export type TGetOrderResponse = TOrderResponse;
 export type TUpdateOrderStatusResponse = TOrderResponse;
 
 export type TGetOrdersAnalyticsResponse = TOrderAnalyticsResponse;
+
+export type TOrderConfigResponse = {
+    shipping_fee: string;
+};
+
+export type TGetOrderConfigResponse = TOrderConfigResponse;
+
+export type TUpdateOrderConfigResponse = TOrderConfigResponse;

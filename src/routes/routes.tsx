@@ -50,6 +50,7 @@ import ManageBanner from "@/pages/BannersManagement/ManageBanner/ManageBanner";
 import AiAgentsManagement from "@/pages/AiAgentsManagement/AiAgentsManagement";
 import SupportTickets from "@/pages/SupportTickets/SupportTickets";
 import AiAgentChat from "@/pages/AiAgentChat/AiAgentChat";
+import Settings from "@/pages/Settings/Settings";
 
 export const routes: RouteObject[] = [
     {
@@ -129,6 +130,7 @@ export const routes: RouteObject[] = [
             { path: APP_ROUTES.ACCOUNT, element: <Profile /> },
             { path: APP_ROUTES.CHATS, element: <AiAgentChat /> },
             { path: APP_ROUTES.NOTIFICATIONS, element: <Notifications /> },
+            { path: APP_ROUTES.SETTINGS, element: <Settings /> },
             // {
             //     path: APP_ROUTES.CHATS,
             //     element: <Chats />,

@@ -1,14 +1,17 @@
 import {
     CreateOrder,
     GetOrder,
+    GetOrderConfig,
     GetOrders,
     GetOrdersAnalytics,
     ORDER_QUERY_KEYS,
+    UpdateOrderConfig,
     UpdateOrderStatus,
 } from "@/api";
 import type {
     TCreateOrderBody,
     TGetOrdersParams,
+    TUpdateOrderConfigBody,
     TUpdateOrderStatusBody,
 } from "@/api/services/orders/orders.request.types";
 import Config from "@/Config";
@@ -75,6 +78,28 @@ export const useUpdateOrderStatus = () => {
                 [ORDER_QUERY_KEYS.ORDER],
             ]);
             showToast.success("Status updated successfully");
+        },
+    });
+};
+
+export const useGetOrderConfig = (enabled?: boolean) => {
+    const isAuthenticated = useStore((state) => state.isAuthenticated);
+
+    return useQuery({
+        queryKey: [ORDER_QUERY_KEYS.ORDER_CONFIG],
+        queryFn: () => GetOrderConfig(),
+        enabled: enabled !== false && isAuthenticated,
+    });
+};
+
+export const useUpdateOrderConfig = () => {
+    return useMutation({
+        mutationFn: (body: TUpdateOrderConfigBody) => UpdateOrderConfig(body),
+        onSuccess: async () => {
+            await invalidateMultiple(queryClient, [
+                [ORDER_QUERY_KEYS.ORDER_CONFIG],
+            ]);
+            showToast.success("Shipping fee updated successfully");
         },
     });
 };
