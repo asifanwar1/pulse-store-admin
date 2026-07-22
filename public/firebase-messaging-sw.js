@@ -11,10 +11,10 @@ importScripts("https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js
 importScripts("https://www.gstatic.com/firebasejs/12.16.0/firebase-messaging-compat.js");
 
 firebase.initializeApp({
-    apiKey: "REPLACE_WITH_VITE_FIREBASE_API_KEY",
-    projectId: "REPLACE_WITH_VITE_FIREBASE_PROJECT_ID",
-    messagingSenderId: "REPLACE_WITH_VITE_FIREBASE_MESSAGING_SENDER_ID",
-    appId: "REPLACE_WITH_VITE_FIREBASE_APP_ID",
+    apiKey: "AIzaSyDm09cGPFfScShVk1ZnLEhM-5e6Sh7RICk",
+    projectId: "pulse-store-8804a",
+    messagingSenderId: "359553618908",
+    appId: "1:359553618908:web:692c7084e6443347ae3519",
 });
 
 const messaging = firebase.messaging();
