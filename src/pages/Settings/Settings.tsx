@@ -21,7 +21,7 @@ const Settings = () => {
 
     return (
         <div className="flex flex-col gap-6 p-4 sm:p-6 min-h-0">
-            <Card>
+            <Card className="bg-pulse-cream">
                 <CardHeader>
                     <CardTitle>Shipping</CardTitle>
                 </CardHeader>
