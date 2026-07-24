@@ -109,6 +109,7 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
             labelClass = "",
             dropzoneClass = "",
             previewSize = "md",
+            hideDropzone = false,
         },
         ref,
     ) => {
@@ -290,7 +291,7 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                 )}
 
                 {/* Drop zone */}
-                {!isAtMax && (
+                {!isAtMax && !hideDropzone && (
                     <div
                         role="button"
                         tabIndex={disabled ? -1 : 0}
@@ -331,20 +332,20 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                                     ` · Up to ${maxFiles} files`}
                             </p>
                         </div>
-                        <input
-                            ref={inputRef}
-                            id={inputId}
-                            name={name}
-                            type="file"
-                            multiple={multiple}
-                            accept={accept}
-                            disabled={disabled}
-                            onChange={handleInputChange}
-                            className="sr-only"
-                            aria-hidden="true"
-                        />
                     </div>
                 )}
+                <input
+                    ref={inputRef}
+                    id={inputId}
+                    name={name}
+                    type="file"
+                    multiple={multiple}
+                    accept={accept}
+                    disabled={disabled}
+                    onChange={handleInputChange}
+                    className="sr-only"
+                    aria-hidden="true"
+                />
 
                 {previews.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-1">

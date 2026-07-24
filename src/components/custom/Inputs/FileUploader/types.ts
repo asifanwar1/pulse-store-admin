@@ -32,6 +32,7 @@ export interface FileUploaderProps {
     labelClass?: string;
     dropzoneClass?: string;
     previewSize?: "sm" | "md" | "lg";
+    hideDropzone?: boolean;
 }
 
 export interface FilePreviewItem {

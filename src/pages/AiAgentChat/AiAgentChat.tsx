@@ -1,4 +1,5 @@
-import { Send } from "lucide-react";
+import { useRef } from "react";
+import { Paperclip, Send } from "lucide-react";
 
 import ChartCard from "@/components/custom/CustomCards/ChartCard";
 import CustomButton from "@/components/custom/CustomButton/CustomButton";
@@ -6,6 +7,8 @@ import FileUploader from "@/components/custom/Inputs/FileUploader/FileUploader";
 import { cn } from "@/lib/utils";
 import { AI_AGENT_META } from "@/constants/ai-agent.constants";
 import { useAiAgentChat } from "./AiAgentChat.Container";
+
+const MAX_ATTACHMENTS = 6;
 
 const AiAgentChat = () => {
     const {
@@ -26,6 +29,13 @@ const AiAgentChat = () => {
         handleSendMessage,
         handleKeyDown,
     } = useAiAgentChat();
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const isAttachDisabled =
+        isDisabled ||
+        isAgentsLoading ||
+        isBusy ||
+        activeConversation.attachments.length >= MAX_ATTACHMENTS;
 
     return (
         <div className="flex min-h-0 flex-col gap-4 p-4 sm:p-6">
@@ -85,7 +95,7 @@ const AiAgentChat = () => {
                             <div
                                 key={message.id}
                                 className={cn(
-                                    "flex",
+                                    "flex min-w-0",
                                     message.role === "user"
                                         ? "justify-end"
                                         : "justify-start",
@@ -93,7 +103,7 @@ const AiAgentChat = () => {
                             >
                                 <div
                                     className={cn(
-                                        "max-w-[75%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm",
+                                        "min-w-0 max-w-[75%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2.5 text-sm",
                                         message.role === "user" &&
                                             "bg-pulse-green text-white",
                                         message.role === "assistant" &&
@@ -142,19 +152,36 @@ const AiAgentChat = () => {
                     )}
                     {supportsImages && (
                         <FileUploader
+                            ref={fileInputRef}
                             value={activeConversation.attachments}
                             onChange={(files) =>
                                 setAttachments(activeAgentKey, files)
                             }
                             disabled={isDisabled || isAgentsLoading || isBusy}
                             accept="image/*"
-                            maxFiles={6}
+                            maxFiles={MAX_ATTACHMENTS}
                             previewSize="sm"
-                            placeholder="Attach product images"
-                            containerClass="mb-2"
+                            hideDropzone
+                            containerClass={
+                                activeConversation.attachments.length
+                                    ? "mb-2"
+                                    : undefined
+                            }
                         />
                     )}
                     <div className="flex flex-wrap items-center gap-3">
+                        {supportsImages && (
+                            <button
+                                type="button"
+                                aria-label="Attach product images"
+                                title="Attach product images"
+                                onClick={() => fileInputRef.current?.click()}
+                                disabled={isAttachDisabled}
+                                className="flex h-15 w-15 shrink-0 items-center justify-center rounded-xl border border-pulse-cream-dark bg-white text-pulse-green-dark transition-colors hover:bg-pulse-cream-dark/40 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                            >
+                                <Paperclip className="h-4 w-4" />
+                            </button>
+                        )}
                         <textarea
                             value={activeConversation.draft}
                             onChange={(event) =>
