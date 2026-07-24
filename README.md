@@ -1,7 +1,5 @@
 # Pulse Store Admin
 
-> ⚠️ **Work in Progress** — This project is not yet complete and is actively under development.
-
 An admin dashboard for the Pulse Store platform, built with React and TypeScript.
 
 ## Tech Stack
@@ -72,4 +70,4 @@ src/
 
 ## Status
 
-This project is currently under active development. Features and pages may be incomplete or subject to change.
+Complete.
