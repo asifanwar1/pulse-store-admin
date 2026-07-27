@@ -5,6 +5,7 @@ import {
     OrderStatusWithHelpers,
     type OrderStatusType,
 } from "@/constants/order-status.constants";
+import { getFormattedDate } from "@/utils/dateTime.utils";
 
 export const customerOrderColumns: TDataColumnDef<TOrderResponse>[] = [
     {
@@ -22,26 +23,36 @@ export const customerOrderColumns: TDataColumnDef<TOrderResponse>[] = [
     },
     {
         id: "product",
-        accessorKey: "product",
+        accessorKey: "items",
         header: "Product",
         meta: {
             label: "Product",
-            cellRenderer: (value) => (
-                <span className="text-pulse-green-dark text-xs truncate block max-w-[200px]">
-                    {value as string}
-                </span>
-            ),
+            cellRenderer: (_value, row) => {
+                const items = row.original.items ?? [];
+                const firstItem = items[0];
+                return (
+                    <span className="text-pulse-green-dark text-xs truncate block max-w-[200px]">
+                        {firstItem
+                            ? `${firstItem.product_name}${
+                                  items.length > 1
+                                      ? ` +${items.length - 1} more`
+                                      : ""
+                              }`
+                            : "-"}
+                    </span>
+                );
+            },
         },
     },
     {
         id: "category",
-        accessorKey: "category",
+        accessorKey: "items",
         header: "Category",
         meta: {
             label: "Category",
-            cellRenderer: (value) => (
+            cellRenderer: (_value, row) => (
                 <span className="text-pulse-green-dark text-xs whitespace-nowrap">
-                    {value as string}
+                    {row.original.items?.[0]?.product_category ?? "-"}
                 </span>
             ),
         },
@@ -53,23 +64,23 @@ export const customerOrderColumns: TDataColumnDef<TOrderResponse>[] = [
         meta: {
             label: "Items",
             align: "center",
-            cellRenderer: (value) => (
+            cellRenderer: (_value, row) => (
                 <span className="font-medium text-pulse-green-dark text-xs">
-                    {value as number}
+                    {row.original.items?.length ?? 0}
                 </span>
             ),
         },
     },
     {
         id: "amount",
-        accessorKey: "amount",
+        accessorKey: "total_amount",
         header: "Amount",
         meta: {
             label: "Amount",
             align: "right",
             cellRenderer: (value) => (
                 <span className="font-semibold text-pulse-green-dark text-xs whitespace-nowrap">
-                    ${(value as number).toLocaleString()}
+                    ${Number(value ?? 0).toLocaleString()}
                 </span>
             ),
         },
@@ -101,14 +112,14 @@ export const customerOrderColumns: TDataColumnDef<TOrderResponse>[] = [
     },
     {
         id: "date",
-        accessorKey: "date",
+        accessorKey: "created_at",
         header: "Date",
         meta: {
             label: "Date",
             align: "right",
             cellRenderer: (value) => (
                 <span className="text-xs text-pulse-green-dark whitespace-nowrap">
-                    {value as string}
+                    {getFormattedDate(value as string)}
                 </span>
             ),
         },

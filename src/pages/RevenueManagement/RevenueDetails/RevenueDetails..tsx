@@ -31,6 +31,7 @@ const RevenueDetails = () => {
         handleNavigateToShipment,
         handleNavigateBack,
         handleNavigateToProduct,
+        NO_VALUE,
     } = useRevenueDetails();
 
     if (isRevenueLoading) {
@@ -81,20 +82,22 @@ const RevenueDetails = () => {
                                 <Hash className="w-3 h-3" />
                                 {revenue.id}
                             </span>
-                            <span className="flex items-center gap-1">
-                                <Package className="w-3 h-3" />
-                                Shipment ID:{" "}
-                                <span
-                                    onClick={() =>
-                                        handleNavigateToShipment(
-                                            revenue.shipment_details[0].id,
-                                        )
-                                    }
-                                    className="cursor-pointer underline"
-                                >
-                                    {revenue.shipment_details[0].id}
+                            {revenue.shipment_details?.length > NO_VALUE && (
+                                <span className="flex items-center gap-1">
+                                    <Package className="w-3 h-3" />
+                                    Shipment ID:{" "}
+                                    <span
+                                        onClick={() =>
+                                            handleNavigateToShipment(
+                                                revenue.shipment_details[0].id,
+                                            )
+                                        }
+                                        className="cursor-pointer underline"
+                                    >
+                                        {revenue.shipment_details[0].id}
+                                    </span>
                                 </span>
-                            </span>
+                            )}
                             <span className="flex items-center gap-1">
                                 <DollarSign className="w-3 h-3" />
                                 {revenue.revenue_amount}
