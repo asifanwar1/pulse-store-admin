@@ -9,6 +9,7 @@ import { ACTION_MODES } from "@/constants/action-modes.constants";
 import { useCreateShipment } from "@/hooks/api/shipment.queries";
 import { getRouteWithId } from "@/utils/common.utils";
 import { APP_ROUTES } from "@/routes/appRoutes";
+import { showToast } from "@/lib/toast";
 
 const NO_VALUE = 0;
 
@@ -47,8 +48,9 @@ export const useManageShipment = ({
         try {
             const payload = buildShipmentPayload(values, id!);
 
-            createShipment(payload, {
+            await createShipment(payload, {
                 onSuccess: () => {
+                    showToast.success("Shipment created successfully");
                     handleNavigateBack();
                 },
             });

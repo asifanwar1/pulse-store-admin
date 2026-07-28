@@ -76,12 +76,16 @@ export default function OrderDetails() {
                     <ArrowLeft className="w-4 h-4" />
                     Back to Orders
                 </Button>
-                {order?.status === OrderStatus.PENDING && (
-                    <Button size="sm" onClick={handleNavigateToShipmentCreate}>
-                        <Plus className="w-4 h-4" />
-                        Create Shipment
-                    </Button>
-                )}
+                {order?.status === OrderStatus.PENDING ||
+                    (order?.status === OrderStatus.PROCESSING && (
+                        <Button
+                            size="sm"
+                            onClick={handleNavigateToShipmentCreate}
+                        >
+                            <Plus className="w-4 h-4" />
+                            Create Shipment
+                        </Button>
+                    ))}
             </div>
 
             <div className="bg-pulse-cream-dark/40 rounded-2xl border border-pulse-cream-dark shadow-dash-card p-6">

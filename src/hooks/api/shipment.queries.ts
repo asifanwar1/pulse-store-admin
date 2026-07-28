@@ -88,6 +88,8 @@ export const useCreateShipment = () => {
             await invalidateMultiple(queryClient, [
                 [SHIPMENT_QUERY_KEYS.SHIPMENTS],
                 [SHIPMENT_QUERY_KEYS.SHIPMENT],
+                [ORDER_QUERY_KEYS.ORDERS],
+                [ORDER_QUERY_KEYS.ORDER],
             ]);
         },
     });

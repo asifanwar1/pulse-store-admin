@@ -75,9 +75,9 @@ export const getSupportTicketsTableColumns = ({
     {
         id: "user_id",
         accessorKey: "user_id",
-        header: "Customer",
+        header: "User Id",
         meta: {
-            label: "Customer",
+            label: "User Id",
             cellRenderer: (value) => (
                 <span className="text-xs font-medium text-pulse-green-dark whitespace-nowrap">
                     User #{value as number}

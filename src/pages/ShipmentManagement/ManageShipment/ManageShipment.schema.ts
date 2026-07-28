@@ -1,11 +1,12 @@
 import { z } from "zod";
+import { formatDateToYearMonthDay } from "@/utils/dateTime.utils";
 
 const optionSchema = z.object({ label: z.string(), value: z.string() });
 
 const DATE_SCHEMA = z.preprocess(
     (value) => {
         if (value instanceof Date) {
-            return value.toISOString().slice(0, 10);
+            return formatDateToYearMonthDay(value);
         }
         return value;
     },
