@@ -56,12 +56,6 @@ export type FilterItem =
 export type FilterBarProps = {
     items: FilterItem[];
     className?: string;
-    /**
-     * When true, renders the search item at ~60% width and groups the
-     * remaining filters into the other ~40%, spanning the full width of
-     * the container. When false (default), items simply flex-wrap inline
-     * as before.
-     */
     splitLayout?: boolean;
 };
 
