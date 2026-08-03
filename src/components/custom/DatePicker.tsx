@@ -142,7 +142,6 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
                         )}
                     </div>
                 </PopoverTrigger>
-                {/* start from end right aligned */}
                 <PopoverContent
                     align="end"
                     className="w-auto p-0 -mt-3 !rounded-md overflow-hidden border-neutral-200 h-[285px]"
