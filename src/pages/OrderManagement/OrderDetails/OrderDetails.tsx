@@ -154,7 +154,6 @@ export default function OrderDetails() {
                 </div>
             </div>
 
-            {/* Stats chips */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 <StatChipCard
                     icon={<Package className="w-4 h-4" />}
