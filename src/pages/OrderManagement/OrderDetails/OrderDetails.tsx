@@ -133,7 +133,6 @@ export default function OrderDetails() {
                         </div>
                     </div>
 
-                    {/* Status selector */}
                     <div className="flex flex-col gap-1.5 shrink-0 w-full sm:w-48">
                         <span className="text-xs font-medium text-pulse-green">
                             Update Status
