@@ -177,7 +177,6 @@ export default function OrderDetails() {
                 />
             </div>
 
-            {/* Order items table */}
             <ChartCard
                 title="Order Items"
                 subtitle={`${order.items.length} item${order.items.length !== 1 ? "s" : ""} in this order`}
