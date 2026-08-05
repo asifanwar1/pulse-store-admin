@@ -198,7 +198,6 @@ export default function OrderDetails() {
                 />
             </ChartCard>
 
-            {/* Order tracking timeline */}
             <ChartCard
                 title="Order Tracking"
                 subtitle="Status history for this order"
