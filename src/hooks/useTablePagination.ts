@@ -1,10 +1,5 @@
-/**
- * Wraps a state setter so that setting it also resets the page back to 1.
- * Use for search, filters, and page-size changes — any change that can
- * invalidate the current page's results.
- */
 export const withPageReset =
-    <T,>(setValue: (value: T) => void, setPage: (page: number) => void) =>
+    <T>(setValue: (value: T) => void, setPage: (page: number) => void) =>
     (value: T) => {
         setValue(value);
         setPage(1);
@@ -17,13 +12,6 @@ type UseTablePaginationParams = {
     totalCount?: number;
 };
 
-/**
- * Derives DataTable's server-pagination props (`pageCount`, `onPaginationChange`)
- * from the page-size/page state a container already owns. Only needed by
- * modules using the `DataTable` component — card-grid + `Pagination` modules
- * don't need `pageCount` (that component computes it internally) and can use
- * `withPageReset` directly instead.
- */
 export const useTablePagination = ({
     pageSize,
     setPage,

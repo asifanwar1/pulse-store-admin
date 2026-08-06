@@ -290,7 +290,6 @@ const FileUploader = React.forwardRef<HTMLInputElement, FileUploaderProps>(
                     </label>
                 )}
 
-                {/* Drop zone */}
                 {!isAtMax && !hideDropzone && (
                     <div
                         role="button"
