@@ -160,10 +160,8 @@ const TableToolbar = ({
                         </div>
                     )}
 
-                    {/* Left Actions */}
                     {leftActions.length > 0 ? renderActions(leftActions) : null}
 
-                    {/* Filter Button */}
                     {showFilter && filterConfig && (
                         <Select
                             value={filterConfig?.selectedValue || ""}
@@ -203,12 +201,10 @@ const TableToolbar = ({
                     )}
                 </div>
 
-                {/* Center Section */}
                 <div className="flex items-center gap-2">
                     {customCenterContent}
                 </div>
 
-                {/* Right Section */}
                 <div className="flex items-center gap-2">
                     {customRightContent}
 
