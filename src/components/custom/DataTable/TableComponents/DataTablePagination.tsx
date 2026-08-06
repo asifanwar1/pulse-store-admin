@@ -39,7 +39,6 @@ const DataTablePagination = <TData,>({
 
     return (
         <div className="flex items-center justify-end gap-5 p-4 w-full">
-            {/* Pagination controls - only left/right arrows */}
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-4">
                     <p className="text-sm font-medium text-[#687082] leading-[1.5] tracking-[0.2px]">
@@ -62,7 +61,6 @@ const DataTablePagination = <TData,>({
                     </div>
                 </div>
 
-                {/* Page info */}
                 <p className="text-sm font-medium text-[#687082] leading-[1.5] tracking-[0.2px]">
                     {startRow} - {endRow} of {totalRows}
                 </p>

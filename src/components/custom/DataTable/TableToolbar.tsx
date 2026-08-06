@@ -208,12 +208,10 @@ const TableToolbar = ({
                 <div className="flex items-center gap-2">
                     {customRightContent}
 
-                    {/* Action Groups */}
                     {actionGroups.length > 0
                         ? renderActionGroups(actionGroups)
                         : null}
 
-                    {/* Right Actions */}
                     {rightActions.length > 0
                         ? renderActions(rightActions)
                         : null}
