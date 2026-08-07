@@ -223,7 +223,6 @@ const ShipmentDetails = () => {
                 )}
             </div>
 
-            {/* Shipment tracking timeline */}
             <ChartCard
                 title="Shipment Tracking"
                 subtitle="Checkpoint history for this shipment"
