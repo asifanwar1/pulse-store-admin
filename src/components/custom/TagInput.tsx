@@ -85,9 +85,7 @@ const TagInput: React.FC<TagInputProps> = ({
                     {label} {required && <span className="text-danger">*</span>}
                 </label>
             )}
-            {/* Tags Display */}
 
-            {/* Input Field */}
             <Input
                 value={inputValue}
                 onChange={handleInputChange}
