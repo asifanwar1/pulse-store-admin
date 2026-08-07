@@ -97,11 +97,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                             onClick={handlePasswordToggle}
                             className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                         >
-                            {/* <img
-                                src={showPassword ? eyeIcon : eyeOffIcon}
-                                alt={showPassword ? "Hide password" : "Show password"}
-                                className="w-5 h-5"
-                            /> */}
                             {showPassword ? (
                                 <Eye size={20} />
                             ) : (
