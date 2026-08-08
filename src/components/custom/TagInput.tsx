@@ -125,7 +125,6 @@ const TagInput: React.FC<TagInputProps> = ({
                 </div>
             )}
 
-            {/* Helper Text */}
             {maxTags && (
                 <p className="text-xs text-text-secondary mt-2">
                     {value.length}/{maxTags} {label}
