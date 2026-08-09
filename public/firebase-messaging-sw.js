@@ -14,8 +14,6 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Background/tab-closed pushes: show the OS notification ourselves.
-// Foreground pushes are handled in-app instead (see src/lib/firebase.ts).
 messaging.onBackgroundMessage((payload) => {
     const { title, body } = payload.notification || {};
     self.registration.showNotification(title || "Pulse Store", {
