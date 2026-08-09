@@ -1,14 +1,9 @@
-// Firebase Web Push service worker. Must be served from the site root
-// (public/firebase-messaging-sw.js -> /firebase-messaging-sw.js) so its scope
-// covers the whole app -- this is how the Firebase Messaging SDK finds it.
-//
-// These values are the public Firebase *web app* config (not secrets -- see
-// https://firebase.google.com/docs/projects/api-keys). REPLACE with your
-// project's values from the Firebase Console (Project settings > General).
-// This file can't read Vite's import.meta.env, so the config is duplicated
-// here from .env's VITE_FIREBASE_* values.
-importScripts("https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/12.16.0/firebase-messaging-compat.js");
+importScripts(
+    "https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js",
+);
+importScripts(
+    "https://www.gstatic.com/firebasejs/12.16.0/firebase-messaging-compat.js",
+);
 
 firebase.initializeApp({
     apiKey: "AIzaSyDm09cGPFfScShVk1ZnLEhM-5e6Sh7RICk",
