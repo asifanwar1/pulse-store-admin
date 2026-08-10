@@ -40,7 +40,6 @@ export type WithSignal<T> = T & { signal?: AbortSignal };
 
 export type APIError = {
     message: string;
-    // Only if 400 error
     error?: {
         [field: string]: string;
     };
