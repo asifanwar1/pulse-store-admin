@@ -54,8 +54,6 @@ export const UpdateBanner = async ({
     });
 };
 
-// Hard delete — the row is permanently removed. Use UpdateBannerStatus to
-// deactivate/reactivate a banner instead of calling this for a toggle.
 export const DeleteBanner = async ({ id }: TApiArgs) => {
     return request<TDeleteBannerResponse, undefined>({
         method: HTTP_METHODS.DELETE,
