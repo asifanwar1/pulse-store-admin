@@ -18,6 +18,5 @@ messaging.onBackgroundMessage((payload) => {
     const { title, body } = payload.notification || {};
     self.registration.showNotification(title || "Pulse Store", {
         body,
-        // icon: "/your-icon.png", -- add once a real app icon exists in public/
     });
 });
