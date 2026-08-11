@@ -45,7 +45,6 @@ const DataTable = <TData extends RowData>({
         enableHiding: column.hideable ? true : column.enableHiding,
     }));
 
-    // Create initial column visibility state
     const initialColumnVisibility = { ...initialState.columnVisibility };
     columns.forEach((column) => {
         if (
@@ -57,7 +56,6 @@ const DataTable = <TData extends RowData>({
         }
     });
 
-    // Create table directly with TanStack Table
     const table = useReactTable({
         data,
         columns: processedColumns,
