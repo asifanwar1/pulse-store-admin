@@ -36,12 +36,10 @@ const DataTable = <TData extends RowData>({
         initialState.rowSelection ?? {},
     );
 
-    // Use controlled state if callback is provided
     const rowSelection = callbacks.onRowSelectionChange
         ? internalRowSelection
         : (initialState.rowSelection ?? {});
 
-    // Process columns to hide those with hideable: true
     const processedColumns = columns.map((column) => ({
         ...column,
         enableHiding: column.hideable ? true : column.enableHiding,
@@ -215,9 +213,7 @@ const DataTable = <TData extends RowData>({
             <div className="flex w-full flex-col gap-2">
                 {Boolean(features?.globalSearch) && (
                     <DataTableSearch
-                        onSearch={(value) =>
-                            callbacks.onGlobalSearch?.(value)
-                        }
+                        onSearch={(value) => callbacks.onGlobalSearch?.(value)}
                         placeholder={searchPlaceholder}
                     />
                 )}
