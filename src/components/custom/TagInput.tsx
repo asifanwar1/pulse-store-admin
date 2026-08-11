@@ -48,7 +48,6 @@ const TagInput: React.FC<TagInputProps> = ({
             ? newValue.slice(0, maxTagLength)
             : newValue;
 
-        // Check if we've reached max tags
         if (maxTags && value.length >= maxTags) {
             return;
         }
