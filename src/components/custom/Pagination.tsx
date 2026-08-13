@@ -8,7 +8,7 @@ import {
 import { Select } from "./Select";
 
 export type PaginationProps = {
-    page: number; // 1-based
+    page: number;
     pageSize: number;
     total: number;
     onPageChange: (p: number) => void;
