@@ -33,7 +33,6 @@ export const CustomModal = ({
     titleClassName,
     footer,
 }: ICustomModalProps) => {
-    // Memoized event handlers for better performance
     const handleEscapeKey = useCallback(
         (event: KeyboardEvent) => {
             if (event.key === "Escape" && closeOnEscape) {

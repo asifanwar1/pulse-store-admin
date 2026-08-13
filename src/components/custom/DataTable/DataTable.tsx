@@ -112,7 +112,6 @@ const DataTable = <TData extends RowData>({
 
                 setInternalRowSelection(newSelection);
 
-                // Get selected row data and send to callback
                 setTimeout(() => {
                     const selectedRowIds = Object.keys(newSelection).filter(
                         (key) => newSelection[key],
