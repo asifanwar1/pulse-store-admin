@@ -63,7 +63,6 @@ export type TShipmentResponse = {
         unit_price: string;
         total_amount: string;
     }>;
-    // Present on shipment detail/create/update/status-update responses, absent on list responses.
     tracking?: TShipmentTrackingEvent[];
 };
 

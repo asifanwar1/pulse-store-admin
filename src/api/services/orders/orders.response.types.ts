@@ -53,7 +53,6 @@ export type TOrderResponse = {
     shipped_at?: string;
     created_at?: string;
     updatedAt?: string;
-    // Present on order detail/create/status-update responses, absent on list responses.
     tracking?: TOrderTrackingEntry[];
 };
 
