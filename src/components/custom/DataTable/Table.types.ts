@@ -88,8 +88,6 @@ export interface IFilterConfig {
     variant: TFilterVariant;
 }
 
-// FEATURES CONFIGURATION
-
 export interface IDataTableFeatures {
     rowSelection?: boolean;
     sorting?: boolean;
@@ -106,8 +104,6 @@ export interface IDataTableFeatures {
     empty?: boolean;
     error?: boolean;
 }
-
-// STYLING CONFIGURATION
 
 export interface IDataTableStyling {
     variant?: "default" | "bordered" | "striped" | "compact";
@@ -135,8 +131,6 @@ export interface IDataTableStyling {
         position?: "top" | "bottom" | "both";
     };
 }
-
-// CALLBACKS
 
 export interface IDataTableCallbacks<TData extends RowData> {
     onRowSelectionChange?: (selectedRows: Row<TData>[]) => void;
