@@ -64,7 +64,7 @@ interface IDataTableToolbarProps {
     customCenterContent?: ReactNode;
     customRightContent?: ReactNode;
 
-    // Title and description
+
     title?: string;
     description?: string;
 }
