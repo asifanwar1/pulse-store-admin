@@ -58,10 +58,8 @@ interface IDataTableToolbarProps {
     rightActions?: IToolbarAction[];
     actionGroups?: IToolbarActionGroup[];
 
-    // Layout configuration
     className?: string;
 
-    // Custom content
     customLeftContent?: ReactNode;
     customCenterContent?: ReactNode;
     customRightContent?: ReactNode;
