@@ -12,7 +12,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-// Define toolbar action types
 export interface IToolbarAction {
     id: string;
     label: string;
