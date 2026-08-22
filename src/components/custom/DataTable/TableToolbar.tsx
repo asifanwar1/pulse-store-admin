@@ -42,7 +42,6 @@ export interface IToolbarActionGroup {
 }
 
 interface IDataTableToolbarProps {
-    // Search configuration
     onSearchChange?: (searchTerm: string) => void;
     searchValue?: string;
     searchPlaceholder?: string;
