@@ -49,13 +49,11 @@ interface IDataTableToolbarProps {
     searchClassName?: string;
     searchWidth?: string;
 
-    // Filter configuration
     showFilter?: boolean;
     filterConfig?: IFilterConfig;
 
     onFilterChange?: (filters: string) => void;
 
-    // Actions configuration
     leftActions?: IToolbarAction[];
     rightActions?: IToolbarAction[];
     actionGroups?: IToolbarActionGroup[];
